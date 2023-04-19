@@ -17,6 +17,7 @@
         "symfony/yaml": "6.3.*"
     },
     "require-dev": {
+        "symfony/debug-bundle": "6.3.*"
     },
     "config": {
         "allow-plugins": {
