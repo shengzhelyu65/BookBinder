@@ -27,4 +27,22 @@ The project will be evaluated based on several factors, including the developmen
 
 During the exam period, there will be a live demo of the web app, followed by a Q&A session with all team members. Peer assessment will also be conducted.
 
+## Running the Website Locally from cmd prompt (Windows)
 
+1. Install Scoop by following the instructions on the [Scoop website](https://scoop.sh/).
+
+2. Once installed, use Scoop to install the Symfony CLI by running the following command in your terminal:
+
+    ```
+    scoop install symfony-cli
+    ```
+
+3. After installation, use the Symfony local server to run the website. The server can be installed by following the instructions on the [Symfony website](https://symfony.com/doc/current/setup/symfony_server.html).
+
+4. After installation, run the following command in your terminal to start the server:
+
+    ```
+    symfony server:start
+    ```
+
+5. If you are using Docker, make sure to expose the port the web server runs the application on to access it.
