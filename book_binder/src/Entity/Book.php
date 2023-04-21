@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Entity;
+
+/**
+ * This class stores all the information of a Book
+ */
 class Book
 {
     public string $id;
