@@ -6,13 +6,11 @@ use App\Repository\UserCredentialsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserCredentialsRepository::class)]
+#[ORM\Table('UserCredentials')]
 class UserCredentials
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $user_ID = null;
 
@@ -21,11 +19,6 @@ class UserCredentials
 
     #[ORM\Column]
     private ?int $password = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUserID(): ?int
     {

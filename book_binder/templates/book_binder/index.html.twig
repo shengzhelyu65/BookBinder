@@ -2,4 +2,7 @@
 
 {% block body %}
     <p>Hello World!</p>
+    {% for user in users %}
+        <li>{{ user.name }}</li>
+    {% endfor %}
 {% endblock %}
