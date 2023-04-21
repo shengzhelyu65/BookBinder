@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Entity\Book;
 use GuzzleHttp\Client;
 require_once __DIR__ . '/../Entity/Book.php';
 
@@ -52,30 +53,9 @@ class GoogleBooksApiClient
             $books = [];
 
             // Loop through the array of book items returned by the API
-            foreach ($json['items'] as $item) {
-                // Create a new Book object from the item data
-                $book = new Book(
-                    $item['id'],
-                    $item['volumeInfo']['title'],
-                    $item['volumeInfo']['authors'][0],
-                    $item['volumeInfo']['description'],
-                    $item['volumeInfo']['imageLinks']['thumbnail'],
-                    $item['volumeInfo']['publishedDate'],
-                    $item['volumeInfo']['industryIdentifiers'],
-                    $item['volumeInfo']['pageCount'],
-                    $item['volumeInfo']['printType'],
-                    $item['volumeInfo']['averageRating'],
-                    $item['volumeInfo']['ratingsCount'],
-                    $item['volumeInfo']['maturityRating'],
-                    $item['volumeInfo']['allowAnonLogging'],
-                    $item['volumeInfo']['contentVersion'],
-                    $item['volumeInfo']['language'],
-                    $item['volumeInfo']['previewLink'],
-                    $item['volumeInfo']['infoLink']
-                );
-
-                // Add the Book object to the array of books
-                array_push($books, $book);
+            foreach ($json['items'] as $book) {
+                // Create and add Book object to the array of books
+                $books[] = $this->jsonToBook($book);
             }
 
             // Return the array of books
@@ -86,5 +66,32 @@ class GoogleBooksApiClient
         }
     }
 
+    /**
+     * Private function that converts a JSON object to a Book object.
+     *
+     * @param mixed $json The JSON object to convert.
+     * @return Book The new Book object.
+     */
+    private function jsonToBook(mixed $json): Book {
+        return new Book(
+            $json['id'],
+            $json['volumeInfo']['title'],
+            $json['volumeInfo']['authors'][0],
+            $json['volumeInfo']['description'],
+            $json['volumeInfo']['imageLinks']['thumbnail'],
+            $json['volumeInfo']['publishedDate'],
+            $json['volumeInfo']['industryIdentifiers'],
+            $json['volumeInfo']['pageCount'],
+            $json['volumeInfo']['printType'],
+            $json['volumeInfo']['averageRating'],
+            $json['volumeInfo']['ratingsCount'],
+            $json['volumeInfo']['maturityRating'],
+            $json['volumeInfo']['allowAnonLogging'],
+            $json['volumeInfo']['contentVersion'],
+            $json['volumeInfo']['language'],
+            $json['volumeInfo']['previewLink'],
+            $json['volumeInfo']['infoLink']
+        );
+    }
 
 }
