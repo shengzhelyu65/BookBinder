@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Entity;
 class Book
 {
     public string $id;
