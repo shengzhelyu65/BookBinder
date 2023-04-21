@@ -46,3 +46,14 @@ During the exam period, there will be a live demo of the web app, followed by a 
     ```
 
 5. If you are using Docker, make sure to expose the port the web server runs the application on to access it.
+
+### Possible issues when accessing the website admin panel locally
+    ```
+    The name of the route associated to "App\Controller\Admin\DashboardController::index" cannot be determined. Clear the application cache to run the EasyAdmin cache warmer, which generates the needed data to find this route
+    ```
+#### Solution
+Clear the cache by running the following command in your terminal:
+
+    ```
+    php bin/console cache:clear
+    ```
