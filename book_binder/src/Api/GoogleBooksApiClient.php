@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 use GuzzleHttp\Client;
 require_once __DIR__ . '/../Entity/Book.php';
 
