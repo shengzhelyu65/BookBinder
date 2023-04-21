@@ -19,11 +19,11 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route("/users", name: "users")]
-    public function users(UserCredentialsRepository $userCredentialRepo): Response {
-        $userCredentials = $userCredentialRepo->findAll();
-        return $this->render('book_binder/index.html.twig',[
-            'users' => $userCredentials
+    #[Route("/home", name: "users")]
+    public function home(): Response
+    {
+        return $this->render('book_binder/index.html.twig', [
+            'controller_name' => 'BookBinderController',
         ]);
     }
 
