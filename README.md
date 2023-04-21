@@ -40,7 +40,6 @@ During the exam period, there will be a live demo of the web app, followed by a 
 3. After installation, use the Symfony local server to run the website. The server can be installed by following the instructions on the [Symfony website](https://symfony.com/doc/current/setup/symfony_server.html).
 
 4. After installation, run the following command in your terminal to start the server:
-
     ```
     symfony server:start
     ```
@@ -48,12 +47,9 @@ During the exam period, there will be a live demo of the web app, followed by a 
 5. If you are using Docker, make sure to expose the port the web server runs the application on to access it.
 
 ### Possible issues when accessing the website admin panel locally
-    ```
-    The name of the route associated to "App\Controller\Admin\DashboardController::index" cannot be determined. Clear the application cache to run the EasyAdmin cache warmer, which generates the needed data to find this route
-    ```
-#### Solution
-Clear the cache by running the following command in your terminal:
 
-    ```
+"The name of the route associated to "App\Controller\Admin\DashboardController::index" cannot be determined. Clear the application cache to run the EasyAdmin cache warmer, which generates the needed data to find this route"
+
+#### Solution
+Clear the cache by running the following command in your terminal:    
     php bin/console cache:clear
-    ```
