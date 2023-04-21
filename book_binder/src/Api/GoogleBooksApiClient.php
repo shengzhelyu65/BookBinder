@@ -74,24 +74,79 @@ class GoogleBooksApiClient
      */
     private function jsonToBook(mixed $json): Book {
         return new Book(
-            $json['id'],
-            $json['volumeInfo']['title'],
-            $json['volumeInfo']['authors'][0],
-            $json['volumeInfo']['description'],
-            $json['volumeInfo']['imageLinks']['thumbnail'],
-            $json['volumeInfo']['publishedDate'],
-            $json['volumeInfo']['industryIdentifiers'],
-            $json['volumeInfo']['pageCount'],
-            $json['volumeInfo']['printType'],
-            $json['volumeInfo']['averageRating'],
-            $json['volumeInfo']['ratingsCount'],
-            $json['volumeInfo']['maturityRating'],
-            $json['volumeInfo']['allowAnonLogging'],
-            $json['volumeInfo']['contentVersion'],
-            $json['volumeInfo']['language'],
-            $json['volumeInfo']['previewLink'],
-            $json['volumeInfo']['infoLink']
+            $json['id'] ?? -1,
+            $json['volumeInfo']['title'] ?? "",
+            $json['volumeInfo']['authors'][0] ?? "",
+            $json['volumeInfo']['description'] ?? "",
+            $json['volumeInfo']['imageLinks']['thumbnail'] ?? "",
+            $json['volumeInfo']['publishedDate'] ?? null,
+            $json['volumeInfo']['industryIdentifiers'] ?? [],
+            $json['volumeInfo']['pageCount'] ?? -1,
+            $json['volumeInfo']['printType'] ?? null,
+            $json['volumeInfo']['averageRating'] ?? -1,
+            $json['volumeInfo']['ratingsCount'] ?? -1,
+            $json['volumeInfo']['maturityRating'] ?? null,
+            $json['volumeInfo']['allowAnonLogging'] ?? null,
+            $json['volumeInfo']['contentVersion'] ?? null,
+            $json['volumeInfo']['language'] ?? null,
+            $json['volumeInfo']['previewLink'] ?? null,
+            $json['volumeInfo']['infoLink'] ?? null
         );
     }
+
+    /**
+     * Search for popular or new books based on subject, max amount, and start index.
+     *
+     * @param string $subject The subject to search for.
+     * @param int $maxResults  The maximum number of results to return. Default is 10.
+     * @param int $startIndex The index of the first result to return. Default is 0.
+     * @param boolean $orderBy Sorts the results by relevance if set to true. Otherwise sorts by newest.
+     * @return array|false An array of Books, or false if the search failed.
+     */
+    public function getInterestingBooks(string $subject, int $maxResults = 1, int $startIndex = 0, bool $orderBy = false): bool|array {
+
+        // Check if $subject is empty
+        if (empty($subject)) {
+            echo "No subject provided";
+            return false;
+        }
+
+        // Set query parameters for Google Books API
+        $queryParams = [
+            'q' => 'subject:' . urlencode($subject),
+            'startIndex' => $startIndex,
+            'maxResults' => $maxResults,
+            'orderBy' => $orderBy ? 'relevance' : 'newest',
+            'key' => $this->API_KEY
+        ];
+
+        // Create a new HTTP client instance
+        $client = new Client([
+            'verify' => false
+        ]);
+
+        // Send a GET request to the Google Books API
+        $response = $client->request('GET', $this->baseUri, ['query' => $queryParams]);
+
+        // Check if the response status code is 200 (OK)
+        if ($response->getStatusCode() === 200) {
+            // Parse the JSON response into an associative array
+            $json = json_decode($response->getBody(), true);
+            $books = [];
+
+            // Loop through the array of book items returned by the API
+            foreach ($json['items'] as $book) {
+                // Create and add Book object to the array of books
+                $books[] = $this->jsonToBook($book);
+            }
+
+            // Return the array of books
+            return $books;
+        } else {
+            // Return false if the response status code is not 200
+            return false;
+        }
+    }
+
 
 }
