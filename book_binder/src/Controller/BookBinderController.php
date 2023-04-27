@@ -27,11 +27,11 @@ class BookBinderController extends AbstractController
         ]);
     }
 
-    #[Route('/login', name: 'login')]
-    public function login(): Response
-    {
-        return $this->render('book_binder/login_test.html.twig', [
-            'controller_name' => 'BookBinderController',
-        ]);
-    }
+    // #[Route('/login', name: 'login')]
+    // public function login(): Response
+    // {
+    //     return $this->render('book_binder/login_test.html.twig', [
+    //         'controller_name' => 'BookBinderController',
+    //     ]);
+    // }
 }
