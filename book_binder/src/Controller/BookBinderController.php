@@ -11,6 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BookBinderController extends AbstractController
 {
+    /**
+     * @Route("/")
+     * @Security("is_granted('ROLE_USER')")
+     */
     #[Route('/', name: 'index')]
     public function index(): Response
     {
