@@ -30,11 +30,13 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "dbrekelmans/bdi": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "symfony/browser-kit": "6.3.*",
+        "symfony/browser-kit": "*",
         "symfony/css-selector": "6.3.*",
         "symfony/debug-bundle": "6.3.*",
         "symfony/maker-bundle": "^1.48",
+        "symfony/panther": "^2.0",
         "symfony/phpunit-bridge": "^6.2",
         "symfony/stopwatch": "6.2.*",
         "symfony/web-profiler-bundle": "6.2.*"
