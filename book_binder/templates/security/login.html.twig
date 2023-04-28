@@ -2,6 +2,10 @@
 
 {% block title %}Log in!{% endblock %}
 
+{% block javascripts %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+{% endblock %}
+
 {% block body %}
 <form method="post">
     {% if error %}
@@ -19,10 +23,7 @@
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -38,5 +39,23 @@
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
+
+    <div id="g_id_onload"
+         data-client_id="773315199188-t2bualn3k6id1gsokusqrueq55lkg4e4"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-login_uri="/home"
+         data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="signin_with"
+         data-size="large"
+         data-locale="en"
+         data-logo_alignment="left">
+    </div>
 </form>
 {% endblock %}
