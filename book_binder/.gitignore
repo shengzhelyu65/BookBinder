@@ -46,3 +46,7 @@ composer.phar
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+
+###> ignore node_modules folder ###
+/node_modules/
