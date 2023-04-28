@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+{% endblock %}
+
 {% block body %}
     <p>Hello World!</p>
+
+    <p>Your credential is: {{ credential }}</p>
 {% endblock %}

@@ -29,4 +29,12 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    #[Route('/glogin', name: 'google_login')]
+    public function googleLogin(): Response
+    {
+        return $this->render('book_binder/login_test.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
 }

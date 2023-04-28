@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\CourseRepository;
-use App\Repository\UserCredentialsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,18 +23,16 @@ class BookBinderController extends AbstractController
     }
 
     #[Route("/home", name: "users")]
-    public function home(): Response
+    public function home(Request $request): Response
     {
+        $credential = $request->request->get('credential');
+
+        // TODO: Handle the login logic using the $credential value
+
         return $this->render('book_binder/index.html.twig', [
             'controller_name' => 'BookBinderController',
+            'credential' => $credential,
         ]);
-    }
 
-    // #[Route('/login', name: 'login')]
-    // public function login(): Response
-    // {
-    //     return $this->render('book_binder/login_test.html.twig', [
-    //         'controller_name' => 'BookBinderController',
-    //     ]);
-    // }
+    }
 }
