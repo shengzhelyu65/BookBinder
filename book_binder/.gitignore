@@ -48,5 +48,9 @@ composer.phar
 ###< phpunit/phpunit ###
 
 
-###> ignore node_modules folder ###
+###> symfony/webpack-encore-bundle ###
 /node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
