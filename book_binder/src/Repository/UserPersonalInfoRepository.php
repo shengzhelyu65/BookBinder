@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\UserCredentials;
+use App\Entity\UserPersonalInfo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<UserCredentials>
+ * @extends ServiceEntityRepository<UserPersonalInfo>
  *
- * @method UserCredentials|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserCredentials|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserCredentials[]    findAll()
- * @method UserCredentials[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method UserPersonalInfo|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserPersonalInfo|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserPersonalInfo[]    findAll()
+ * @method UserPersonalInfo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserCredentialsRepository extends ServiceEntityRepository
+class UserPersonalInfoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, UserCredentials::class);
+        parent::__construct($registry, UserPersonalInfo::class);
     }
 
-    public function save(UserCredentials $entity, bool $flush = false): void
+    public function save(UserPersonalInfo $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class UserCredentialsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(UserCredentials $entity, bool $flush = false): void
+    public function remove(UserPersonalInfo $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class UserCredentialsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return UserCredentials[] Returns an array of UserCredentials objects
+//     * @return UserPersonalInfo[] Returns an array of UserPersonalInfo objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class UserCredentialsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?UserCredentials
+//    public function findOneBySomeField($value): ?UserPersonalInfo
 //    {
 //        return $this->createQueryBuilder('u')
 //            ->andWhere('u.exampleField = :val')
