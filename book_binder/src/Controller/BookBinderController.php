@@ -22,6 +22,10 @@ class BookBinderController extends AbstractController
     {
         $credential = $request->request->get('credential');
 
+        if (!isset($credential)) {
+            $credential = '';
+        }
+
         return $this->render('book_binder/index.html.twig', [
             'controller_name' => 'BookBinderController',
             'credential' => $credential,
