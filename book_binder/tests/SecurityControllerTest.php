@@ -21,11 +21,11 @@ class SecurityControllerTest extends PantherTestCase
 
         // Check if login form works
         $form = $crawler->selectButton('Sign in')->form();
-        $form['email'] = 'admin';
-        $form['password'] = 'admin';
+        $form['email'] = 'shengzhe.lyu@gmail.com';
+        $form['password'] = 'secret';
         $client->submit($form);
 
-//        $this->assertStringContainsString('/admin', $client->getCurrentURL());
+        $this->assertStringContainsString('/admin', $client->getCurrentURL());
 //
 //        // Check if logout button is present
 //        $this->assertStringContainsString('Logout', $crawler->filter('a')->text());

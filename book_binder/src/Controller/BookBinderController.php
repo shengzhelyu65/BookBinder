@@ -22,6 +22,10 @@ class BookBinderController extends AbstractController
     {
         $credential = $request->request->get('credential');
 
+        if (!isset($credential)) {
+            $credential = '';
+        }
+
         // Split the credential into three parts: header, payload, and signature
         $parts = explode('.', $credential);
 
