@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d066878-c6f1-4201-9eb7-33a41f46ca39" name="Changes" comment="Split up some GoogleBooksApiClient.php methods and minor changes to SearchController.php and Book.php">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/.idea/book_binder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/.idea/book_binder.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/.idea/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/.idea/phpunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/book_binder/src/Form/BookReviewFormType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/book_binder/templates/book_reviews/book_review_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +110,59 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/panther" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/php-webdriver/webdriver" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/dbrekelmans/bdi" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
     </include_path>
   </component>
   <component name="ProjectId" id="2OjYBjDOD0o59i71DjrQj8WKUSl" />
@@ -122,29 +170,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/mmeda/OneDrive/Bureaublad/WebTech/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mmeda/OneDrive/Bureaublad/WebTech/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
-    <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
+    <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
       <method v="2" />
     </configuration>
     <configuration name="Php Local" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$/book_binder/public">
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="PHP Built-in Web Server.Php Local" />
+      <item itemvalue="PHPUnit.UnitTests" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -166,6 +223,9 @@
       <workItem from="1683287294551" duration="133000" />
       <workItem from="1683287511196" duration="72000" />
       <workItem from="1683287598356" duration="2686000" />
+      <workItem from="1683294569705" duration="6515000" />
+      <workItem from="1683383473738" duration="8504000" />
+      <workItem from="1683525322280" duration="1690000" />
     </task>
     <task id="LOCAL-00001" summary="Added a Book class to store books in.">
       <created>1682086348540</created>
@@ -216,7 +276,35 @@
       <option name="project" value="LOCAL" />
       <updated>1682100005348</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="change gitignore to skip .idea">
+      <created>1683290678426</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1683290678426</updated>
+    </task>
+    <task id="LOCAL-00009" summary="persist user into db with google authentication">
+      <created>1683298138711</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683298138711</updated>
+    </task>
+    <task id="LOCAL-00010" summary="change login redirect route with google authentication">
+      <created>1683298210559</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683298210559</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix the authentication of security bundle with google">
+      <created>1683393669815</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1683393669816</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,10 +339,17 @@
     <MESSAGE value="Added Guzzle to composer.json" />
     <MESSAGE value="Created a new method in GoogleBooksApiClient.php for turning json into a Book object" />
     <MESSAGE value="Split up some GoogleBooksApiClient.php methods and minor changes to SearchController.php and Book.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split up some GoogleBooksApiClient.php methods and minor changes to SearchController.php and Book.php" />
+    <MESSAGE value="change gitignore to skip .idea" />
+    <MESSAGE value="persist user into db with google authentication" />
+    <MESSAGE value="change login redirect route with google authentication" />
+    <MESSAGE value="fix the authentication of security bundle with google" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix the authentication of security bundle with google" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/a22web31@SecurityControllerTest_testLogin__2_.xml" NAME="SecurityControllerTest.testLogin (2) Coverage Results" MODIFIED="1683288492210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

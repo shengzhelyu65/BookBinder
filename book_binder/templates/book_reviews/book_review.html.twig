@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book Reviews{% endblock %}
+
+{% block body %}
+    <h1>Add Book Review</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.rating) }}
+    {{ form_row(form.tags) }}
+    {{ form_row(form.review) }}
+
+    <button type="submit" class="btn btn-primary">Add Review</button>
+
+    {{ form_end(form) }}
+{% endblock %}
