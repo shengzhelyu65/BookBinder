@@ -24,7 +24,7 @@ class BookReviewFormType extends AbstractType
                     '4' => 4,
                     '5' => 5,
                 ],
-                'required' => false,
+                'required' => true,
                 'label' => 'Rating',
                 'constraints' => [
                     new Range([
