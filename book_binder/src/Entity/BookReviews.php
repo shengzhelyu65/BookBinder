@@ -18,7 +18,7 @@ class BookReviews
     #[ORM\Column]
     private ?int $book_ID = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private ?User $user_ID = null;
 
