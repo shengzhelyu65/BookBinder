@@ -35,6 +35,8 @@ class RegistrationController extends AbstractController
         $user = new User();
         $userPersonalInfo = new UserPersonalInfo();
 
+        $includeProfileForm = false;
+
         // pass the UserPersonalInfo and user objects to the form
         $form = $this->createForm(RegistrationFormType::class, [$user, $userPersonalInfo]);
         $form->handleRequest($request);
@@ -98,11 +100,19 @@ class RegistrationController extends AbstractController
             // store the token in the token storage
             $tokenStorage->setToken($token);
 
-            return $this->redirectToRoute('index');
+            $includeProfileForm = true;
+
+            return $this->render('registration/register.html.twig', [
+                'controller_name' => 'RegistrationController',
+                'includeProfileForm' => $includeProfileForm,
+                'userEmail' => $email,
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [
+            'controller_name' => 'RegistrationController',
             'registrationForm' => $form->createView(),
+            'includeProfileForm' => $includeProfileForm,
         ]);
     }
 
