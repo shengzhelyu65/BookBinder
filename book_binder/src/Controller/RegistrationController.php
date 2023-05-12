@@ -38,8 +38,6 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, [$user, $userPersonalInfo]);
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -49,7 +47,37 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // check if email is already registered
+            $email = $form->get('email')->getData();
+            $email = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+            if ($email) {
+                $this->addFlash('error', 'Email already registered');
+                return $this->redirectToRoute('app_register');
+            } else {
+                $user->setEmail($form->get('email')->getData());
+            }
+
             $entityManager->persist($user);
+
+            //handle user personal info if any
+            $userPersonalInfo->setUser($user);
+            // try to add name, if not set, set it to null
+            try {
+                $userPersonalInfo->setName($form->get('name')->getData());
+            } catch (\Throwable $th) {
+                $userPersonalInfo->setName(null);
+            }
+            // try to add surname, if not set, set it to null
+            try {
+                $userPersonalInfo->setSurname($form->get('surname')->getData());
+            } catch (\Throwable $th) {
+                $userPersonalInfo->setSurname(null);
+            }
+            // add nickname
+            $userPersonalInfo->setNickname($form->get('nickname')->getData());
+
+            $entityManager->persist($userPersonalInfo);
+
             $entityManager->flush();
 
             // generate a signed url and email it to the user

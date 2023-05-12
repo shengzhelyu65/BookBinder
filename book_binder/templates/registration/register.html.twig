@@ -33,6 +33,9 @@
                                 {% for flash_error in app.flashes('verify_email_error') %}
                                     <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
                                 {% endfor %}
+                                {% for flash_message in app.session.flashbag.get('error') %}
+                                    <div class="alert alert-danger">{{ flash_message }}</div>
+                                {% endfor %}
                                 {{ form_start(registrationForm, {'attr': {'class': 'form-signin', 'needs-validation':false}}) }}
                                     <!-- 2 column grid layout with text inputs for the first and last names -->
                                     <div class="row mb-0">
