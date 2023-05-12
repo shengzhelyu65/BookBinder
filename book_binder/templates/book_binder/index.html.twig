@@ -1,17 +1,5 @@
-{% extends '/base_login_registration.html.twig' %}
-
-{% block javascripts %}
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-{% endblock %}
+{% extends '/base_website.html.twig' %}
 
 {% block body %}
-<main class="d-flex flex-nowrap">
-    {# {% include './book_binder/sidebar_example.html.twig' %} #}
-    {% if includeProfileForm %}
-        {% include './book_binder/profile_info_form.html.twig' %}
-    {% else %}
-        <p>The user has already set their nickname and their three fav categories</p>
-    {% endif %}
-</main>
-
+    <h1>Hello!</h1>
 {% endblock %}
