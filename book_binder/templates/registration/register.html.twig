@@ -25,7 +25,7 @@
                 </div>
 
                 {% if includeProfileForm %}
-                    <p>The user has already set their nickname and their three fav categories</p>
+                    {% include './book_binder/profile_info_form.html.twig' %}
                 {% else %}
                     {% include './registration/register_form.html.twig' %}
                 {% endif %}
