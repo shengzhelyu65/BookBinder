@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserPersonalInfo;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use App\Repository\UserPersonalInfoRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,8 +32,13 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $userPersonalInfo = new UserPersonalInfo();
+
+        // pass the UserPersonalInfo and user objects to the form
+        $form = $this->createForm(RegistrationFormType::class, [$user, $userPersonalInfo]);
         $form->handleRequest($request);
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -46,7 +53,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('arthurtquintao@gmail.com', 'BookBinder Bot'))
                     ->to($user->getEmail())

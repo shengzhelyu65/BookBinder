@@ -35,14 +35,14 @@
                                 <div class="row mb-0">
                                     <div class="col-md-5 mb-3">
                                     <div class="form-outline">
-                                        <label class="form-label" for="form3Example1">Name</label>
-                                        <input type="text" id="form3Example1" placeholder="Optional" class="form-control" />
+                                        <label class="form-label" for="inputName">Name</label>
+                                        <input type="text" id="inputName" placeholder="Optional" class="form-control" />
                                     </div>
                                     </div>
                                     <div class="col-md-7 mb-3">
                                     <div class="form-outline">
-                                        <label class="form-label" for="form3Example2">Surname</label>
-                                        <input type="text" id="form3Example2" placeholder="Optional" class="form-control" />
+                                        <label class="form-label" for="inputSurname">Surname</label>
+                                        <input type="text" id="inputSurname" placeholder="Optional" class="form-control" />
                                     </div>
                                     </div>
                                 </div>
@@ -51,22 +51,22 @@
                                 <div class="row mb-0">
                                     <div class="col-md-4 mb-3">
                                     <div class="form-outline">
-                                        <label class="form-label">Nickname</label>
-                                        <input type="text" class="form-control" placeholder="Required">
+                                        <label class="form-label" for="inputNickname">Nickname</label>
+                                        <input type="text" id=for="inputNickname" placeholder="Required" class="form-control">
                                     </div>
                                     </div>
                                     <div class="col-md-8 mb-3">
                                     <div class="form-outline">
-                                        <label class="form-label" for="form3Example3">Email address</label>
-                                        <input type="email" id="form3Example3" placeholder="Required" class="form-control" />
+                                        <label class="form-label" for="inputEmail">Email address</label>
+                                        <input type="email" id="inputEmail" placeholder="Required" class="form-control" />
                                     </div>
                                     </div>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="form3Example4">Password</label>
-                                    <input type="password" id="form3Example4" placeholder="Required" class="form-control" />
+                                    <label class="form-label" for="inputPassword">Password</label>
+                                    <input type="password" id="inputPassword" placeholder="Required" class="form-control" />
                                 </div>
 
                                 <div class="">
@@ -120,6 +120,9 @@
     <h1>Register</h1>
 
     {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.name) }}
+        {{ form_row(registrationForm.surname) }}
+        {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
