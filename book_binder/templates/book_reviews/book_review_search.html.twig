@@ -3,18 +3,27 @@
 {% block title %}All book Reviews{% endblock %}
 
 {% block body %}
-    <h1>Search Results for "{{ query }}"</h1>
+    <h1>Search for Book Reviews</h1>
 
-    {% if bookReviews|length == 0 %}
-        <p>No reviews found.</p>
+    <form method="GET" action="{{ path('book_reviews_search') }}">
+        <label for="q">Search:</label>
+        <input type="text" id="q" name="q" value="{{ query }}" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    {% if reviewsData is not empty %}
+        <ul>
+            {% for reviewData in reviewsData %}
+                <li>
+                    <h3>{{ reviewData.review }}</h3>
+                    <p>Rating: {{ reviewData.rating }}</p>
+                    <p>Tags: {{ reviewData.tags }}</p>
+                </li>
+            {% endfor %}
+        </ul>
     {% else %}
-        {% for reviewData in reviewsData %}
-            <div>
-                <h2>{{ reviewData.review_ID }}</h2>
-                <p>{{ reviewData.review }}</p>
-                <p>Rating: {{ reviewData.rating }}</p>
-                <p>Tags: {{ reviewData.tags }}</p>
-            </div>
-        {% endfor %}
+        <p>No reviews found.</p>
     {% endif %}
 {% endblock %}
