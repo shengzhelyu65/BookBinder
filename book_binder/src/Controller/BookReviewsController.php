@@ -72,8 +72,8 @@ class BookReviewsController extends AbstractController
         }
 
         return $this->render('book_reviews/book_review_search.html.twig', [
-            'bookReviews' => $bookReviews,
-            'query' => $query,
+            'reviewsData' => $reviewsData,
+            'query' => $query
         ]);
     }
 }
