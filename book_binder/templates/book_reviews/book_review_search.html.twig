@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All book Reviews{% endblock %}
+
+{% block body %}
+    <h1>Search Book Reviews</h1>
+
+    <form id="search-form">
+        <label for="search-query">Search:</label>
+        <input type="text" id="search-query" name="q" placeholder="Enter search terms...">
+        <input type="submit" value="Search">
+    </form>
+
+    <div id="search-results"></div>
+
+    <script>
+        $(function() {
+            var searchForm = $('#search-form');
+            var searchQuery = $('#search-query');
+            var searchResults = $('#search-results');
+
+            searchForm.submit(function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                var query = searchQuery.val();
+
+                $.ajax({
+                    url: '/book/reviews/search',
+                    method: 'GET',
+                    data: { q: query },
+                    dataType: 'json',
+                    success: function(reviews) {
+                        // Clear previous search results
+                        searchResults.empty();
+
+                        // Display search results
+                        for (var i = 0; i < reviews.length; i++) {
+                            var review = reviews[i];
+                            var rating = review.rating;
+                            var reviewText = review.review;
+                            var tags = review.tags;
+
+                            var resultLine = '<div>';
+                            resultLine += '<span>Rating: ' + rating + '</span>';
+                            resultLine += '<span>Review: ' + reviewText + '</span>';
+                            resultLine += '<span>Tags: ' + tags + '</span>';
+                            resultLine += '</div>';
+
+                            searchResults.append(resultLine);
+                        }
+                    }
+                });
+            });
+
+            // Update search results as the user types
+            searchQuery.keyup(function() {
+                searchForm.submit();
+            });
+        });
+    </script>
+{% endblock %}
