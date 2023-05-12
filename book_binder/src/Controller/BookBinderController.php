@@ -46,4 +46,12 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
         ]);
     }
+    #[Route('/searchbook', name: 'book_search')]
+    public function search(): Response
+    {
+        return $this->render('book_binder/search.html.twig', [
+            'controller_name' => 'BookBinderController',
+        ]);
+    }
 }
+
