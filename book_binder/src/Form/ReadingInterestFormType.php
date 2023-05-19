@@ -1,76 +1,51 @@
 <?php
 
-// src/Form/Type/TaskType.php
-namespace App\Form\Type;
+namespace App\Form;
 
+use App\Enum\LanguageEnum;
+use App\Enum\GenreEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReadingInterestFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('genre', ChoiceType::class, [
-                'label' => 'Genre',
-                'choices' => [
-                    'Anthologies' => 'anthologies',
-                    'Art' => 'art',
-                    'Audiobooks' => 'audiobooks',
-                    'Biographies' => 'biographies',
-                    'Body' => 'body',
-                    'Business' => 'business',
-                    'Children' => 'children',
-                    'Comics' => 'comics',
-                    'Contemporary' => 'contemporary',
-                    'Cooking' => 'cooking',
-                    'Crime' => 'crime',
-                    'Engineering' => 'engineering',
-                    'Entertainment' => 'entertainment',
-                    'Fantasy' => 'fantasy',
-                    'Fiction' => 'fiction',
-                    'Food' => 'food',
-                    'General' => 'general',
-                    'Health' => 'health',
-                    'History' => 'history',
-                    'Horror' => 'horror',
-                    'Investing' => 'investing',
-                    'Literary' => 'literary',
-                    'Literature' => 'literature',
-                    'Manga' => 'manga',
-                    'Media-help' => 'media-help',
-                    'Memoirs' => 'memoirs',
-                    'Mind' => 'mind',
-                    'Mystery' => 'mystery',
-                    'Nonfiction' => 'nonfiction',
-                    'Religion' => 'religion',
-                    'Romance' => 'romance',
-                    'Science' => 'science',
-                    'Self' => 'self',
-                    'Spirituality' => 'spirituality',
-                    'Sports' => 'sports',
-                    'Superheroes' => 'superheroes',
-                    'Technology' => 'technology',
-                    'Thrillers' => 'thrillers',
-                    'Travel' => 'travel',
-                    'Women' => 'women',
-                    'Young' => 'young',
-                ],
+            ->add('languages', ChoiceType::class, [
+                'label' => 'Languages',
+                'choices' => array_flip(LanguageEnum::getChoices()),
+                'multiple' => true,
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'multiple-select-field',
+                    'data-placeholder' => 'Select languages',
+                ]
             ])
-            ->add('language', ChoiceType::class, [
-                'label' => 'Language',
-                'choices' => [
-                    'English' => 'en',
-                    'French' => 'fr',
-                    'German' => 'de',
-                ],
+            ->add('genres', ChoiceType::class, [
+                'label' => 'Genres',
+                'choices' => array_flip(GenreEnum::getChoices()),
+                'multiple' => true,
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'multiple-select-field',
+                    'data-placeholder' => 'Search and Select genres',
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Submit',
             ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            // Configure your form options here
+            'readingInterest_data' => ReadingInterest::class,
+        ]);
     }
 }
