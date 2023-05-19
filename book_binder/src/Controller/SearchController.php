@@ -14,32 +14,40 @@ use App\Api\GoogleBooksApiClient;
  */
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'search')]
+    #[Route('/bookSearch', name: 'bookSearch')]
     public function index(): Response
     {
         //
         $ApiClient = new GoogleBooksApiClient();
-        $books = $ApiClient->getPopularBooks("fantasy");
+        $books = $ApiClient->getPopularBooks("fantasy", 3);
 
-        if ($books) {
-            echo "<br>";
-            echo "<img src=".$books[0]->imageUrl.">";
-            echo "<br>";
-            echo $books[0]->description;
-            echo "<br>";
-            echo $books[0]->language;
-            echo "<br>";
-            echo $books[0]->title;
-            echo "<br>";
-            echo $books[0]->author;
-            echo "<br>";
-            echo $books[0]->ratingsCount;
-        } else {
-            echo "No books found";
-        }
-
-        return $this->render('book_binder/index.html.twig', [
+        return $this->render('book_binder/bookSearch.html.twig', [
             'controller_name' => 'BookBinderController',
+            'books' => $books,
         ]);
+    }
+
+
+    /**
+     * @throws \Google_Exception
+     */
+    #[Route('/bookPage/{id}', name: 'bookPage')]
+    public function clickBook($id): Response
+    {
+        $ApiClient = new GoogleBooksApiClient();
+        $book = $ApiClient->getBookById($id);
+
+        $thumbnailUrl = $book->getVolumeInfo()->getImageLinks()->getThumbnail();
+
+        if ($book) {
+            return $this->render('book_binder/bookPage.html.twig', [
+                'book' => $book,
+                'thumbnailUrl' => $thumbnailUrl
+            ]);
+        } else {
+            return $this->render('book_binder/bookPage.html.twig', [
+                'error' => 'No books found',
+            ]);
+        }
     }
 }

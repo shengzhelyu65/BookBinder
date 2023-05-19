@@ -77,7 +77,20 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/book_binder/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
 </project>

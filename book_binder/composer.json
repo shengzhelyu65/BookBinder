@@ -16,7 +16,8 @@
         "symfony/framework-bundle": "6.3.*",
         "symfony/runtime": "6.3.*",
         "symfony/yaml": "6.3.*",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "google/apiclient": "*"
     },
     "require-dev": {
         "symfony/debug-bundle": "6.3.*"
