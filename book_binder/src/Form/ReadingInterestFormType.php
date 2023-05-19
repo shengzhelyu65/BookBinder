@@ -23,7 +23,7 @@ class ReadingInterestFormType extends AbstractType
                 'expanded' => false,
                 'attr' => [
                     'class' => 'multiple-select-field',
-                    'data-placeholder' => 'Select languages',
+                    'data-placeholder' => 'Select book languages',
                 ]
             ])
             ->add('genres', ChoiceType::class, [
@@ -33,7 +33,7 @@ class ReadingInterestFormType extends AbstractType
                 'expanded' => false,
                 'attr' => [
                     'class' => 'multiple-select-field',
-                    'data-placeholder' => 'Search and Select genres',
+                    'data-placeholder' => 'Search and select book genres',
                 ]
             ])
             ->add('submit', SubmitType::class, [
