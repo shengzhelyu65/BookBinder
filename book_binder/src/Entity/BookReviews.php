@@ -32,6 +32,9 @@ class BookReviews
     #[ORM\Column(type: Types::TEXT)]
     private ?string $review = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
+
     public function getReviewID(): ?int
     {
         return $this->review_ID;
@@ -93,6 +96,18 @@ class BookReviews
     public function setReview(string $review): self
     {
         $this->review = $review;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

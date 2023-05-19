@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\Security;
 
 class BookBinderController extends AbstractController
 {
-
     #[Route('/', name: 'index')]
     public function index(Security $security, EntityManagerInterface $entityManager): Response
     {

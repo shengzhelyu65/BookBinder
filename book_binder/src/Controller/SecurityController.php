@@ -80,6 +80,6 @@ class SecurityController extends AbstractController
         // store the token in the token storage
         $tokenStorage->setToken($token);
 
-        return new RedirectResponse($this->generateUrl('app_home'));
+        return new RedirectResponse($this->generateUrl('index'));
     }
 }
