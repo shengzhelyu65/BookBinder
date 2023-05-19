@@ -11,7 +11,6 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.9",
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "easycorp/easyadmin-bundle": "^4.6",
@@ -39,6 +38,8 @@
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fakerphp/faker": "^1.22",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "*",
         "symfony/css-selector": "6.3.*",
