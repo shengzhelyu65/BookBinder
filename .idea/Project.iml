@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/book_binder/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/book_binder/tests" isTestSource="true" packagePrefix="App\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/book_binder/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/doctrine/collections" />
@@ -80,15 +81,16 @@
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/symfony/var-exporter" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/twig/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/google/apiclient" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/google/apiclient-services" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpseclib/phpseclib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-  <component name="TemplatesService">
-    <option name="TEMPLATE_FOLDERS">
-      <list>
-        <option value="$MODULE_DIR$/book_binder/templates" />
-      </list>
-    </option>
   </component>
 </module>

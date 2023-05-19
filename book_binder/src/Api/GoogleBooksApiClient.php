@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Api;
+
 use App\Entity\Book;
+use Google\Exception;
+use Google_Exception;
+use Google_Service_Books;
+use Google_Service_Books_Volume;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Google\Client as Google_Client;
+use GuzzleHttp\ClientInterface;
 
 /**
  * Class used for interacting with the google books API
@@ -97,6 +104,46 @@ class GoogleBooksApiClient
         ];
 
         return $this->queryBooks($queryParams);
+    }
+
+    /**
+     * Retrieves a book from the Google Books API by its ID.
+     *
+     * @param string $bookId The ID of the book to retrieve.
+     * @param Google_Client $client An instance of the Google_Client class.
+     * @return Google_Service_Books_Volume|null The book object, or null if not found.
+     * @throws Google_Exception If an error occurs while making the API request.
+     * @throws Exception
+     */
+    function getBookById(string $bookId): ?Google_Service_Books_Volume
+    {
+        $client = new Google_Client();
+        $client->setApplicationName('My App');
+        $client->setDeveloperKey($this->API_KEY);
+        $client->setScopes(['https://www.googleapis.com/auth/books']);
+        #$client->setAuthConfig('path/to/client_secret.json');
+        $client->setHttpClient(new Client([
+            'verify' => false,
+        ]));
+
+        // Create a new instance of the Google_Service_Books class.
+        $service = new Google_Service_Books($client);
+
+        try {
+            // Make the API request to retrieve the book by ID.
+            $book = $service->volumes->get($bookId);
+
+            // Return the book object if found.
+            return $book;
+        } catch (Google_Exception $e) {
+            // If the book is not found, return null.
+            if ($e->getCode() === 404) {
+                return null;
+            }
+
+            // Otherwise, rethrow the exception.
+            throw $e;
+        }
     }
 
 
