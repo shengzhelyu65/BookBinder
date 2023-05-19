@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_website.html.twig' %}
 
 {% block body %}
-    {% for book in books %}
+    {% for book in results.fantasy %}
         <div>
-            <a href="{{ path('bookPage', {'id': book.id}) }}">
-                <img src="{{ book.imageUrl }}" alt="Book cover">
-            </a>
+            <h2>{{ book.volumeInfo.title }}</h2>
+            <p>by {{ book.volumeInfo.authors|join(', ') }}</p>
+            <p>{{ book.volumeInfo.description }}</p>
         </div>
     {% endfor %}
 {% endblock %}
