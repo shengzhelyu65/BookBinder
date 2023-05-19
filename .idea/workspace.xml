@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Split up some GoogleBooksApiClient.php methods and minor changes to SearchController.php and Book.php">
-      <change afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Start of search page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +19,12 @@
     <execution>
       <executable path="composer" />
     </execution>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/SearchAPI" />
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="dev" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -392,7 +398,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683393669816</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Start of search page">
+      <created>1683898108217</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1683898108217</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,7 +444,8 @@
     <MESSAGE value="persist user into db with google authentication" />
     <MESSAGE value="change login redirect route with google authentication" />
     <MESSAGE value="fix the authentication of security bundle with google" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix the authentication of security bundle with google" />
+    <MESSAGE value="Start of search page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start of search page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

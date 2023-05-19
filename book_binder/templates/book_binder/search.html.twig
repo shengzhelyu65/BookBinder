@@ -1,8 +1,48 @@
 {% extends 'base_website.html.twig' %}
 
-{% block title %}Book Reviews{% endblock %}
+{% block title %}Search book{% endblock %}
 
 {% block body %}
-    <h1>search</h1>
+    <form action="{{ path('book_search') }}" method="GET">
+        <label for="search-text">Search for books:</label>
+        <input type="text" id="search-text" name="q" required>
+        <button type="submit">Search</button>
+    </form>
+    {% if searchResults is not empty %}
+        {% for book in searchResults %}
+            <img src="{{ book['imageLink'] }}" alt="{{ book['title'] }}"><br>
+            <p>Title: {{ book['title'] }}</p>
+            <p>Author: {{ book['author'] }}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No results found</p>
+    {% endif %}
+{% endblock %}
 
+{% block javascripts %}
+    <script>
+        // Example of using the GoogleBooksApiClient from the Twig template
+        const client = new GoogleBooksApiClient();
+        client.searchBooks('{{ app.request.query.get('q') }}')
+            .then((books) => {
+                console.log(books);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        img {
+            height: 200px;
+            width: 150px;
+        }
+        hr {
+            margin: 10px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 {% endblock %}

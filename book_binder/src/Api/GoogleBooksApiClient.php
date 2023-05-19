@@ -170,5 +170,20 @@ class GoogleBooksApiClient
             $json['volumeInfo']['infoLink'] ?? ""
         );
     }
+    public function bookSearch(Request $request)
+    {
+        // Get the search query from the request
+        $query = $request->query->get('q');
+
+        // Use your API or database to get search results
+        // For example, using the GoogleBooksApiClient
+        $client = new GoogleBooksApiClient();
+        $searchResults = $client->searchBooks($query);
+
+        // Pass the search results to the Twig template
+        return $this->render('book_search.html.twig', [
+            'searchResults' => $searchResults,
+        ]);
+    }
 
 }
