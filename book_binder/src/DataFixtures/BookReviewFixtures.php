@@ -3,21 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\BookReviews;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\Exception\NotSupported;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class BookReviewFixtures extends Fixture
+class BookReviewFixtures extends Fixture implements DependentFixtureInterface
 {
-    /**
-     * @throws OptimisticLockException
-     * @throws NotSupported
-     * @throws ORMException
-     */
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
@@ -26,17 +18,22 @@ class BookReviewFixtures extends Fixture
             $bookReview = new BookReviews();
             $bookReview->setBookID($faker->numberBetween(1, 1000));
             $bookReview->setRating($faker->numberBetween(1, 5));
-            $bookReview->setTags($faker->words(3, true));
+            $bookReview->setTags($faker->words(1, true));
             $bookReview->setReview('#' . $bookReview->getTags() . '# ' . $faker->paragraphs(3, true));
             $bookReview->setCreatedAt($faker->dateTimeBetween('-1 days', 'now'));
-
-            // Get a random user
-            $user = $manager->getRepository(User::class)->findOneBy([]);
+            $user = $this->getReference(UserFixtures::USER_REFERENCE);
             $bookReview->setUserID($user);
 
             $manager->persist($bookReview);
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }
