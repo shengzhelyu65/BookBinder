@@ -15,3 +15,7 @@ require('bootstrap');
 
 require('bootstrap-icons/font/bootstrap-icons.css');
 
+import '.controllers/searchController';
+
+import $ from 'jquery';
+import 'select2';

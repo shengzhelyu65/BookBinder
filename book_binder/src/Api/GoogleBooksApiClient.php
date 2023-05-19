@@ -29,12 +29,12 @@ class GoogleBooksApiClient
      * Retrieves an array of books from the Google Books API that match a specified title.
      *
      * @param string $title The title to search for.
-     * @param int $maxResults The maximum number of results to return. Defaults to 10.
+     * @param int $maxResults The maximum number of results to return. Defaults to 5.
      * @param int $startIndex The index of the first result to return (used for pagination). Defaults to 0.
      *
      * @return array An array of book objects that match the specified title.
      */
-    function searchBooksByTitle(string $title, int $maxResults = 10, int $startIndex = 0): array
+    function searchBooksByTitle(string $title, int $maxResults = 5, int $startIndex = 0): array
     {
         // Get Google Books API service
         $service = $this->getBooksService();

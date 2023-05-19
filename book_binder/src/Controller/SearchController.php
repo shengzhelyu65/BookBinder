@@ -14,25 +14,25 @@ use App\Api\GoogleBooksApiClient;
  */
 class SearchController extends AbstractController
 {
-    #[Route('/bookSearch', name: 'bookSearch')]
-    public function index(): Response
+    #[Route('/bookSearch/{query}', name: 'bookSearch')]
+    public function index($query): Response
     {
         $ApiClient = new GoogleBooksApiClient();
 
-        // Define an array of genres to search for.
-        $genres = ['fantasy', 'mystery', 'romance'];
+        $results = $ApiClient->searchBooksByTitle($query);
 
-        // Create an empty array to hold the results.
-        $results = [];
-
-        // Loop through each genre and retrieve the popular books.
-        foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre, 10);
-            $results[$genre] = $books;
+        foreach ($results as $book) {
+            echo "<img src=\"" . $book->getVolumeInfo()->getImageLinks()->getThumbnail() . "\">";
+            echo "<br>";
+            echo $book->getVolumeInfo()->getTitle();
+            echo "<br>";
+            echo $book->getVolumeInfo()->getDescription();
+            echo "<br>";
+            echo $book->getVolumeInfo()->getAverageRating();
         }
 
         // Pass the results array to the Twig template.
-        return $this->render('book_binder/index.html.twig', [
+        return $this->render('base.html.twig', [
             'controller_name' => 'BookBinderController',
             'results' => $results,
         ]);

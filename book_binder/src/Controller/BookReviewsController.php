@@ -26,6 +26,7 @@ class BookReviewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bookReview->setUserID($user);
             $bookReview->setBookID($bookId);
+            $bookReview->setCreatedAt(new \DateTime());
 
             $entityManager->persist($bookReview);
             $entityManager->flush();
@@ -39,9 +40,9 @@ class BookReviewsController extends AbstractController
     }
 
     #[Route('/book/reviews/list', name: 'book_reviews_list')]
-    public function showAllReviews(EntityManagerInterface $entityManager): Response
+    public function showLatestReviews(EntityManagerInterface $entityManager): Response
     {
-        $bookReviews = $entityManager->getRepository(BookReviews::class)->findAll();
+        $bookReviews = $entityManager->getRepository(BookReviews::class)->findBy([], ['created_at' => 'DESC'], 10);
 
         return $this->render('book_reviews/book_review_list.html.twig', [
             'bookReviews' => $bookReviews,
