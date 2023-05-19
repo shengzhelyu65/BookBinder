@@ -23,6 +23,9 @@
         "symfony/framework-bundle": "6.3.*",
         "symfony/mailer": "6.3.*",
         "symfony/runtime": "6.3.*",
+        "symfony/yaml": "6.3.*",
+        "guzzlehttp/guzzle": "*",
+        "google/apiclient": "*"
         "symfony/security-bundle": "6.3.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/webpack-encore-bundle": "^1.16",

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for book in books %}
+        <div>
+            <a href="{{ path('bookPage', {'id': book.id}) }}">
+                <img src="{{ book.imageUrl }}" alt="Book cover">
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
