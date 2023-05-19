@@ -1,42 +1,41 @@
+
 <div class="col-lg-5 mb-5 mb-lg-0">
     <div class="card">
-        <!-- Title START -->
-        <div class="card-header border-0 pb-2">
-          <h1 class="h5 card-title">Reading Interests</h1>
-          <p class="mb-0">Before we start, tell us about your reading interests.</p>
-        </div>
         <div class="card-body px-5 pb-5 pt-4 px-md-5">
+            <h2 class="fw-bold mb-4 pb-2">Book Preferences</h2>
             {% for flash_message in app.session.flashbag.get('error') %}
                 <div class="alert alert-danger">{{ flash_message }}</div>
             {% endfor %}
-            {{ form_start(form, {'attr': {'class': 'form-signin', 'needs-validation': false}}) }}
-
-            <!-- Genre and language inputs -->
-            <div class="row mb-0">
-                <div class="col-md-6 mb-3">
-                    <div class="form-outline">
-                        {{ form_label(form.genre, 'Genre') }}
-                        {{ form_widget(form.genre, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputGenre'} }) }}
-                        {{ form_errors(form.genre) }}
+            {{ form_start(readingInterestForm, {'attr': {'class': 'form-group', 'needs-validation': false}}) }}
+                <!-- Language inputs -->
+                <div class="row mb-0">
+                    <div class="col-md-12 mb-3">
+                        {{ form_label(readingInterestForm.languages, 'Languages') }}
+                        {{ form_widget(readingInterestForm.languages) }}
+                        {{ form_errors(readingInterestForm.languages) }}
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <div class="form-outline">
-                        {{ form_label(form.language, 'Language') }}
-                        {{ form_widget(form.language, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputLanguage'}}) }}
-                        {{ form_errors(form.language) }}
+                <!-- Genre inputs -->
+                <div class="row mb-0">
+                    <div class="col-md-12 mb-3">
+                        {{ form_label(readingInterestForm.genres, 'Genres') }}
+                        {{ form_widget(readingInterestForm.genres) }}
+                        {{ form_errors(readingInterestForm.genres) }}
                     </div>
                 </div>
-            </div>
-
-            <div class="">
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary w-100 mb-4">
-                    Sign up
-                </button>
-            </div>
-
-            {{ form_end(form) }}
+            {{ form_end(readingInterestForm) }}
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $( '.multiple-select-field' ).select2( {
+            theme: "bootstrap-5",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            placeholder: $( this ).data( 'placeholder' ),
+            closeOnSelect: false,
+            maximumSelectionLength: 5,
+        } );
+    });
+</script>
