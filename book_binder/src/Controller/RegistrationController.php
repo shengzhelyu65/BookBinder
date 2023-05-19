@@ -138,14 +138,15 @@ class RegistrationController extends AbstractController
 
             // Get the user from the token storage
             $user = $this->getUser();
-            // Set the 
+            // Set the user reading interest object to the user
+            $userReadingInterest->setUser($user);
 
             // Persist the user reading interest to the database
             $entityManager->persist($userReadingInterest);
             $entityManager->flush();
 
             // Redirect to the next step or perform any other desired action
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('registration/register.html.twig', [
