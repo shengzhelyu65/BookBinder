@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserPersonalInfo;
+use App\Entity\UserReadingInterest;
+
 use App\Form\RegistrationFormType;
+use App\Form\ReadingInterestFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 
 class RegistrationController extends AbstractController
 {
@@ -35,7 +39,7 @@ class RegistrationController extends AbstractController
         $user = new User();
         $userPersonalInfo = new UserPersonalInfo();
 
-        $includeProfileForm = false;
+        $includeReadingInterestForm = false;
 
         // pass the UserPersonalInfo and user objects to the form
         $form = $this->createForm(RegistrationFormType::class, [$user, $userPersonalInfo]);
@@ -100,19 +104,29 @@ class RegistrationController extends AbstractController
             // store the token in the token storage
             $tokenStorage->setToken($token);
 
-            $includeProfileForm = true;
-
-            return $this->render('registration/register.html.twig', [
-                'controller_name' => 'RegistrationController',
-                'includeProfileForm' => $includeProfileForm,
-                'userEmail' => $email,
-            ]);
+            // Redirect to the reading interest form
+            return $this->redirectToRoute('reading_interest');
         }
 
         return $this->render('registration/register.html.twig', [
             'controller_name' => 'RegistrationController',
             'registrationForm' => $form->createView(),
-            'includeProfileForm' => $includeProfileForm,
+            'includeReadingInterestForm' => $includeReadingInterestForm,
+        ]);
+    }
+
+    #[Route('/reading-interest', name: 'reading_interest')]
+    public function collectReadingInterestForm(Request $request, EntityManagerInterface $entityManager,): Response
+    {
+        $userReadingInterest = new UserReadingInterest();
+
+        $readingInterestForm = $this->createForm(ReadingInterestFormType::class, [$userReadingInterest]);
+        $readingInterestForm->handleRequest($request);
+
+        return $this->render('registration/register.html.twig', [
+            'controller_name' => 'RegistrationController',
+            'includeReadingInterestForm' => true,
+            'readingInterestForm' => $readingInterestForm->createView(),
         ]);
     }
 
