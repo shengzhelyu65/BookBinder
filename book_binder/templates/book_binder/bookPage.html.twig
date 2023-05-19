@@ -1,13 +1,86 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <div>
-        <img src="{{ thumbnailUrl }}" alt="Book cover">
-        <h1>{{ book.getVolumeInfo().getTitle() }}</h1>
-        <p>{{ book.getVolumeInfo().getDescription()|raw }}</p>
-        <p>Rating: {{ book.getVolumeInfo().getAverageRating() }}</p>
-        {% if book.getVolumeInfo().getRatingsCount() is defined %}
-            <p>Reviews: {{ book.getVolumeInfo().getRatingsCount() }}</p>
-        {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <img src="{{ thumbnailUrl }}" alt="Book cover" style="min-width: 200px">
+
+            </div>
+            <div class="col">
+                <h1>{{ book.getVolumeInfo().getTitle() }}</h1>
+                <p>
+                    {% set authors = book.getVolumeInfo().getAuthors() %}
+                    {% if authors|length == 1 %}
+                        Author:
+                    {% else %}
+                        Authors:
+                    {% endif %}
+                    {{ authors|join(', ') }}
+                </p>
+                <p>Rating: {{ book.getVolumeInfo().getAverageRating() }}</p>
+                {% if book.getVolumeInfo().getRatingsCount() is defined %}
+                    <p>Reviews: {{ book.getVolumeInfo().getRatingsCount() }}</p>
+                {% endif %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Add to
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText('Read', this)">Read</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText('Currently reading', this)">Currently reading</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText('To read', this)">To read</a></li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg">Find meeting</button>
+
+                <script>
+                    function changeButtonText(text, element) {
+                        var dropdownButton = document.getElementById('dropdownMenuButton1');
+                        dropdownButton.innerHTML = text;
+                    }
+                </script>
+            </div>
+        </div>
+    <div class="container">
+        <p>
+            <button class="btn btn-primary" type="button" onclick="showContent('content1')">
+                Content
+            </button>
+            <button class="btn btn-primary" type="button" onclick="showContent('content2')">
+                Details
+            </button>
+        </p>
+        <div class="card card-body">
+            <p id="content1" style="display: block;">{{ book.getVolumeInfo().getDescription() | raw }}</p>
+            <p id="content2" style="display: none;">{% set authors = book.getVolumeInfo().getAuthors() %}
+                {% if authors|length == 1 %}
+                    Author:
+                {% else %}
+                    Authors:
+                {% endif %}
+                {{ authors|join(', ') }}
+                <br>
+                Date of publish: {{ book.getVolumeInfo().getpublishedDate() }}
+                <br>
+                Pages: {{ book.getVolumeInfo().getpagecount() }}
+            </p>
+        </div>
     </div>
+
+
+    <script>
+        function showContent(contentId) {
+            var contentElements = document.querySelectorAll('.card.card-body p');
+            contentElements.forEach(function(content) {
+                if (content.id === contentId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+
 {% endblock %}
