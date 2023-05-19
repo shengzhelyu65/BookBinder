@@ -123,6 +123,27 @@ class RegistrationController extends AbstractController
         $readingInterestForm = $this->createForm(ReadingInterestFormType::class, [$userReadingInterest]);
         $readingInterestForm->handleRequest($request);
 
+        if ($readingInterestForm->isSubmitted() && $readingInterestForm->isValid()) {
+            // Retrieve the selected languages and genres from the form
+            $selectedLanguages = $readingInterestForm->get('languages')->getData();
+            $selectedGenres = $readingInterestForm->get('genres')->getData();
+
+            // Put the selected languages and genres in the user reading interest object
+            $userReadingInterest->setLanguages($selectedLanguages);
+            $userReadingInterest->setGenres($selectedGenres);
+
+            // Get the user from the token storage
+            $user = $this->getUser();
+            // Set the 
+
+            // Persist the user reading interest to the database
+            $entityManager->persist($userReadingInterest);
+            $entityManager->flush();
+
+            // Redirect to the next step or perform any other desired action
+            return $this->redirectToRoute('index');
+        }
+
         return $this->render('registration/register.html.twig', [
             'controller_name' => 'RegistrationController',
             'includeReadingInterestForm' => true,

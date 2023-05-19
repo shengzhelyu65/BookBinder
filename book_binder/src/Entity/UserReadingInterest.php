@@ -22,6 +22,10 @@ class UserReadingInterest
     #[ORM\Column]
     private array $genres = [];
 
+    #[ORM\OneToOne(inversedBy: 'userReadingInterest', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +55,18 @@ class UserReadingInterest
     public function setGenres(array $genres): self
     {
         $this->genres = $genres;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
