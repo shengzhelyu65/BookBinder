@@ -8,12 +8,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
+use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(Security $security, EntityManagerInterface $entityManager): Response
     {
+        // ============= API stuff =============
+        $ApiClient = new GoogleBooksApiClient();
+
+        // Define an array of genres to search for.
+        $genres = ['fantasy', 'mystery', 'romance'];
+
+        // Create an empty array to hold the results.
+        $results = [];
+
+        // Loop through each genre and retrieve the popular books.
+        foreach ($genres as $genre) {
+            $books = $ApiClient->getBooksBySubject($genre, 5);
+            $results[$genre] = $books;
+        }
+
+        // =============
+
         $includeProfileForm = false; // Set this to true or false depending on your condition
 
         $this->security = $security;
@@ -35,6 +53,7 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
+            'results' => $results
         ]);
     }
 

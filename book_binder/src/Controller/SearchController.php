@@ -27,12 +27,12 @@ class SearchController extends AbstractController
 
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre);
+            $books = $ApiClient->getBooksBySubject($genre, 10);
             $results[$genre] = $books;
         }
 
         // Pass the results array to the Twig template.
-        return $this->render('book_binder/bookSearch.html.twig', [
+        return $this->render('book_binder/index.html.twig', [
             'controller_name' => 'BookBinderController',
             'results' => $results,
         ]);
