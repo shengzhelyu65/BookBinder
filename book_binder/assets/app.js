@@ -15,3 +15,6 @@ require('bootstrap');
 
 require('bootstrap-icons/font/bootstrap-icons.css');
 
+
+import $ from 'jquery';
+import 'select2';

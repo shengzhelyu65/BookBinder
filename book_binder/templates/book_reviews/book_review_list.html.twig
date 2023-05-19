@@ -16,6 +16,7 @@
                     <p>Tags: {{ bookReview.getTags() }}</p>
                     <p>Review: {{ bookReview.getReview() }}</p>
                     <p>By {{ bookReview.getUserID().getEmail() }}</p>
+                    <p>On {{ bookReview.getCreatedAt()|date('Y-m-d')|time }}</p>
                 </li>
             {% endfor %}
         </ul>
