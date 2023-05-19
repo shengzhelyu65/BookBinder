@@ -21,113 +21,92 @@ use GuzzleHttp\ClientInterface;
  */
 class GoogleBooksApiClient
 {
-    private string $baseUri = 'https://www.googleapis.com/books/v1/volumes';
 
     // TODO: MOVE THIS KEY TO A SAFER PLACE LATER?
     private string $API_KEY = "AIzaSyDqRjtenxk_Dp8BJv6-Sqo0VvaL2y-6K2g";
 
     /**
-     * Search for books based on query text, max amount, and start index.
+     * Retrieves an array of books from the Google Books API that match a specified title.
      *
-     * @param string $title The query text to search for.
-     * @param int $maxResults  The maximum number of results to return. Default is 10.
-     * @param int $startIndex The index of the first result to return. Default is 0.
-     * @return array|false An array of Books, or false if the search failed.
+     * @param string $title The title to search for.
+     * @param int $maxResults The maximum number of results to return. Defaults to 10.
+     * @param int $startIndex The index of the first result to return (used for pagination). Defaults to 0.
+     *
+     * @return array An array of book objects that match the specified title.
      */
-    public function searchBooks(string $title = "", int $maxResults = 10, int $startIndex = 0): bool|array {
-        // Check if $title is empty
-        if (empty($title)) {
-            echo "No title provided";
-            return false;
+    function searchBooksByTitle(string $title, int $maxResults = 10, int $startIndex = 0): array
+    {
+        // Get Google Books API service
+        $service = $this->getBooksService();
+
+        try {
+            // Set the parameters for the API request to search for books by title.
+            $query = "intitle:" . urlencode($title);
+
+            $optParams = array(
+                'maxResults' => $maxResults,
+                'startIndex' => $startIndex
+            );
+
+            // Make the API request to search for books by title.
+            $results = $service->volumes->listVolumes($query, $optParams);
+
+            // Return the array of book objects.
+            return $results->getItems();
+        } catch (Google_Exception $e) {
+            // If an error occurs, log the error and return an empty array.
+            error_log('Error searching for books by title: ' . $e->getMessage());
+            return array();
         }
-
-        // Set query parameters for Google Books API
-        $queryParams = [
-            'q' => 'intitle:' . urlencode($title),
-            'startIndex' => $startIndex,
-            'maxResults' => $maxResults,
-            'key' => $this->API_KEY
-        ];
-
-        return  $this->queryBooks($queryParams);
     }
 
-    /**
-     * Search for the newest books of a certain subject.
-     *
-     * @param string $subject The query text to search for.
-     * @param int $maxResults  The maximum number of results to return. Default is 10.
-     * @param int $startIndex The index of the first result to return. Default is 0.
-     * @return array|false An array of Books, or false if the search failed.
-     */
-    public function getNewBooks(string $subject, int $maxResults = 1, int $startIndex = 0): bool|array {
-        // Check if $subject is empty
-        if (empty($subject)) {
-            echo "No subject provided";
-            return false;
-        }
-
-        // Set query parameters for Google Books API
-        $queryParams = [
-            'q' => 'subject:' . urlencode($subject),
-            'startIndex' => $startIndex,
-            'maxResults' => $maxResults,
-            'orderBy' => 'newest',
-            'key' => $this->API_KEY
-        ];
-
-        return  $this->queryBooks($queryParams);
-    }
 
     /**
-     * Search for popular ("relevant") books of a certain subject.
+     * Retrieves an array of books from the Google Books API that match a specified subject.
      *
-     * @param string $subject The query text to search for.
-     * @param int $maxResults  The maximum number of results to return. Default is 10.
-     * @param int $startIndex The index of the first result to return. Default is 0.
-     * @return array|false An array of Books, or false if the search failed.
+     * @param string $subject The subject to search for.
+     * @param int $maxResults The maximum number of results to return. Defaults to 3.
+     * @param int $startIndex The index of the first result to return (used for pagination). Defaults to 0.
+     *
+     * @return array An array of book objects that match the specified subject.
      */
-    public function getPopularBooks(string $subject, int $maxResults = 1, int $startIndex = 0): bool|array {
-        // Check if $subject is empty
-        if (empty($subject)) {
-            echo "No subject provided";
-            return false;
+    function getBooksBySubject(string $subject, int $maxResults = 3, int $startIndex = 0): array
+    {
+        // Get Google Books API service
+        $service = $this->getBooksService();
+
+        try {
+            // Set the parameters for the API request to search for books by subject.
+            $query = "subject:" . urlencode($subject);
+
+            $optParams = array(
+                'maxResults' => $maxResults,
+                'startIndex' => $startIndex
+            );
+
+            // Make the API request to search for books by subject.
+            $results = $service->volumes->listVolumes($query, $optParams);
+
+            // Return the array of book objects.
+            return $results->getItems();
+        } catch (Google_Exception $e) {
+            // If an error occurs, log the error and return an empty array.
+            error_log('Error searching for books by subject: ' . $e->getMessage());
+            return array();
         }
-
-        // Set query parameters for Google Books API
-        $queryParams = [
-            'q' => 'subject:' . urlencode($subject),
-            'startIndex' => $startIndex,
-            'maxResults' => $maxResults,
-            'orderBy' => 'relevance',
-            'key' => $this->API_KEY
-        ];
-
-        return $this->queryBooks($queryParams);
     }
 
     /**
      * Retrieves a book from the Google Books API by its ID.
      *
      * @param string $bookId The ID of the book to retrieve.
-     * @param Google_Client $client An instance of the Google_Client class.
      * @return Google_Service_Books_Volume|null The book object, or null if not found.
      * @throws Google_Exception If an error occurs while making the API request.
-     * @throws Exception
      */
     function getBookById(string $bookId): ?Google_Service_Books_Volume
     {
-        $client = new Google_Client();
-        $client->setApplicationName('My App');
-        $client->setDeveloperKey($this->API_KEY);
-        $client->setScopes(['https://www.googleapis.com/auth/books']);
-        #$client->setAuthConfig('path/to/client_secret.json');
-        $client->setHttpClient(new Client([
-            'verify' => false,
-        ]));
-
-        // Create a new instance of the Google_Service_Books class.
-        $service = new Google_Service_Books($client);
+        // Get google books API service
+        $service = $this->getBooksService();
 
         try {
             // Make the API request to retrieve the book by ID.
@@ -146,76 +125,18 @@ class GoogleBooksApiClient
         }
     }
 
+    // Helper function to initialize the Google_Client and Google_Service_Books objects.
+    private function getBooksService(): Google_Service_Books
+    {
+        $client = new Google_Client();
+        $client->setDeveloperKey($this->API_KEY);
+        $client->setApplicationName('My App');
+        $client->setScopes(['https://www.googleapis.com/auth/books']);
+        $client->setHttpClient(new Client([
+            'verify' => false,
+        ]));
 
-    /**
-     * Creates a http client and queries books based on
-     * $queryParams
-     * @param array $queryParams the params for the query
-     * @return array|false returns an array of books or false
-     */
-    private function queryBooks(array $queryParams): bool|array {
-
-        // Create a new HTTP client instance
-        $client = new Client([
-            'verify' => false
-        ]);
-
-        // Send a GET request to the Google Books API
-        try {
-            $response = $client->request('GET', $this->baseUri, ['query' => $queryParams]);
-
-            // Check if the response status code is 200 (OK)
-            if ($response->getStatusCode() === 200) {
-                // Parse the JSON response into an associative array
-                $json = json_decode($response->getBody(), true);
-                $books = [];
-
-                // Loop through the array of book items returned by the API
-                foreach ($json['items'] as $book) {
-                    // Create and add Book object to the array of books
-                    $books[] = $this->jsonToBook($book);
-                }
-
-                // Return the array of books
-                return $books;
-            } else {
-                // Return false if the response status code is not 200
-                return false;
-            }
-        }
-        catch (GuzzleException $e) {
-            print_r($e);
-
-            return false;
-        }
-    }
-
-    /**
-     * Private function that converts a JSON object to a Book object.
-     *
-     * @param mixed $json The JSON object to convert.
-     * @return Book The new Book object.
-     */
-    private function jsonToBook(mixed $json): Book {
-        return new Book(
-            $json['id'] ?? -1,
-            $json['volumeInfo']['title'] ?? "",
-            $json['volumeInfo']['authors'][0] ?? "",
-            $json['volumeInfo']['description'] ?? "",
-            $json['volumeInfo']['imageLinks']['thumbnail'] ?? "",
-            $json['volumeInfo']['publishedDate'] ?? "",
-            $json['volumeInfo']['industryIdentifiers'] ?? [],
-            $json['volumeInfo']['pageCount'] ?? -1,
-            $json['volumeInfo']['printType'] ?? "",
-            $json['volumeInfo']['averageRating'] ?? -1,
-            $json['volumeInfo']['ratingsCount'] ?? -1,
-            $json['volumeInfo']['maturityRating'] ?? "",
-            $json['volumeInfo']['allowAnonLogging'] ?? false,
-            $json['volumeInfo']['contentVersion'] ?? "",
-            $json['volumeInfo']['language'] ?? "",
-            $json['volumeInfo']['previewLink'] ?? "",
-            $json['volumeInfo']['infoLink'] ?? ""
-        );
+        return new Google_Service_Books($client);
     }
 
 }

@@ -17,16 +17,26 @@ class SearchController extends AbstractController
     #[Route('/bookSearch', name: 'bookSearch')]
     public function index(): Response
     {
-        //
         $ApiClient = new GoogleBooksApiClient();
-        $books = $ApiClient->getPopularBooks("fantasy", 3);
 
+        // Define an array of genres to search for.
+        $genres = ['fantasy', 'mystery', 'romance'];
+
+        // Create an empty array to hold the results.
+        $results = [];
+
+        // Loop through each genre and retrieve the popular books.
+        foreach ($genres as $genre) {
+            $books = $ApiClient->getBooksBySubject($genre);
+            $results[$genre] = $books;
+        }
+
+        // Pass the results array to the Twig template.
         return $this->render('book_binder/bookSearch.html.twig', [
             'controller_name' => 'BookBinderController',
-            'books' => $books,
+            'results' => $results,
         ]);
     }
-
 
     /**
      * @throws \Google_Exception
