@@ -58,6 +58,9 @@ class LibraryFixtures extends Fixture
         $library->setNumber('+32 16 32 46 00');
         $library->setWebsite('https://bib.kuleuven.be/english');
         $library->setEmail('bib@kuleuven.be');
+
+        $manager->persist($library);
+        $manager->flush();
     }
 }
 
