@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MeetupRequestsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MeetupRequestsRepository::class)]
@@ -26,6 +27,9 @@ class MeetupRequests
 
     #[ORM\Column]
     private ?int $max_number = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $datetime = null;
 
     public function getMeetupID(): ?int
     {
@@ -76,6 +80,18 @@ class MeetupRequests
     public function setMaxNumber(int $max_number): self
     {
         $this->max_number = $max_number;
+
+        return $this;
+    }
+
+    public function getDatetime(): ?\DateTimeInterface
+    {
+        return $this->datetime;
+    }
+
+    public function setDatetime(\DateTimeInterface $datetime): self
+    {
+        $this->datetime = $datetime;
 
         return $this;
     }

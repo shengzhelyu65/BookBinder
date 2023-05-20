@@ -1,0 +1,35 @@
+{% extends 'base_website.html.twig' %}
+
+{% block title %}All Meetup Requests{% endblock %}
+
+{% block body %}
+    <h1>Meetup Requests</h1>
+
+    {% if meetupRequests is empty %}
+        <p>No meetup requests found.</p>
+    {% else %}
+        <table>
+            <thead>
+            <tr>
+                <th>Meetup ID</th>
+                <th>Library</th>
+                <th>Host User</th>
+                <th>Book ID</th>
+                <th>Max Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for meetupRequest in meetupRequests %}
+                <tr>
+                    <td>{{ meetupRequest.getMeetupID() }}</td>
+                    <td>{{ meetupRequest.getLibraryID().getName() }}</td>
+                    <td>{{ meetupRequest.getHostUser().getEmail() }}</td>
+                    <td>{{ meetupRequest.getBookID() }}</td>
+                    <td>{{ meetupRequest.getMaxNumber() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}
