@@ -13,7 +13,10 @@ import './bootstrap';
 
 require('bootstrap');
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import $ from 'jquery';
+
 import 'select2';
 
 

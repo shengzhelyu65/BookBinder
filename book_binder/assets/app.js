@@ -11,11 +11,13 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 require('bootstrap');
 
 require('bootstrap-icons/font/bootstrap-icons.css');
 
-import '.controllers/searchController';
+import './controllers/searchController';
 
 import $ from 'jquery';
 import 'select2';
