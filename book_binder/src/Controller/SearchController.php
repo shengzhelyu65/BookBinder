@@ -14,32 +14,50 @@ use App\Api\GoogleBooksApiClient;
  */
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'search')]
-    public function index(): Response
+    #[Route('/bookSearch/{query}', name: 'bookSearch')]
+    public function index($query): Response
     {
-        //
         $ApiClient = new GoogleBooksApiClient();
-        $books = $ApiClient->getPopularBooks("fantasy");
 
-        if ($books) {
+        $results = $ApiClient->searchBooksByTitle($query);
+
+        foreach ($results as $book) {
+            echo "<img src=\"" . $book->getVolumeInfo()->getImageLinks()->getThumbnail() . "\">";
             echo "<br>";
-            echo "<img src=".$books[0]->imageUrl.">";
+            echo $book->getVolumeInfo()->getTitle();
             echo "<br>";
-            echo $books[0]->description;
+            echo $book->getVolumeInfo()->getDescription();
             echo "<br>";
-            echo $books[0]->language;
-            echo "<br>";
-            echo $books[0]->title;
-            echo "<br>";
-            echo $books[0]->author;
-            echo "<br>";
-            echo $books[0]->ratingsCount;
-        } else {
-            echo "No books found";
+            echo $book->getVolumeInfo()->getAverageRating();
         }
 
-        return $this->render('book_binder/index.html.twig', [
+        // Pass the results array to the Twig template.
+        return $this->render('base.html.twig', [
             'controller_name' => 'BookBinderController',
+            'results' => $results,
         ]);
+    }
+
+    /**
+     * @throws \Google_Exception
+     */
+    #[Route('/bookPage/{id}', name: 'bookPage')]
+    public function clickBook($id): Response
+    {
+        $ApiClient = new GoogleBooksApiClient();
+        $book = $ApiClient->getBookById($id);
+
+        $thumbnailUrl = $book->getVolumeInfo()->getImageLinks()->getThumbnail();
+
+        if ($book) {
+            return $this->render('book_binder/bookPage.html.twig', [
+                'book' => $book,
+                'thumbnailUrl' => $thumbnailUrl
+            ]);
+        } else {
+            return $this->render('book_binder/bookPage.html.twig', [
+                'error' => 'No books found',
+            ]);
+        }
     }
 }

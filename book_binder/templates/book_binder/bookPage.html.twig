@@ -1,0 +1,13 @@
+{% extends 'base_website.html.twig' %}
+
+{% block body %}
+    <div>
+        <img src="{{ thumbnailUrl }}" alt="Book cover">
+        <h1>{{ book.getVolumeInfo().getTitle() }}</h1>
+        <p>{{ book.getVolumeInfo().getDescription()|raw }}</p>
+        <p>Rating: {{ book.getVolumeInfo().getAverageRating() }}</p>
+        {% if book.getVolumeInfo().getRatingsCount() is defined %}
+            <p>Reviews: {{ book.getVolumeInfo().getRatingsCount() }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\BookReviewFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BookReviews;
@@ -17,15 +16,19 @@ class BookReviewsController extends AbstractController
     #[Route('/book/review/{userId}/{bookId}', name: 'app_book_review')]
     public function addBookReview(Request $request, int $userId, int $bookId, EntityManagerInterface $entityManager): Response
     {
+        $bookReview = new BookReviews();
+
+        // Get the currently logged-in user from the database
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $userId]);
 
-        $bookReview = new BookReviews();
+        // Create the form
         $form = $this->createForm(BookReviewFormType::class, $bookReview);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bookReview->setUserID($user);
             $bookReview->setBookID($bookId);
+            $bookReview->setCreatedAt(new \DateTime());
 
             $entityManager->persist($bookReview);
             $entityManager->flush();
@@ -39,9 +42,9 @@ class BookReviewsController extends AbstractController
     }
 
     #[Route('/book/reviews/list', name: 'book_reviews_list')]
-    public function showAllReviews(EntityManagerInterface $entityManager): Response
+    public function showLatestReviews(EntityManagerInterface $entityManager): Response
     {
-        $bookReviews = $entityManager->getRepository(BookReviews::class)->findAll();
+        $bookReviews = $entityManager->getRepository(BookReviews::class)->findBy([], ['created_at' => 'DESC'], 10);
 
         return $this->render('book_reviews/book_review_list.html.twig', [
             'bookReviews' => $bookReviews,
