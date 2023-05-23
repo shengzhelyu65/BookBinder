@@ -1,11 +1,22 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    {% for book in results.fantasy %}
-        <div>
-            <h2>{{ book.volumeInfo.title }}</h2>
-            <p>by {{ book.volumeInfo.authors|join(', ') }}</p>
-            <p>{{ book.volumeInfo.description }}</p>
-        </div>
+    <h1>You searched for 'Search term'</h1>
+    <p>{{ results|length }} result(s) found</p>
+    {% for book in results %}
+        <a href="{{ path('bookPage', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">
+            <div class="card mb-3">
+                <div class="d-flex flex-row h-100">
+                    <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="rounded-start" alt="{{ book.getVolumeInfo().getTitle() }}" style="width: 6rem; height: 100%; object-fit: cover">
+                    <div class="card-body">
+                        <p><b>{{ book.getVolumeInfo().getTitle() }}</b></p>
+                        <p class="card-text">{{ book.getVolumeInfo().getAuthors()|join(', ') }}</p>
+                        {% if book.getVolumeInfo().getAverageRating() is not empty %}
+                            <p class="card-text">Rating: {{ book.getVolumeInfo().getAverageRating() }} / 5</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </a>
     {% endfor %}
 {% endblock %}

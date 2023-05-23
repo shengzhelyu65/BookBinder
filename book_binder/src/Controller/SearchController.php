@@ -21,18 +21,8 @@ class SearchController extends AbstractController
 
         $results = $ApiClient->searchBooksByTitle($query);
 
-        foreach ($results as $book) {
-            echo "<img src=\"" . $book->getVolumeInfo()->getImageLinks()->getThumbnail() . "\">";
-            echo "<br>";
-            echo $book->getVolumeInfo()->getTitle();
-            echo "<br>";
-            echo $book->getVolumeInfo()->getDescription();
-            echo "<br>";
-            echo $book->getVolumeInfo()->getAverageRating();
-        }
-
         // Pass the results array to the Twig template.
-        return $this->render('base.html.twig', [
+        return $this->render('book_binder/bookSearch.html.twig', [
             'controller_name' => 'BookBinderController',
             'results' => $results,
         ]);
