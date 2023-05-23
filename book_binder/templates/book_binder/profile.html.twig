@@ -3,13 +3,39 @@
 {% block body %}
     <div class="row">
         <div class="col-md-6">
-            <span class="d-flex flex-row justify-content-start align-items-center gap-3">
+            <div class="d-flex flex-row justify-content-start align-items-center gap-3">
                 <img src="{{ asset('images/profile_picture.jpg') }}" alt="user" width="80" height="80" class="rounded-circle">
-                <h1>Username</h1>
-            </span>
+                <div class="d-flex flex-column">
+                    <h1>Username</h1>
+                    <p><b>Name Surname</b></p>
+                </div>
+            </div>
             <hr>
-            <h2>Name Surname</h2>
+            <h2>Preferences</h2>
+            <p><b>Languages</b></p>
+            <p>English</p>
+            <p><b>Genres</b></p>
+            <p>Fiction, Fantasy</p>
+            <hr>
+            <h2>My reading lists</h2>
+            <div class="d-flex flex-row justify-content-between">
+                <a href="#" class="text-decoration-none text-black"> read (0) </a>
+                <a href="#" class="text-decoration-none text-black"> currently-reading (0) </a>
+                <a href="#" class="text-decoration-none text-black"> to-read (0) </a>
+            </div>
         </div>
         <div class="col-md-6">
+            <hr class="d-md-none">
+            <h2>My reviews</h2>
+            <div class="card">
+                <div class="card-header">
+                    Book title
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>Review on the book</p>
+                    </blockquote>
+                </div>
+            </div>
         </div>
 {% endblock %}
