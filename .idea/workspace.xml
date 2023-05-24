@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d066878-c6f1-4201-9eb7-33a41f46ca39" name="Changes" comment="Split up some GoogleBooksApiClient.php methods and minor changes to SearchController.php and Book.php">
+    <list default="true" id="0d066878-c6f1-4201-9eb7-33a41f46ca39" name="Changes" comment="Basic Bookpage with js needs more layout">
+      <change afterPath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/assets/controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/assets/controllers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,6 +246,14 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
       <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
       <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/snapappointments/bootstrap-select" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/serializer" />
     </include_path>
   </component>
   <component name="ProjectId" id="2OjYBjDOD0o59i71DjrQj8WKUSl" />
@@ -256,27 +261,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Git.Branch.Popup.ShowAllRemotes": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/mmeda/OneDrive/Bureaublad/WebTech/Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mmeda/OneDrive/Bureaublad/WebTech/Project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
     <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
@@ -313,7 +318,8 @@
       <workItem from="1683294569705" duration="6515000" />
       <workItem from="1683383473738" duration="8504000" />
       <workItem from="1683525322280" duration="1690000" />
-      <workItem from="1684501574269" duration="6900000" />
+      <workItem from="1684501574269" duration="7046000" />
+      <workItem from="1684877967589" duration="9102000" />
     </task>
     <task id="LOCAL-00001" summary="Added a Book class to store books in.">
       <created>1682086348540</created>
@@ -392,7 +398,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683393669816</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Basic Bookpage with js needs more layout">
+      <created>1684508769261</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1684508769261</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -409,7 +422,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/dev" />
+                        <option value="origin/3-homescreen" />
                       </list>
                     </value>
                   </entry>
@@ -431,7 +444,8 @@
     <MESSAGE value="persist user into db with google authentication" />
     <MESSAGE value="change login redirect route with google authentication" />
     <MESSAGE value="fix the authentication of security bundle with google" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix the authentication of security bundle with google" />
+    <MESSAGE value="Basic Bookpage with js needs more layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Bookpage with js needs more layout" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
