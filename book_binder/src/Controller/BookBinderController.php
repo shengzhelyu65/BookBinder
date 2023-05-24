@@ -26,7 +26,7 @@ class BookBinderController extends AbstractController
 
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre, 5);
+            $books = $ApiClient->getBooksBySubject($genre, 40);
             $results[$genre] = $books;
         }
 
