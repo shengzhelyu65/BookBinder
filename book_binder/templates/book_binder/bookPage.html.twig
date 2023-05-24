@@ -1,7 +1,8 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="row">
+        <div class="col">
         <div class="row">
             <div class="col-auto">
                 <img src="{{ thumbnailUrl }}" alt="Book cover" style="min-width: 200px">
@@ -22,7 +23,7 @@
                 {% if book.getVolumeInfo().getRatingsCount() is defined %}
                     <p>Reviews: {{ book.getVolumeInfo().getRatingsCount() }}</p>
                 {% endif %}
-                <div class="dropdown">
+                <div class="dropdown pb-2">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Add to
                     </button>
@@ -32,7 +33,7 @@
                         <li><a class="dropdown-item" href="#" onclick="changeButtonText('To read', this)">To read</a></li>
                     </ul>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg">Find meeting</button>
+                <button type="button" class="btn btn-primary  btn-lg" data-bs-toggle="modal" data-bs-target="#host" >Host Meetup</button>
 
                 <script>
                     function changeButtonText(text, element) {
@@ -42,7 +43,7 @@
                 </script>
             </div>
         </div>
-    <div class="container">
+    <div class="container pt-3">
         <p>
             <button class="btn btn-primary" type="button" onclick="showContent('content1')">
                 Content
@@ -67,7 +68,57 @@
             </p>
         </div>
     </div>
+        </div>
+        <div class = "col-md-4">
+            <h3>Join Meetups:</h3>
+            {% for i in range(1, 2) %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ thumbnailUrl }}" alt="Book cover">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Host: Thomas Goris</h5>
+                                <p class="card-text">participants: 5</p>
+                                <p class="card-text">library: The Mediocre Bib</p>
+                                <p class="card-text">Date: 26/06/2023</p>
+                                <button class="btn btn-primary mb-2">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
+
+    <div class="modal fade" id="host" tabindex="-1" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="exampleModalLgLabel">Host a meetup</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="meetup-date" class="form-label">Meetup Date</label>
+                            <input type="date" class="form-control" id="meetup-date" name="meetup-date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="max-participants" class="form-label">Maximum Participants</label>
+                            <input type="number" class="form-control" id="max-participants" name="max-participants" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function showContent(contentId) {
@@ -81,6 +132,8 @@
             });
         }
     </script>
+
+
 
 
 {% endblock %}
