@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,9 +27,13 @@ class BookBinderController extends AbstractController
 
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre, 5);
+            $books = $ApiClient->getBooksBySubject($genre, 40);
             $results[$genre] = $books;
         }
+
+        // ============= Reviews
+
+        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(10);
 
         // =============
 
@@ -53,7 +58,8 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
-            'results' => $results
+            'results' => $results,
+            'reviews' => $reviews
         ]);
     }
 

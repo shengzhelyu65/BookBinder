@@ -19,7 +19,7 @@ class SearchController extends AbstractController
     {
         $ApiClient = new GoogleBooksApiClient();
 
-        $results = $ApiClient->searchBooksByTitle($query);
+        $results = $ApiClient->searchBooksByTitle($query, 40);
 
         // Pass the results array to the Twig template.
         return $this->render('book_binder/bookSearch.html.twig', [
