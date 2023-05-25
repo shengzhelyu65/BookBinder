@@ -9,7 +9,7 @@
                 </a>
             {% else %}
                 <a href="{{ path('bookPage', {'id': book.id}) }}">
-                    <img src="{{ asset('images/book_cover.png') }}" alt="Book Cover" class="book-cover">
+                    <img src="{{ asset('images/book_cover_empty.png') }}" alt="Book Cover" class="book-cover">
                 </a>
             {% endif %}
             <h2>{{ book.volumeInfo.title }}</h2>
