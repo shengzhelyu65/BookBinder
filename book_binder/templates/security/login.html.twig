@@ -2,66 +2,28 @@
 
 {% block title %}Log in!{% endblock %}
 
-{% block javascripts %}
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-{% endblock %}
-
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <!-- Jumbotron -->
+    <div class="px-4 py-4 px-md-5 text-lg-start">
+        <div class="container">
+            <div class="d-flex flex-wrap flex-row justify-content-center gx-lg-3 align-items-top">
+                <div class="col-lg-4 mb-5 mb-lg-0 mx-4">
+                    <h1 class="mb-5 display-3 fw-bold ls-tight">
+                    Welcome to <br />
+                    <span class="text-primary">BookBinder</span>
+                    </h1>
+                    <p style="color: hsl(217, 10%, 50.8%)">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                    quibusdam tempora at cupiditate quis eum maiores libero
+                    veritatis? Dicta facilis sint aliquid ipsum atque?
+                    </p>
+                </div>
+                
+                {% include './security/login_form.html.twig' %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <!-- Sign-in button -->
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-
-    <!-- Register button -->
-    <a href="/register" class="btn btn-lg btn-secondary">
-        Register
-    </a>
-
-    <div id="g_id_onload"
-         data-client_id="773315199188-t2bualn3k6id1gsokusqrueq55lkg4e4"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-login_uri="/login/google"
-         data-auto_prompt="false">
     </div>
-
-    <div class="g_id_signin"
-         data-type="standard"
-         data-shape="rectangular"
-         data-theme="outline"
-         data-text="signin_with"
-         data-size="large"
-         data-locale="en"
-         data-logo_alignment="left">
-    </div>
-</form>
 {% endblock %}
+
