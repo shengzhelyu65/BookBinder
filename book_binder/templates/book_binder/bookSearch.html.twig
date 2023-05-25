@@ -1,11 +1,18 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    {% for book in results.fantasy %}
+    {% for book in results %}
         <div>
+            {% if book.volumeInfo.imageLinks is not null %}
+                <a href="{{ path('bookPage', {'id': book.id}) }}">
+                    <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="Book Cover" class="book-cover">
+                </a>
+            {% else %}
+                <a href="{{ path('bookPage', {'id': book.id}) }}">
+                    <img src="{{ asset('images/book_cover.png') }}" alt="Book Cover" class="book-cover">
+                </a>
+            {% endif %}
             <h2>{{ book.volumeInfo.title }}</h2>
-            <p>by {{ book.volumeInfo.authors|join(', ') }}</p>
-            <p>{{ book.volumeInfo.description }}</p>
         </div>
     {% endfor %}
 {% endblock %}
