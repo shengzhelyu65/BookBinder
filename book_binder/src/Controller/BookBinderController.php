@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,10 @@ class BookBinderController extends AbstractController
             $results[$genre] = $books;
         }
 
+        // ============= Reviews
+
+        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(10);
+
         // =============
 
         $includeProfileForm = false; // Set this to true or false depending on your condition
@@ -53,7 +58,8 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
-            'results' => $results
+            'results' => $results,
+            'reviews' => $reviews
         ]);
     }
 
