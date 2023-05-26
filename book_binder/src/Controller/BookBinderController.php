@@ -21,8 +21,10 @@ class BookBinderController extends AbstractController
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
+        $user = $this->getUser();
+
         // Define an array of genres to search for.
-        $genres = ['fantasy', 'mystery', 'romance'];
+        $genres = $user->getUserReadingInterest()->getGenres();
 
         // Create an empty array to hold the results.
         $results = [];
@@ -43,6 +45,15 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
             'results' => $results,
             'reviews' => $reviews
+        ]);
+    }
+
+    #[Route("/profile", name: 'profile')]
+    public function profile(): Response
+    {
+        return $this->render('book_binder/profile.html.twig', [
+            'controller_name' => 'BookBinderController',
+            'user' => $this->getUser()
         ]);
     }
 }
