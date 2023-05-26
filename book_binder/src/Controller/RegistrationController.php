@@ -122,7 +122,10 @@ class RegistrationController extends AbstractController
     #[Route('/reading-interest', name: 'reading_interest')]
     public function collectReadingInterestForm(Request $request, EntityManagerInterface $entityManager,): Response
     {
-        if ($this->getUser()) {
+        // check if the user has already filled the reading interest form
+        $user = $this->getUser();
+        $userReadingInterest = $entityManager->getRepository(UserReadingInterest::class)->findOneBy(['user' => $user]);
+        if ($userReadingInterest) {
             return $this->redirectToRoute('app_home');
         }
 
