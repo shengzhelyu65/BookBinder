@@ -103,6 +103,10 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
+                            <label for="library-name" class="form-label">Library</label>
+                            <input type="text" class="form-control" id="library-name" name="library-name" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="meetup-date" class="form-label">Meetup Date</label>
                             <input type="date" class="form-control" id="meetup-date" name="meetup-date" required>
                         </div>
@@ -111,6 +115,7 @@
                             <input type="number" class="form-control" id="max-participants" name="max-participants" required>
                         </div>
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
