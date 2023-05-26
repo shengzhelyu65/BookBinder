@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d066878-c6f1-4201-9eb7-33a41f46ca39" name="Changes" comment="Added meetup functionality to book page">
-      <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Start of search page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,96 +161,6 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/twig/extra-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/nikic/php-parser" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/web-profiler-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/maker-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/stopwatch" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfonycasts/verify-email-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/egulias/email-validator" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/polyfill-intl-idn" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mailer" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-migrations-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/migrations" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/annotations" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-file-iterator" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/browser-kit" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/css-selector" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-code-coverage" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/dom-crawler" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/phpunit-bridge" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/masterminds/html5" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/version" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/manifest" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/type" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/recursion-context" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-reflector" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/myclabs/deep-copy" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/lines-of-code" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/environment" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/complexity" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/diff" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit-reverse-lookup" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/cli-parser" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/theseer/tokenizer" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-timer" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-invoker" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/panther" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client-contracts" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/php-webdriver/webdriver" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/dbrekelmans/bdi" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
-      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
-      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/asset" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
-      <path value="$PROJECT_DIR$/vendor/symfony/config" />
-      <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
-      <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
-      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
-      <path value="$PROJECT_DIR$/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
-      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
-      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpseclib/phpseclib" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-docblock" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-common" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/type-resolver" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/webmozart/assert" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/fakerphp/faker" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/snapappointments/bootstrap-select" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpstan/phpdoc-parser" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/serializer" />
     </include_path>
   </component>
   <component name="ProjectId" id="2OjYBjDOD0o59i71DjrQj8WKUSl" />
