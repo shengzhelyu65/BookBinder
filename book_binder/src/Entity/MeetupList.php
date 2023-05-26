@@ -14,24 +14,24 @@ class MeetupList
     private ?int $meetup_list_ID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_ID', nullable: false)]
+    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_id', nullable: false)]
     private ?MeetupRequests $meetup_ID = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'user_ID', referencedColumnName: 'id', nullable: false)]
     private ?User $user_ID = null;
 
-    public function getMeetupListId(): ?int
+    public function getMeetupListID(): ?int
     {
         return $this->meetup_list_ID;
     }
 
-    public function getMeetup(): ?MeetupRequests
+    public function getMeetupID(): ?MeetupRequests
     {
         return $this->meetup_ID;
     }
 
-    public function setMeetup(?MeetupRequests $meetup_ID): self
+    public function setMeetupID(?MeetupRequests $meetup_ID): self
     {
         $this->meetup_ID = $meetup_ID;
 

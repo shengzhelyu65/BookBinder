@@ -14,7 +14,7 @@ class MeetupRequestList
     private ?int $meetup_request_list_ID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_ID', nullable: false)]
+    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_id', nullable: false)]
     private ?MeetupRequests $meetup_ID = null;
 
     #[ORM\ManyToOne]
