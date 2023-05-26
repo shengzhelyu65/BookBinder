@@ -47,4 +47,13 @@ class BookBinderController extends AbstractController
             'reviews' => $reviews
         ]);
     }
+
+    #[Route("/profile", name: 'profile')]
+    public function profile(): Response
+    {
+        return $this->render('book_binder/profile.html.twig', [
+            'controller_name' => 'BookBinderController',
+            'user' => $this->getUser()
+        ]);
+    }
 }
