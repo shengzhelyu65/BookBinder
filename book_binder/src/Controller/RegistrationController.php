@@ -122,6 +122,10 @@ class RegistrationController extends AbstractController
     #[Route('/reading-interest', name: 'reading_interest')]
     public function collectReadingInterestForm(Request $request, EntityManagerInterface $entityManager,): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+
         $userReadingInterest = new UserReadingInterest();
 
         $readingInterestForm = $this->createForm(ReadingInterestFormType::class, [$userReadingInterest]);
