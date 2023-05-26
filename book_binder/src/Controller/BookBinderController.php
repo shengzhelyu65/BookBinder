@@ -19,7 +19,7 @@ class BookBinderController extends AbstractController
         $ApiClient = new GoogleBooksApiClient();
 
         // Define an array of genres to search for.
-        $genres = ['fantasy', 'mystery', 'romance'];
+        $genres = ['fantasy', 'body', 'general', 'business'];
 
         // Create an empty array to hold the results.
         $results = [];

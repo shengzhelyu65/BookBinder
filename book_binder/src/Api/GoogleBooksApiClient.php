@@ -70,7 +70,7 @@ class GoogleBooksApiClient
      *
      * @return array An array of book objects that match the specified subject.
      */
-    function getBooksBySubject(string $subject, int $maxResults = 3, int $startIndex = 0): array
+    function getBooksBySubject(string $subject, int $maxResults = 40, int $startIndex = 0): array
     {
         // Get Google Books API service
         $service = $this->getBooksService();
