@@ -25,6 +25,7 @@ class SearchController extends AbstractController
         return $this->render('book_binder/bookSearch.html.twig', [
             'controller_name' => 'BookBinderController',
             'results' => $results,
+            'query' => $query
         ]);
     }
 

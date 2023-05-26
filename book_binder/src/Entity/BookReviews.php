@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Api\GoogleBooksApiClient;
 use App\Repository\BookReviewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Google\Service\Books\VolumeVolumeInfo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookReviewsRepository::class)]
@@ -16,7 +18,7 @@ class BookReviews
     private ?int $review_ID = null;
 
     #[ORM\Column]
-    private ?int $book_ID = null;
+    private ?string $book_ID = null;
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
@@ -35,17 +37,20 @@ class BookReviews
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
+    #[ORM\Column(length: 200)]
+    private ?string $book_title = null;
+
     public function getReviewID(): ?int
     {
         return $this->review_ID;
     }
 
-    public function getBookID(): ?int
+    public function getBookID(): ?string
     {
         return $this->book_ID;
     }
 
-    public function setBookID(int $book_ID): self
+    public function setBookID(string$book_ID): self
     {
         $this->book_ID = $book_ID;
 
@@ -108,6 +113,26 @@ class BookReviews
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getTitleOfBook(): string {
+        $ApiClient = new GoogleBooksApiClient();
+
+        $book = $ApiClient->getBookById($this->book_ID);
+
+        return $book->getVolumeInfo()->getTitle();
+    }
+
+    public function getBookTitle(): ?string
+    {
+        return $this->book_title;
+    }
+
+    public function setBookTitle(string $book_title): self
+    {
+        $this->book_title = $book_title;
 
         return $this;
     }

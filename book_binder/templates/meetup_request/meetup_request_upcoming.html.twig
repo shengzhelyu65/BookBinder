@@ -1,0 +1,22 @@
+{% extends 'base_website.html.twig' %}
+
+{% block title %}Upcoming Meetup Requests{% endblock %}
+
+{% block body %}
+    <h1>Upcoming Meetup Requests</h1>
+
+    {% if upcomingRequests is empty %}
+        <p>No upcoming meetup requests found.</p>
+    {% else %}
+        <ul>
+            {% for request in upcomingRequests %}
+                <li>
+                    {{ request.getMeetupID() }}
+                    - Library: {{ request.getLibraryID().getLibraryName() }}
+                    - Book ID: {{ request.getBookID() }}
+                    - Time: {{ request.getDatetime()|date('Y-m-d H:i:s') }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

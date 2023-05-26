@@ -16,9 +16,7 @@
     <header class="py-3 mb-4 shadow">
         <div class="container-fluid align-items-center d-flex">
             <div class="flex-shrink-1">
-                <a class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none">
-                    <img src="{{ asset('images/logo_light.jpg') }}" alt="" style="width: 40px; height: 40px">
-                </a>
+                <img src="{{ asset('images/logo_light.jpg') }}" alt="" style="width: 40px; height: 40px">
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
                 <form class="w-100 me-3" onsubmit="searchBooks(event)">
@@ -36,7 +34,7 @@
 
                 <div class="flex-shrink-0 dropdown">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('images/profile_picture.jpg') }}" alt="user" width="32" height="32" class="rounded-circle">
+                        <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="32" height="32" class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser2" style="z-index: 2000">
                         <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -56,7 +54,7 @@
                 <div class="bg-light border rounded-3 p-1 sticky-top">
                     <ul class="navbar-nav flex-lg-column flex-row mb-auto justify-content-between text-truncate">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active px-2 text-truncate">
+                            <a href="{{ path('app_home') }}" class="nav-link active px-2 text-truncate">
                                 <i class="bi bi-house fs-5"></i>
                                 <span class="d-none d-sm-inline">Home</span>
                             </a>

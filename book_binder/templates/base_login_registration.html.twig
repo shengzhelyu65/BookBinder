@@ -10,12 +10,12 @@
         {{ encore_entry_link_tags('login_registration') }}
     {% endblock %}
     {% block javascripts %}
-        {{ encore_entry_script_tags('login_registration') }}
-            <!-- Scripts -->
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        {{ encore_entry_script_tags('login_registration') }}
     {% endblock %}
 </head>
 <body>
+
     {% block body %} {% endblock %}
 
 </body>

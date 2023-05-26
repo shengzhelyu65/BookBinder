@@ -7,3 +7,12 @@ controllers:
 login:
     path: /login
     controller: App\Controller\SecurityController::login
+
+index:
+    path: /index
+    defaults:
+        _controller: App\Controller\YourController::index
+home:
+    path: /home
+    defaults:
+        _controller: App\Controller\YourController::index

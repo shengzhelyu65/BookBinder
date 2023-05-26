@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserPersonalInfo;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-//        if ($this->getUser()) {
-//            return $this->redirectToRoute('app_home');
-//        }
-
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -74,12 +74,25 @@ class SecurityController extends AbstractController
             $entityManager->flush();
         }
 
+        // set the nickname
+        $nickname = explode('@', $email)[0];
+        if (!$user->getUserPersonalInfo()) {
+            $userPersonalInfo = new UserPersonalInfo();
+            $userPersonalInfo->setUser($user);
+            $userPersonalInfo->setNickname($nickname);
+            $entityManager->persist($userPersonalInfo);
+            $entityManager->flush();
+        }
+
         // authenticate the user
         $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
-
         // store the token in the token storage
         $tokenStorage->setToken($token);
 
-        return new RedirectResponse($this->generateUrl('index'));
+        // redirect the user to the home page or the reading interest page
+        if (!$user->getUserReadingInterest()) {
+            return $this->redirectToRoute('reading_interest');
+        }
+        return $this->redirectToRoute('app_home');
     }
 }

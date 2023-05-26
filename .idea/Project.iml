@@ -3,8 +3,6 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/book_binder/src" isTestSource="false" packagePrefix="App\" />
-      <sourceFolder url="file://$MODULE_DIR$/book_binder/tests" isTestSource="true" packagePrefix="App\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/book_binder/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/doctrine/cache" />
@@ -89,6 +87,14 @@
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpseclib/phpseclib" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpdocumentor/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/snapappointments/bootstrap-select" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/symfony/serializer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
