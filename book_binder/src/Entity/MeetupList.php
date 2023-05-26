@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\MeetupRequestListRepository;
+use App\Repository\MeetupListRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MeetupRequestListRepository::class)]
-class MeetupRequestList
+#[ORM\Entity(repositoryClass: MeetupListRepository::class)]
+class MeetupList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $meetup_request_list_ID = null;
+    private ?int $meetup_list_ID = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_ID', nullable: false)]
@@ -21,17 +21,17 @@ class MeetupRequestList
     #[ORM\JoinColumn(name: 'user_ID', referencedColumnName: 'id', nullable: false)]
     private ?User $user_ID = null;
 
-    public function getMeetupRequestListID(): ?int
+    public function getMeetupListId(): ?int
     {
-        return $this->meetup_request_list_ID;
+        return $this->meetup_list_ID;
     }
 
-    public function getMeetupID(): ?MeetupRequests
+    public function getMeetup(): ?MeetupRequests
     {
         return $this->meetup_ID;
     }
 
-    public function setMeetupID(?MeetupRequests $meetup_ID): self
+    public function setMeetup(?MeetupRequests $meetup_ID): self
     {
         $this->meetup_ID = $meetup_ID;
 

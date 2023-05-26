@@ -15,7 +15,7 @@ class MeetupRequests
     private ?int $meetup_ID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'library_ID', referencedColumnName: 'library_ID', nullable: false)]
+    #[ORM\JoinColumn(name: 'library_ID', referencedColumnName: 'library_id', nullable: false)]
     private ?Library $library_ID = null;
 
     #[ORM\ManyToOne]
