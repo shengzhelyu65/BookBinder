@@ -23,7 +23,7 @@ class MeetupRequests
     private ?User $host_user = null;
 
     #[ORM\Column]
-    private ?int $book_ID = null;
+    private ?string $book_ID = null;
 
     #[ORM\Column]
     private ?int $max_number = null;
@@ -60,12 +60,12 @@ class MeetupRequests
         return $this;
     }
 
-    public function getBookID(): ?int
+    public function getBookID(): ?String
     {
         return $this->book_ID;
     }
 
-    public function setBookID(int $book_ID): self
+    public function setBookID(String $book_ID): self
     {
         $this->book_ID = $book_ID;
 
