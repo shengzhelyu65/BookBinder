@@ -13,7 +13,6 @@ use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
-    #[Route("/index", name: 'app_home')]
     #[Route("/home", name: 'app_home')]
     #[Route("/", name: 'app_home')]
     public function home(EntityManagerInterface $entityManager): Response
