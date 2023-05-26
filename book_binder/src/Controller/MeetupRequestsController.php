@@ -212,16 +212,23 @@ class MeetupRequestsController extends AbstractController
 
         $userId = $user->getId();
 
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->createQueryBuilder('mr')
-            ->where('mr.host_user != :userId')
-            ->andWhere('mr.meetup_ID NOT IN (
-        SELECT ml.meetup_ID FROM App\Entity\MeetupList ml WHERE ml.user_ID = :userId
-    )')
+        $meetupAvailable = $entityManager->createQueryBuilder()
+            ->select('mr')
+            ->from('App\Entity\MeetupRequests', 'mr')
+            ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
+            ->where('mr.host_user != :userId AND NOT EXISTS (
+                        SELECT 1 FROM App\Entity\MeetupList subml
+                        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+                        )')
             ->setParameter('userId', $userId)
             ->orderBy('mr.datetime', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+
+
+
+
 
         // Fetch the books based on book IDs in meetupRequests
         $books = [];
@@ -237,8 +244,9 @@ class MeetupRequestsController extends AbstractController
             'userEmail' => $email,
             'results' => $results,
             'meetupRequests' => $meetupRequests,
-            'meetupavailabe' => $meetupAvailabe,
-            'books' => $books
+            "meetupAvailabe"=>$meetupAvailable,
+            'books' => $books,
+
         ]);
     }
 

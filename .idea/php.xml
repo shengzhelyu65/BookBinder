@@ -130,8 +130,6 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/book_binder/vendor/twig/extra-bundle" />
       <path value="$PROJECT_DIR$/book_binder/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/book_binder/vendor/symfony/web-profiler-bundle" />
@@ -206,12 +204,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
       <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/phpseclib/phpseclib" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
-      <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
       <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/type-resolver" />
@@ -220,6 +212,14 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/snapappointments/bootstrap-select" />
       <path value="$PROJECT_DIR$/book_binder/vendor/phpstan/phpdoc-parser" />
       <path value="$PROJECT_DIR$/book_binder/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

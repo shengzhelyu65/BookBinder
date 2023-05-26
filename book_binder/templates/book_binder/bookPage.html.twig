@@ -5,7 +5,7 @@
         <div class="col">
             <div class="row">
                 <div class="col-auto">
-                    <img src="{{ thumbnailUrl }}" alt="Book cover" style="min-width: 200px">
+                    <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ book.getVolumeInfo().getTitle() }}">
 
                 </div>
                 <div class="col">
@@ -71,19 +71,18 @@
         </div>
         <div class = "col-md-4">
             <h3>Join Meetups:</h3>
-            {% for i in range(1, 2) %}
+            {% for meetupRequest in meetupRequests %}
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ thumbnailUrl }}" alt="Book cover">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Host: Thomas Goris</h5>
-                                <p class="card-text">participants: 5</p>
-                                <p class="card-text">library: The Mediocre Bib</p>
-                                <p class="card-text">Date: 26/06/2023</p>
-                                <button class="btn btn-primary mb-2">Join</button>
+                            <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ book.getVolumeInfo().getTitle() }}">                        </div>
+                        <div class="col-md-8 ps-3">
+                            <div class="card-body p-0">
+                                <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
+                                <p class="card-text">participants: {{ meetupRequest.getMaxNumber() }}</p>
+                                <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
+                                <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
+                                <button class="btn btn-primary">Join</button>
                             </div>
                         </div>
                     </div>
