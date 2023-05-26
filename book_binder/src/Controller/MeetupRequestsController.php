@@ -184,10 +184,7 @@ class MeetupRequestsController extends AbstractController
         $results = [];
 
         // Loop through each genre and retrieve the popular books.
-        foreach ($genres as $genre) {
-            $books2 = $ApiClient->getBooksBySubject($genre, 5);
-            $results[$genre] = $books2;
-        }
+
 
         // =============
 
@@ -207,10 +204,24 @@ class MeetupRequestsController extends AbstractController
             // If it is null, set the includeProfileForm to false
             $includeProfileForm = true;
         }
-
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
-
         $userId = $user->getId();
+        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
+        $joinedMeetupIds = array_map(function ($joinedRequest) {
+            return $joinedRequest->getMeetupID();
+        }, $joinedRequests);
+
+        // Get the hosted meetup requests for the user
+        $hostedRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $userId]);
+
+        // Combine the meetup requests into a single list
+        $upcomingRequests = array_merge($joinedMeetupIds, $hostedRequests);
+
+        // Sort the meetup requests by datetime
+        usort($upcomingRequests, function ($a, $b) {
+            return $a->getDatetime() <=> $b->getDatetime();
+        });
+
+
 
         $meetupAvailable = $entityManager->createQueryBuilder()
             ->select('mr')
@@ -230,17 +241,30 @@ class MeetupRequestsController extends AbstractController
 // Retrieve the meetups hosted by the user
         $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
 
-        // Retrieve the meetup requests for the hosted meetups
+            // Retrieve the meetup requests for the hosted meetups
+
         $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
 
-
-
-        // Fetch the books based on book IDs in meetupRequests
+            // Fetch the books based on book IDs in meetupRequests
         $books = [];
         foreach ($meetupRequests as $meetupRequest) {
             $bookId = $meetupRequest->getBookID();
             $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
             $books[$bookId] = $book;
+
+        }
+        $books2 = [];
+        foreach ($upcomingRequests as $up) {
+            $bookId = $up->getBookID();
+            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
+            $books2[$bookId] = $book;
+
+        }
+        $books3 = [];
+        foreach ($meetupAvailable as $meetupAvailabl) {
+            $bookId = $meetupAvailabl->getBookID();
+            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
+            $books3[$bookId] = $book;
 
         }
         return $this->render('meetup_request/meetup_overview.html.twig', [
@@ -249,8 +273,11 @@ class MeetupRequestsController extends AbstractController
             'userEmail' => $email,
             'results' => $results,
             'meetupRequests' => $meetupRequests,
-            "meetupAvailabe"=>$meetupAvailable,
+            'meetupAvailabe'=>$meetupAvailable,
+            'upcoming' => $upcomingRequests,
             'books' => $books,
+            'books2' =>$books2,
+            'books3' => $books3
 
         ]);
     }
