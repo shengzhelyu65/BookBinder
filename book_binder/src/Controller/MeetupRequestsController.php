@@ -47,9 +47,9 @@ class MeetupRequestsController extends AbstractController
     #[Route('/meetup/requests/list', name: 'meetup_requests_list')]
     public function showLatestRequests(EntityManagerInterface $entityManager): Response
     {
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['created_at' => 'DESC'], 10);
+        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
 
-        return $this->render('meetup_request/meetup_request_list.html.twig.html.twig', [
+        return $this->render('meetup_request/meetup_request_list.html.twig', [
             'meetupRequests' => $meetupRequests
         ]);
     }

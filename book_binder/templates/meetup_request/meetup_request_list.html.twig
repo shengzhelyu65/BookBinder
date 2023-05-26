@@ -22,7 +22,7 @@
             {% for meetupRequest in meetupRequests %}
                 <tr>
                     <td>{{ meetupRequest.getMeetupID() }}</td>
-                    <td>{{ meetupRequest.getLibraryID().getName() }}</td>
+                    <td>{{ meetupRequest.getLibraryID().getLibraryName() }}</td>
                     <td>{{ meetupRequest.getHostUser().getEmail() }}</td>
                     <td>{{ meetupRequest.getBookID() }}</td>
                     <td>{{ meetupRequest.getMaxNumber() }}</td>
