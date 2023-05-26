@@ -231,7 +231,7 @@ class MeetupRequestsController extends AbstractController
             $books[$bookId] = $book;
 
         }
-        return $this->render('meetup_request/Meetup_overview.html.twig', [
+        return $this->render('meetup_request/meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
