@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="meetup querie">
-      <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with some queries">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -440,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685105811778</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Meetup with some queries">
+      <created>1685109678630</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1685109678630</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +481,8 @@
     <MESSAGE value="Added meetup functionality to book page" />
     <MESSAGE value="Made some changes to Search and google API that should be looked at" />
     <MESSAGE value="meetup querie" />
-    <option name="LAST_COMMIT_MESSAGE" value="meetup querie" />
+    <MESSAGE value="Meetup with some queries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Meetup with some queries" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
