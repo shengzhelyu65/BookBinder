@@ -185,8 +185,8 @@ class MeetupRequestsController extends AbstractController
 
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre, 5);
-            $results[$genre] = $books;
+            $books2 = $ApiClient->getBooksBySubject($genre, 5);
+            $results[$genre] = $books2;
         }
 
         // =============
@@ -208,11 +208,37 @@ class MeetupRequestsController extends AbstractController
             $includeProfileForm = true;
         }
 
+        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
+
+        $userId = $user->getId();
+
+        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->createQueryBuilder('mr')
+            ->where('mr.host_user != :userId')
+            ->andWhere('mr.meetup_ID NOT IN (
+        SELECT ml.meetup_ID FROM App\Entity\MeetupList ml WHERE ml.user_ID = :userId
+    )')
+            ->setParameter('userId', $userId)
+            ->orderBy('mr.datetime', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        // Fetch the books based on book IDs in meetupRequests
+        $books = [];
+        foreach ($meetupRequests as $meetupRequest) {
+            $bookId = $meetupRequest->getBookID();
+            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
+            $books[$bookId] = $book;
+
+        }
         return $this->render('meetup_request/Meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
-            'results' => $results
+            'results' => $results,
+            'meetupRequests' => $meetupRequests,
+            'meetupavailabe' => $meetupAvailabe,
+            'books' => $books
         ]);
     }
 
