@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Form\MeetupRequestFormType;
@@ -15,7 +16,7 @@ use App\Api\GoogleBooksApiClient;
 class MeetupRequestsController extends AbstractController
 {
     #[Route('/meetup/request/{userId}/{bookId}', name: 'app_meetup_requests')]
-    public function createMeetupRequest(Request $request, int $userId, int $bookId, EntityManagerInterface $entityManager): Response
+    public function createMeetupRequest(Request $request, int $userId, String $bookId, EntityManagerInterface $entityManager): Response
     {
         $meetupRequest = new MeetupRequests();
 
@@ -50,6 +51,31 @@ class MeetupRequestsController extends AbstractController
     {
         $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
 
+        return $this->render('meetup_request/meetup_request_list.html.twig', [
+            'meetupRequests' => $meetupRequests
+        ]);
+    }
+
+    #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
+    public function joinMeetupRequest(int $userId, int $meetupId, EntityManagerInterface $entityManager): Response
+    {
+        // Get the User and MeetupRequest entities based on the provided IDs
+        $user = $entityManager->getRepository(User::class)->find($userId);
+        $meetupRequest = $entityManager->getRepository(MeetupRequests::class)->find($meetupId);
+
+        if ($user && $meetupRequest) {
+            // Create a new MeetupRequestList entity
+            $meetupRequestList = new MeetupRequestList();
+            $meetupRequestList->setMeetupID($meetupRequest);
+            $meetupRequestList->setUserID($user);
+
+            // Persist the new entity
+            $entityManager->persist($meetupRequestList);
+            $entityManager->flush();
+        }
+
+        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
+        // Redirect or return a response
         return $this->render('meetup_request/meetup_request_list.html.twig', [
             'meetupRequests' => $meetupRequests
         ]);
