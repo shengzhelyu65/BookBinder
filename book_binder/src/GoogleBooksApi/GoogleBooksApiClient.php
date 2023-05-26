@@ -23,7 +23,7 @@ class GoogleBooksApiClient
 {
 
     // TODO: MOVE THIS KEY TO A SAFER PLACE LATER?
-    private string $API_KEY = "AIzaSyDqRjtenxk_Dp8BJv6-Sqo0VvaL2y-6K2g";
+    private string $API_KEY = "AIzaSyCKrBJQwWhsGg4hnW6-3CxUmdWR-s5tGV4";
 
     /**
      * Retrieves an array of books from the Google Books API that match a specified title.
