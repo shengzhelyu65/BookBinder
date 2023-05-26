@@ -4,32 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Start of search page">
+    <list default="true" id="0d066878-c6f1-4201-9eb7-33a41f46ca39" name="Changes" comment="Added meetup functionality to book page">
+      <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Api/GoogleBooksApiClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/book_binder/composer.json</pharConfigPath>
     <execution>
       <executable path="composer" />
     </execution>
   </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/SearchAPI" />
-  </component>
-  <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="dev" />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="Bookonly" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -167,6 +162,96 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfonycasts/verify-email-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/panther" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/php-webdriver/webdriver" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/dbrekelmans/bdi" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/snapappointments/bootstrap-select" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/serializer" />
     </include_path>
   </component>
   <component name="ProjectId" id="2OjYBjDOD0o59i71DjrQj8WKUSl" />
@@ -176,6 +261,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -195,101 +281,11 @@
   }
 }</component>
   <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
-    <configuration default="true" type="DjangoTestsConfigurationType">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
       <method v="2" />
     </configuration>
     <configuration name="Php Local" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="$PROJECT_DIR$/book_binder/public">
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Python.FlaskServer">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
     <list>
@@ -320,6 +316,9 @@
       <workItem from="1683294569705" duration="6515000" />
       <workItem from="1683383473738" duration="8504000" />
       <workItem from="1683525322280" duration="1690000" />
+      <workItem from="1684501574269" duration="7046000" />
+      <workItem from="1684877967589" duration="15771000" />
+      <workItem from="1685085368344" duration="881000" />
     </task>
     <task id="LOCAL-00001" summary="Added a Book class to store books in.">
       <created>1682086348540</created>
@@ -398,14 +397,28 @@
       <option name="project" value="LOCAL" />
       <updated>1683393669816</updated>
     </task>
-    <task id="LOCAL-00012" summary="Start of search page">
-      <created>1683898108217</created>
+    <task id="LOCAL-00012" summary="Basic Bookpage with js needs more layout">
+      <created>1684508769261</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1683898108217</updated>
+      <updated>1684508769261</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added meetup overview page">
+      <created>1684938423819</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1684938423819</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added meetup functionality to book page">
+      <created>1684943197690</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1684943197690</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,8 +457,10 @@
     <MESSAGE value="persist user into db with google authentication" />
     <MESSAGE value="change login redirect route with google authentication" />
     <MESSAGE value="fix the authentication of security bundle with google" />
-    <MESSAGE value="Start of search page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start of search page" />
+    <MESSAGE value="Basic Bookpage with js needs more layout" />
+    <MESSAGE value="Added meetup overview page" />
+    <MESSAGE value="Added meetup functionality to book page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added meetup functionality to book page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
