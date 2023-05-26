@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserPersonalInfo;
 use App\Entity\UserReadingInterest;
+use App\Entity\UserReadingList;
 
 use App\Form\RegistrationFormType;
 use App\Form\ReadingInterestFormType;
@@ -42,6 +43,7 @@ class RegistrationController extends AbstractController
 
         $user = new User();
         $userPersonalInfo = new UserPersonalInfo();
+        $userReadingList = new UserReadingList();
 
         $includeReadingInterestForm = false;
 
@@ -88,6 +90,15 @@ class RegistrationController extends AbstractController
             $userPersonalInfo->setNickname($form->get('nickname')->getData());
 
             $entityManager->persist($userPersonalInfo);
+
+            //handle user reading list
+            $userReadingList->setUser($user);
+
+            $userReadingList->setCurrentlyReading([]);
+            $userReadingList->setWantToRead([]);
+            $userReadingList->setHaveRead([]);
+
+            $entityManager->persist($userReadingList);
 
             $entityManager->flush();
 
