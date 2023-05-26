@@ -117,14 +117,6 @@ class BookReviews
         return $this;
     }
 
-    public function getTitleOfBook(): string {
-        $ApiClient = new GoogleBooksApiClient();
-
-        $book = $ApiClient->getBookById($this->book_ID);
-
-        return $book->getVolumeInfo()->getTitle();
-    }
-
     public function getBookTitle(): ?string
     {
         return $this->book_title;
