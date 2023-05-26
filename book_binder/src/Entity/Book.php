@@ -41,6 +41,9 @@ class Book
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $published_date = null;
 
+    #[ORM\Column]
+    private array $category = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -150,6 +153,18 @@ class Book
     public function setPublishedDate(\DateTimeInterface $published_date): self
     {
         $this->published_date = $published_date;
+
+        return $this;
+    }
+
+    public function getCategory(): array
+    {
+        return $this->category;
+    }
+
+    public function setCategory(array $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
