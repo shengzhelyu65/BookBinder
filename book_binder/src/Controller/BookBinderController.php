@@ -51,6 +51,7 @@ class BookBinderController extends AbstractController
     {
         return $this->render('book_binder/profile.html.twig', [
             'controller_name' => 'BookBinderController',
+            'user' => $this->getUser()
         ]);
     }
 }

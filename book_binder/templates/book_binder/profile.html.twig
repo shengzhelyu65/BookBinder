@@ -4,24 +4,36 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-row justify-content-start align-items-center gap-3">
-                <img src="{{ asset('images/profile_picture.jpg') }}" alt="user" width="80" height="80" class="rounded-circle">
+                <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="80" height="80" class="rounded-circle">
                 <div class="d-flex flex-column">
-                    <h1>Username</h1>
-                    <p><b>Name Surname</b></p>
+                    <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
+                    {% if  user.getUserPersonalInfo().getName() is not null or user.getUserPersonalInfo().getSurname() is not null %}
+                        <p><b>{{ user.getUserPersonalInfo().getName() }} {{ user.getUserPersonalInfo().getSurname() }}<</b></p>
+                    {% endif %}
                 </div>
             </div>
             <hr>
             <h2>Preferences</h2>
             <p><b>Languages</b></p>
-            <p>English</p>
+                {% for language in user.getUserReadingInterest().getLanguages() %}
+                    <p>{{ language }}   </p>
+                {% endfor %}
             <p><b>Genres</b></p>
-            <p>Fiction, Fantasy</p>
+                {% for genre in user.getUserReadingInterest().getGenres() %}
+                    <p>{{ genre }}   </p>
+                {% endfor %}
             <hr>
             <h2>My reading lists</h2>
             <div class="d-flex flex-row justify-content-between">
-                <a href="#" class="text-decoration-none text-black"> read (0) </a>
-                <a href="#" class="text-decoration-none text-black"> currently-reading (0) </a>
-                <a href="#" class="text-decoration-none text-black"> to-read (0) </a>
+                {%  if user.getUserReadingList() is null  %}
+                    <a href="#" class="text-decoration-none text-black"> read (0) </a>
+                    <a href="#" class="text-decoration-none text-black"> currently-reading (0) </a>
+                    <a href="#" class="text-decoration-none text-black"> to-read (0) </a>
+                {%  else %}
+                    <a href="#" class="text-decoration-none text-black"> read ({{ user.getUserReadingList().getHaveRead()|length }}) </a>
+                    <a href="#" class="text-decoration-none text-black"> currently-reading ({{ user.getUserReadingList().getCurrentlyReading()|length }}) </a>
+                    <a href="#" class="text-decoration-none text-black"> to-read ({{ user.getUserReadingList().getWantToRead()|length }}) </a>
+                {% endif %}
             </div>
         </div>
         <div class="col-md-6">
