@@ -227,6 +227,11 @@ class MeetupRequestsController extends AbstractController
             ->getResult();
 
 
+// Retrieve the meetups hosted by the user
+        $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
+
+        // Retrieve the meetup requests for the hosted meetups
+        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
 
 
 
