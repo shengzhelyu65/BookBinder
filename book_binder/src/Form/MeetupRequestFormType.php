@@ -32,6 +32,7 @@ class MeetupRequestFormType extends AbstractType
                     return $er->createQueryBuilder('l')
                         ->orderBy('l.library_name', 'ASC');
                 },
+                'choice_value' => 'library_ID',
             ])
             ->add('datetime', DateTimeType::class, [
                 'required' => true,

@@ -16,20 +16,21 @@
                 <th>Host User</th>
                 <th>Book ID</th>
                 <th>Max Number</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for meetupRequest in meetupRequests %}
                 <tr>
                     <td>{{ meetupRequest.getMeetupID() }}</td>
-                    <td>{{ meetupRequest.getLibraryID().getName() }}</td>
-                    <td>{{ meetupRequest.getHostUser().getEmail() }}</td>
+                    <td>{{ meetupRequest.getLibraryID().getLibraryName() }}</td>
+                    <td>{{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</td>
                     <td>{{ meetupRequest.getBookID() }}</td>
                     <td>{{ meetupRequest.getMaxNumber() }}</td>
+
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% endif %}
-
 {% endblock %}

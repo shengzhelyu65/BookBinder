@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Api\GoogleBooksApiClient;
 use App\Repository\BookReviewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Google\Service\Books\VolumeVolumeInfo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookReviewsRepository::class)]
@@ -16,7 +18,7 @@ class BookReviews
     private ?int $review_ID = null;
 
     #[ORM\Column]
-    private ?int $book_ID = null;
+    private ?string $book_ID = null;
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
@@ -40,12 +42,12 @@ class BookReviews
         return $this->review_ID;
     }
 
-    public function getBookID(): ?int
+    public function getBookID(): ?string
     {
         return $this->book_ID;
     }
 
-    public function setBookID(int $book_ID): self
+    public function setBookID(string$book_ID): self
     {
         $this->book_ID = $book_ID;
 
@@ -110,5 +112,13 @@ class BookReviews
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    public function getTitleOfBook(): string {
+        $ApiClient = new GoogleBooksApiClient();
+
+        $book = $ApiClient->getBookById($this->book_ID);
+
+        return $book->getVolumeInfo()->getTitle();
     }
 }

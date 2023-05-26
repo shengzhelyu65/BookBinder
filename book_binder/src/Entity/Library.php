@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LibraryRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LibraryRepository::class)]
