@@ -25,6 +25,9 @@ class Library
     #[ORM\Column]
     private ?int $house_number = null;
 
+    #[ORM\Column(length: 250)]
+    private ?string $street = null;
+
     #[ORM\Column(length: 25)]
     private ?string $number = null;
 
@@ -83,6 +86,18 @@ class Library
     public function setHouseNumber(int $house_number): self
     {
         $this->house_number = $house_number;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
 
         return $this;
     }

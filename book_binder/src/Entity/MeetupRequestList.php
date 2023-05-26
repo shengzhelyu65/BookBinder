@@ -11,19 +11,19 @@ class MeetupRequestList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $meetup_list_ID = null;
+    private ?int $meetup_request_list_ID = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_ID', nullable: false)]
+    #[ORM\JoinColumn(name: 'meetup_ID', referencedColumnName: 'meetup_id', nullable: false)]
     private ?MeetupRequests $meetup_ID = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'user_ID', referencedColumnName: 'id', nullable: false)]
     private ?User $user_ID = null;
 
-    public function getMeetupListID(): ?int
+    public function getMeetupRequestListID(): ?int
     {
-        return $this->meetup_list_ID;
+        return $this->meetup_request_list_ID;
     }
 
     public function getMeetupID(): ?MeetupRequests

@@ -11,10 +11,12 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.9",
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "easycorp/easyadmin-bundle": "^4.6",
+        "phpdocumentor/reflection-docblock": "^5.3",
+        "phpstan/phpdoc-parser": "^1.20",
+        "snapappointments/bootstrap-select": "^1.13",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
@@ -22,8 +24,13 @@
         "symfony/form": "6.3.*",
         "symfony/framework-bundle": "6.3.*",
         "symfony/mailer": "6.3.*",
+        "symfony/property-access": "6.3.*",
+        "symfony/property-info": "6.3.*",
         "symfony/runtime": "6.3.*",
+        "symfony/yaml": "6.3.*",
+        "guzzlehttp/guzzle": "*"
         "symfony/security-bundle": "6.3.*",
+        "symfony/serializer": "6.3.*",
         "symfony/twig-bundle": "6.2.*",
         "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "6.3.*",
@@ -33,6 +40,8 @@
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fakerphp/faker": "^1.22",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "*",
         "symfony/css-selector": "6.3.*",
@@ -53,7 +62,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "App\\Doctrine\\Type\\": "src/Doctrine/Type/"
         }
     },
     "autoload-dev": {

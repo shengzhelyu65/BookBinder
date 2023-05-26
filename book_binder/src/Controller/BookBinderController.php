@@ -2,47 +2,47 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
+use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(Security $security, EntityManagerInterface $entityManager): Response
+    #[Route("/index", name: 'app_home')]
+    #[Route("/home", name: 'app_home')]
+    #[Route("/", name: 'app_home')]
+    public function home(EntityManagerInterface $entityManager): Response
     {
-        $includeProfileForm = false; // Set this to true or false depending on your condition
+        // ============= API stuff =============
+        $ApiClient = new GoogleBooksApiClient();
 
-        $this->security = $security;
-        $user = $this->security->getUser();
+        // Define an array of genres to search for.
+        $genres = ['fantasy', 'mystery', 'romance'];
 
-        // print_r($user);
-        // Get current user entity object from the database using repository method by email
-        $email = $user->getEmail();
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        // print_r($user->getUserIdentifier());
+        // Create an empty array to hold the results.
+        $results = [];
 
-        // Check if the userPersonalInfo entity object is null
-        if ($user->getUserPersonalInfo() == null) {
-            // If it is null, set the includeProfileForm to false
-            $includeProfileForm = true;
+        // Loop through each genre and retrieve the popular books.
+        foreach ($genres as $genre) {
+            $books = $ApiClient->getBooksBySubject($genre, 40);
+            $results[$genre] = $books;
         }
 
-        return $this->render('book_binder/index.html.twig', [
-            'controller_name' => 'BookBinderController',
-            'includeProfileForm' => $includeProfileForm,
-            'userEmail' => $email,
-        ]);
-    }
+        // ============= Reviews
 
-    #[Route("/home", name: 'app_home')]
-    public function home(): Response
-    {
+        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(10);
+
+        // =============
+
         return $this->render('book_binder/index.html.twig', [
             'controller_name' => 'BookBinderController',
+            'results' => $results,
+            'reviews' => $reviews
         ]);
     }
 

@@ -6,12 +6,12 @@ This is a web application designed and implemented using modern web technologies
 
 ## Minimal Requirements
 
-- [ ] - MySQL database with 5 or more tables
-- [ ] - Fully mapped ORM
+- [x] - MySQL database with 5 or more tables
+- [x] - Fully mapped ORM
 - [x] - User login/authentication
 - [ ] - Test code coverage >65%
 - [ ] - Test data with >1000 database records
-- [ ] - Use of local/remote JSON API
+- [x] - Use of local/remote JSON API
 - [ ] - (Automatically) deployed on studev.groept.be server
 
 

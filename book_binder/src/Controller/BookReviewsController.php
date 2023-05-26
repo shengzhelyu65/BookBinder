@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\BookReviewFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BookReviews;
@@ -17,9 +16,12 @@ class BookReviewsController extends AbstractController
     #[Route('/book/review/{userId}/{bookId}', name: 'app_book_review')]
     public function addBookReview(Request $request, int $userId, int $bookId, EntityManagerInterface $entityManager): Response
     {
+        $bookReview = new BookReviews();
+
+        // Get the currently logged-in user from the database
         $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $userId]);
 
-        $bookReview = new BookReviews();
+        // Create the form
         $form = $this->createForm(BookReviewFormType::class, $bookReview);
         $form->handleRequest($request);
 
