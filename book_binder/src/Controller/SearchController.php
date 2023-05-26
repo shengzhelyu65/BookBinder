@@ -31,7 +31,7 @@ class SearchController extends AbstractController
         $results = $ApiClient->searchBooksByTitle($query, 40);
 
         // Pass the results array to the Twig template.
-        return $this->render('book_binder/bookSearch.html.twig', [
+        return $this->render('book_binder/book_search.html.twig', [
             'controller_name' => 'BookBinderController',
             'results' => $results,
             'query' => $query
@@ -48,36 +48,14 @@ class SearchController extends AbstractController
         $book = $ApiClient->getBookById($id);
 
         $thumbnailUrl = $book->getVolumeInfo()->getImageLinks()->getThumbnail();
-        $includeProfileForm = false; // Set this to true or false depending on your condition
 
-        $this->security = $security;
-        $user = $this->security->getUser();
-
-        // print_r($user);
-        // Get current user entity object from the database using repository method by email
-        $email = $user->getEmail();
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        // print_r($user->getUserIdentifier());
-
-        // Check if the userPersonalInfo entity object is null
-        if ($user->getUserPersonalInfo() == null) {
-            // If it is null, set the includeProfileForm to false
-            $includeProfileForm = true;
-        }
         $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['book_ID' => $id], ['datetime' => 'DESC'], 10);
         // Fetch the books based on book IDs in meetupRequests
 
-
-        if ($book) {
-            return $this->render('book_binder/bookPage.html.twig', [
-                'book' => $book,
-                'thumbnailUrl' => $thumbnailUrl,
-                'meetupRequests' => $meetupRequests
-            ]);
-        } else {
-            return $this->render('book_binder/bookPage.html.twig', [
-                'error' => 'No books found',
-            ]);
-        }
+        return $this->render('book_binder/book_page.html.twig', [
+            'book' => $book,
+            'thumbnailUrl' => $thumbnailUrl,
+            'meetupRequests' => $meetupRequests
+        ]);
     }
 }
