@@ -28,7 +28,7 @@
         "symfony/property-info": "6.3.*",
         "symfony/runtime": "6.3.*",
         "symfony/yaml": "6.3.*",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
         "symfony/security-bundle": "6.3.*",
         "symfony/serializer": "6.3.*",
         "symfony/twig-bundle": "6.2.*",
@@ -36,7 +36,8 @@
         "symfony/yaml": "6.3.*",
         "symfonycasts/verify-email-bundle": "*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "google/apiclient": "*"
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.0",
