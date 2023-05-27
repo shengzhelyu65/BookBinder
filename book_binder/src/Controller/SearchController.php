@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Security;
  * GoogleBooksApiClient, it shows examples on how to
  * use the class.
  */
+
 class SearchController extends AbstractController
 {
     #[Route('/bookSearch/{query}', name: 'bookSearch')]
@@ -44,11 +45,11 @@ class SearchController extends AbstractController
     /**
      * @throws \Google_Exception
      */
-    #[Route('/bookPage/{id}', name: 'bookPage')]
+    #[Route('/book-page/{id}', name: 'book-page')]
     public function clickBook($id, Security $security, EntityManagerInterface $entityManager): Response
     {
-        $ApiClient = new GoogleBooksApiClient();
-        $book = $ApiClient->getBookById($id);
+        // Look up the book by ID in the database
+        $book = $entityManager->getRepository(Book::class)->find($id);
 
         // current user for meetups
         $this->security = $security;
@@ -59,7 +60,7 @@ class SearchController extends AbstractController
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         $userId = $user->getId();
 
-        $thumbnailUrl = $book->getVolumeInfo()->getImageLinks()->getThumbnail();
+        $thumbnailUrl = $book->getThumbnail();
 
         //$meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['book_ID' => $id], ['datetime' => 'DESC'], 10);
         $meetupRequests = $entityManager->createQueryBuilder()
@@ -90,8 +91,8 @@ class SearchController extends AbstractController
             'meetupRequests' => $meetupRequests
         ]);
     }
-    #[Route('/bookPage/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
-    public function joinMeetupRequest(String $bookId, int $meetupRequestId,Security $security, EntityManagerInterface $entityManager): Response
+    #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
+    public function joinMeetupRequest(String $bookId, int $meetupRequestId, Security $security, EntityManagerInterface $entityManager): Response
     {
         $this->security = $security;
         $user = $this->security->getUser();
@@ -130,7 +131,7 @@ class SearchController extends AbstractController
         }
 
         // Redirect or return a response
-        return $this->redirectToRoute('bookPage', ['id' => $bookId]);
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
     }
 
     /**
