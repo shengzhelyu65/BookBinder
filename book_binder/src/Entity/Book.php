@@ -23,7 +23,7 @@ class Book
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 600)]
     private ?string $thumbnail = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
