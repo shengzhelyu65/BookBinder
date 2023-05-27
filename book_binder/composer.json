@@ -36,7 +36,8 @@
         "symfonycasts/verify-email-bundle": "*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "google/apiclient": "*"
+        "google/apiclient": "*",
+        "symfony/messenger": "*"
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.0",
