@@ -177,8 +177,6 @@ class MeetupRequestsController extends AbstractController
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
-        // Define an array of genres to search for.
-        $genres = ['fantasy', 'mystery', 'romance'];
 
         // Create an empty array to hold the results.
         $results = [];
@@ -243,16 +241,30 @@ class MeetupRequestsController extends AbstractController
 
             // Retrieve the meetup requests for the hosted meetups
 
-        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
+        $meetupRequestsPersons = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
+
 
             // Fetch the books based on book IDs in meetupRequests
         $books = [];
-        foreach ($meetupRequests as $meetupRequest) {
-            $bookId = $meetupRequest->getBookID();
+        foreach ($meetupRequestsPersons as $meetupRequest) {
+            $bookId = $meetupRequest->getMeetupID()->getBookID();
             $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
             $books[$bookId] = $book;
 
         }
+        $usernames = [];
+        foreach ($meetupRequestsPersons as $meetupRequestPerson) {
+            $meetupId = $meetupRequestPerson->getMeetupID()->getMeetupID();
+            $userName = $meetupRequestPerson->getUserID()->getUserPersonalInfo()->getName();
+            if (!isset($usernames[$meetupId])) {
+                $usernames[$meetupId] = [
+                    'meetupId' => $meetupRequestPerson->getMeetupID(),
+                    'usernames' => [],
+                ];
+            }
+            $usernames[$meetupId]['usernames'][] = $userName;
+        }
+
         $books2 = [];
         foreach ($upcomingRequests as $up) {
             $bookId = $up->getBookID();
@@ -272,7 +284,9 @@ class MeetupRequestsController extends AbstractController
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
             'results' => $results,
-            'meetupRequests' => $meetupRequests,
+            'meetupRequests' => $meetupRequestsPersons,
+            'meetupRequestsPersons' => $meetupRequestsPersons,
+            'usernames' => $usernames,
             'meetupAvailabe'=>$meetupAvailable,
             'upcoming' => $upcomingRequests,
             'books' => $books,
