@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\MeetupRequests;
+use App\Entity\Book;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Api\GoogleBooksApiClient;
@@ -57,5 +59,29 @@ class SearchController extends AbstractController
             'thumbnailUrl' => $thumbnailUrl,
             'meetupRequests' => $meetupRequests
         ]);
+    }
+
+    /**
+     * @Route("/bookSuggestion/{input}", name="book_suggestion", requirements={"input"=".*"})
+     */
+    #[Route("/bookSuggestion/{input}", name: 'book_suggestion')]
+    public function bookSuggestion($input, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $books = $entityManager->getRepository(Book::class)->createQueryBuilder('b')
+            ->where('b.title LIKE :title')
+            ->setParameter('title', '%' . $input . '%')
+            ->getQuery()
+            ->getResult();
+
+        $suggestions = [];
+        foreach ($books as $book) {
+            $suggestions[] = [
+                'id' => $book->getId(),
+                'title' => $book->getTitle(),
+                // add any other book properties you need
+            ];
+        }
+
+        return new JsonResponse($suggestions);
     }
 }
