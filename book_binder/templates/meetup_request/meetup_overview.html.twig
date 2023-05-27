@@ -48,8 +48,10 @@
                                             <h5 class="card-title"><a href="#" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
-                                                    <button type="button" class="btn btn-success me-2">Accept</button>
-                                                    <button type="button" class="btn btn-danger">Deny</button>
+                                                    <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
+                                                        <button type="submit" class="btn btn-success me-2" name="action" value="accept">Accept</button>
+                                                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

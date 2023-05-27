@@ -110,7 +110,7 @@ class MeetupRequestsController extends AbstractController
         $entityManager->remove($meetupRequest);
         $entityManager->flush();
 
-        return $this->redirectToRoute('meetup_requests_host', ['hostId' => $host]);
+        return $this->redirectToRoute('meetup_overview');
     }
 
     #[Route('/meetup/overview', name: 'meetup_overview')]
@@ -193,5 +193,4 @@ class MeetupRequestsController extends AbstractController
             'booksMeetupAvailables' => $booksMeetupAvailables,
         ]);
     }
-
 }
