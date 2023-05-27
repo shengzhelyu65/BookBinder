@@ -138,3 +138,4 @@ class GoogleBooksApiClient
 
         return new Google_Service_Books($client);
     }
+}
