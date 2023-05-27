@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with some queries">
-      <change afterPath="$PROJECT_DIR$/book_binder/src/Message/AddBookToDatabase.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/book_binder/src/MessageHandler/AddBookToDatabaseHandler.php" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Composer.json update for symfony/messenger">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Entity/Book.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -451,7 +446,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685119756522</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Homepage Caching works">
+      <created>1685204250232</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1685204250232</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Composer.json update for symfony/messenger">
+      <created>1685204448111</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1685204448111</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -496,7 +505,9 @@
     <MESSAGE value="Made some changes to Search and google API that should be looked at" />
     <MESSAGE value="meetup querie" />
     <MESSAGE value="Meetup with some queries" />
-    <option name="LAST_COMMIT_MESSAGE" value="Meetup with some queries" />
+    <MESSAGE value="Homepage Caching works" />
+    <MESSAGE value="Composer.json update for symfony/messenger" />
+    <option name="LAST_COMMIT_MESSAGE" value="Composer.json update for symfony/messenger" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

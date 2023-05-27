@@ -20,7 +20,8 @@
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
                 <form class="w-100 me-3" onsubmit="searchBooks(event)">
-                    <input type="search" class="form-control" placeholder="Search...">
+                    <input type="search" class="form-control" placeholder="Search..." list="book-list" onkeyup="getSuggestion(event)">
+                    <datalist id="book-list"></datalist>
                 </form>
                 <script>
                     function searchBooks(event) {
@@ -29,6 +30,20 @@
                         const url = `/bookSearch/${encodeURIComponent(query)}`;
                         console.log("Searching for: " + query);
                         window.location.href = url;
+                    }
+
+                    async function getSuggestion(event) {
+                        const input = event.target.value;
+                        const url = `/bookSuggestion/${encodeURIComponent(input)}`;
+                        const response = await fetch(url);
+                        const suggestions = await response.json();
+                        const datalist = document.getElementById('book-list');
+                        datalist.innerHTML = ''; // clear previous suggestions
+                        suggestions.forEach(suggestion => {
+                            const option = document.createElement('option');
+                            option.value = suggestion.title;
+                            datalist.appendChild(option);
+                        });
                     }
                 </script>
 
