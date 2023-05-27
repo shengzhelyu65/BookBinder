@@ -47,20 +47,6 @@ class MeetupRequestsController extends AbstractController
         ]);
     }
 
-    #[Route('/meetup/requests/list', name: 'meetup_requests_list')]
-    public function showLatestRequests(EntityManagerInterface $entityManager): Response
-    {
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
-
-        // TODO: only show the requests that the user has not joined yet
-        // TODO: and that are not hosted by the user, and that are not expired
-        // TODO: and that are not full, and in the user's library
-
-        return $this->render('meetup_request/meetup_request_list.html.twig', [
-            'meetupRequests' => $meetupRequests
-        ]);
-    }
-
     #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
     public function joinMeetupRequest(int $userId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
@@ -100,22 +86,6 @@ class MeetupRequestsController extends AbstractController
         ]);
     }
 
-    #[Route('/meetup/requests/host/{hostId}', name: 'meetup_requests_host')]
-    public function meetupRequestsHost(int $hostId, EntityManagerInterface $entityManager): Response
-    {
-        // $user = $this->getUser(); // Assuming you have user authentication
-        $user = $entityManager->getRepository(User::class)->find($hostId);
-
-        // Retrieve the meetups hosted by the user
-        $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
-
-        // Retrieve the meetup requests for the hosted meetups
-        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
-
-        return $this->render('meetup_request/meetup_request_host.html.twig', [
-            'meetupRequests' => $meetupRequests,
-        ]);
-    }
 
     #[Route('/meetup/request/host/accept/{meetupRequestId}', name: 'meetup_request_host_accept')]
     public function acceptMeetupRequest(int $meetupRequestId, EntityManagerInterface $entityManager, Request $request): Response
@@ -144,31 +114,6 @@ class MeetupRequestsController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('meetup_requests_host', ['hostId' => $host]);
-    }
-
-    #[Route('/meetup/requests/upcoming/{userId}', name: 'meetup_requests_upcoming')]
-    public function upcomingMeetupRequests(int $userId, EntityManagerInterface $entityManager): Response
-    {
-        // Get the joined meetup requests for the user
-        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
-        $joinedMeetupIds = array_map(function ($joinedRequest) {
-            return $joinedRequest->getMeetupID();
-        }, $joinedRequests);
-
-        // Get the hosted meetup requests for the user
-        $hostedRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $userId]);
-
-        // Combine the meetup requests into a single list
-        $upcomingRequests = array_merge($joinedMeetupIds, $hostedRequests);
-
-        // Sort the meetup requests by datetime
-        usort($upcomingRequests, function ($a, $b) {
-            return $a->getDatetime() <=> $b->getDatetime();
-        });
-
-        return $this->render('meetup_request/meetup_request_upcoming.html.twig', [
-            'upcomingRequests' => $upcomingRequests,
-        ]);
     }
 
     #[Route('/meetup/overview', name: 'meetup_overview')]
