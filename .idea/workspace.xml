@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Composer.json update for symfony/messenger">
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with Correct Queries">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Meetup" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -439,28 +440,7 @@
       <option name="project" value="LOCAL" />
       <updated>1685109678630</updated>
     </task>
-    <task id="LOCAL-00018" summary="Meetup with some queries">
-      <created>1685119756522</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1685119756522</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Homepage Caching works">
-      <created>1685204250232</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1685204250232</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Composer.json update for symfony/messenger">
-      <created>1685204448111</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1685204448111</updated>
-    </task>
-    <option name="localTasksCounter" value="21" />
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,9 +485,8 @@
     <MESSAGE value="Made some changes to Search and google API that should be looked at" />
     <MESSAGE value="meetup querie" />
     <MESSAGE value="Meetup with some queries" />
-    <MESSAGE value="Homepage Caching works" />
-    <MESSAGE value="Composer.json update for symfony/messenger" />
-    <option name="LAST_COMMIT_MESSAGE" value="Composer.json update for symfony/messenger" />
+    <MESSAGE value="Meetup with Correct Queries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Meetup with Correct Queries" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

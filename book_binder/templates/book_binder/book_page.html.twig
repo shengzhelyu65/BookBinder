@@ -84,7 +84,7 @@
                                 <p class="card-text">participants: {{ meetupRequest.getMaxNumber() }}</p>
                                 <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
                                 <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
-                                <button class="btn btn-primary">Join</button>
+                                <a href="{{ path('meetup_requests_list_join_book', {'bookId': book.getID(),'meetupRequestId': meetupRequest.getMeetupId()}) }}" class="btn btn-primary">Join</a>
                             </div>
                         </div>
                     </div>

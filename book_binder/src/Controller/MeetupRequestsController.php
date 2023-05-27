@@ -134,10 +134,15 @@ class MeetupRequestsController extends AbstractController
             ->select('mr')
             ->from('App\Entity\MeetupRequests', 'mr')
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
+            ->leftJoin('App\Entity\MeetupRequestList', 'mrl', 'WITH', 'mr.meetup_ID = mrl.meetup_ID')
             ->where('mr.host_user != :userId AND NOT EXISTS (
-                        SELECT 1 FROM App\Entity\MeetupList subml
-                        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
-                        )')
+        SELECT 1 FROM App\Entity\MeetupList subml
+        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+    )')
+            ->andWhere('NOT EXISTS (
+        SELECT 1 FROM App\Entity\MeetupRequestList submrl
+        WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
+    )')
             ->setParameter('userId', $userId)
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
