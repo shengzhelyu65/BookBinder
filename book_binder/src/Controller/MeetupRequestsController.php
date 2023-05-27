@@ -47,20 +47,6 @@ class MeetupRequestsController extends AbstractController
         ]);
     }
 
-    #[Route('/meetup/requests/list', name: 'meetup_requests_list')]
-    public function showLatestRequests(EntityManagerInterface $entityManager): Response
-    {
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
-
-        // TODO: only show the requests that the user has not joined yet
-        // TODO: and that are not hosted by the user, and that are not expired
-        // TODO: and that are not full, and in the user's library
-
-        return $this->render('meetup_request/meetup_request_list.html.twig', [
-            'meetupRequests' => $meetupRequests
-        ]);
-    }
-
     #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
     public function joinMeetupRequest(int $userId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
@@ -93,29 +79,10 @@ class MeetupRequestsController extends AbstractController
             }
         }
 
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
         // Redirect or return a response
-        return $this->render('meetup_request/meetup_request_list.html.twig', [
-            'meetupRequests' => $meetupRequests
-        ]);
+        return $this->redirectToRoute('meetup_overview');
     }
 
-    #[Route('/meetup/requests/host/{hostId}', name: 'meetup_requests_host')]
-    public function meetupRequestsHost(int $hostId, EntityManagerInterface $entityManager): Response
-    {
-        // $user = $this->getUser(); // Assuming you have user authentication
-        $user = $entityManager->getRepository(User::class)->find($hostId);
-
-        // Retrieve the meetups hosted by the user
-        $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
-
-        // Retrieve the meetup requests for the hosted meetups
-        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
-
-        return $this->render('meetup_request/meetup_request_host.html.twig', [
-            'meetupRequests' => $meetupRequests,
-        ]);
-    }
 
     #[Route('/meetup/request/host/accept/{meetupRequestId}', name: 'meetup_request_host_accept')]
     public function acceptMeetupRequest(int $meetupRequestId, EntityManagerInterface $entityManager, Request $request): Response
@@ -143,85 +110,27 @@ class MeetupRequestsController extends AbstractController
         $entityManager->remove($meetupRequest);
         $entityManager->flush();
 
-        return $this->redirectToRoute('meetup_requests_host', ['hostId' => $host]);
-    }
-
-    #[Route('/meetup/requests/upcoming/{userId}', name: 'meetup_requests_upcoming')]
-    public function upcomingMeetupRequests(int $userId, EntityManagerInterface $entityManager): Response
-    {
-        // Get the joined meetup requests for the user
-        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
-        $joinedMeetupIds = array_map(function ($joinedRequest) {
-            return $joinedRequest->getMeetupID();
-        }, $joinedRequests);
-
-        // Get the hosted meetup requests for the user
-        $hostedRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $userId]);
-
-        // Combine the meetup requests into a single list
-        $upcomingRequests = array_merge($joinedMeetupIds, $hostedRequests);
-
-        // Sort the meetup requests by datetime
-        usort($upcomingRequests, function ($a, $b) {
-            return $a->getDatetime() <=> $b->getDatetime();
-        });
-
-        return $this->render('meetup_request/meetup_request_upcoming.html.twig', [
-            'upcomingRequests' => $upcomingRequests,
-        ]);
+        return $this->redirectToRoute('meetup_overview');
     }
 
     #[Route('/meetup/overview', name: 'meetup_overview')]
     public function showMeetupOverview(Security $security, EntityManagerInterface $entityManager): Response
     {
-        // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
-
-        // Create an empty array to hold the results.
-        $results = [];
-
-        // Loop through each genre and retrieve the popular books.
-
-
-        // =============
-
-        $includeProfileForm = false; // Set this to true or false depending on your condition
-
+        // Get the current user
         $this->security = $security;
         $user = $this->security->getUser();
 
-        // print_r($user);
         // Get current user entity object from the database using repository method by email
         $email = $user->getEmail();
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-        // print_r($user->getUserIdentifier());
-
-        // Check if the userPersonalInfo entity object is null
-        if ($user->getUserPersonalInfo() == null) {
-            // If it is null, set the includeProfileForm to false
-            $includeProfileForm = true;
-        }
         $userId = $user->getId();
-        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
-        $joinedMeetupIds = array_map(function ($joinedRequest) {
-            return $joinedRequest->getMeetupID();
-        }, $joinedRequests);
 
-        // Get the hosted meetup requests for the user
-        $hostedRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $userId]);
-
-        // Combine the meetup requests into a single list
-        $upcomingRequests = array_merge($joinedMeetupIds, $hostedRequests);
-
-        // Sort the meetup requests by datetime
-        usort($upcomingRequests, function ($a, $b) {
-            return $a->getDatetime() <=> $b->getDatetime();
-        });
-
-
-
-        $meetupAvailable = $entityManager->createQueryBuilder()
+        // The third column
+        // Retrieve the latest meetup requests
+        // $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
+        $meetupAvailables = $entityManager->createQueryBuilder()
             ->select('mr')
             ->from('App\Entity\MeetupRequests', 'mr')
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
@@ -230,70 +139,58 @@ class MeetupRequestsController extends AbstractController
                         WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
                         )')
             ->setParameter('userId', $userId)
-            ->orderBy('mr.datetime', 'DESC')
+            ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+        // Fetch the books based on book IDs in meetupRequests
+        $booksMeetupAvailables = [];
+        foreach ($meetupAvailables as $meetupAvailable) {
+            $bookId = $meetupAvailable->getBookID();
+            $book = $ApiClient->getBookById($bookId);
+            $booksMeetupAvailables[$bookId] = $book;
+        }
 
-
-// Retrieve the meetups hosted by the user
+        // The second column
+        // Retrieve the meetups hosted by the user
         $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
-
-            // Retrieve the meetup requests for the hosted meetups
-
-        $meetupRequestsPersons = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
-
-
-            // Fetch the books based on book IDs in meetupRequests
-        $books = [];
-        foreach ($meetupRequestsPersons as $meetupRequest) {
+        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
+        $booksMeetupRequests = [];
+        foreach ($meetupRequests as $meetupRequest) {
             $bookId = $meetupRequest->getMeetupID()->getBookID();
-            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
-            $books[$bookId] = $book;
-
-        }
-        $usernames = [];
-        foreach ($meetupRequestsPersons as $meetupRequestPerson) {
-            $meetupId = $meetupRequestPerson->getMeetupID()->getMeetupID();
-            $userName = $meetupRequestPerson->getUserID()->getUserPersonalInfo()->getName();
-            if (!isset($usernames[$meetupId])) {
-                $usernames[$meetupId] = [
-                    'meetupId' => $meetupRequestPerson->getMeetupID(),
-                    'usernames' => [],
-                ];
-            }
-            $usernames[$meetupId]['usernames'][] = $userName;
+            $book = $ApiClient->getBookById($bookId);
+            $booksMeetupRequests[$bookId] = $book;
         }
 
-        $books2 = [];
-        foreach ($upcomingRequests as $up) {
-            $bookId = $up->getBookID();
-            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
-            $books2[$bookId] = $book;
-
+        // The first column
+        // Get the joined meetup requests for the user
+        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
+        $joinedMeetupIds = array_map(function ($joinedRequest) {
+            return $joinedRequest->getMeetupID();
+        }, $joinedRequests);
+        // Combine the meetup requests into a single list
+        $upcomingRequests = array_merge($joinedMeetupIds, $hostedMeetups);
+        // Sort the meetup requests by datetime
+        usort($upcomingRequests, function ($a, $b) {
+            return $a->getDatetime() <=> $b->getDatetime();
+        });
+        $booksUpcomingRequests = [];
+        foreach ($upcomingRequests as $upcomingRequest) {
+            $bookId = $upcomingRequest->getBookID();
+            $book = $ApiClient->getBookById($bookId);
+            $booksUpcomingRequests[$bookId] = $book;
         }
-        $books3 = [];
-        foreach ($meetupAvailable as $meetupAvailabl) {
-            $bookId = $meetupAvailabl->getBookID();
-            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
-            $books3[$bookId] = $book;
 
-        }
         return $this->render('meetup_request/meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
-            'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
-            'results' => $results,
-            'meetupRequests' => $meetupRequestsPersons,
-            'meetupRequestsPersons' => $meetupRequestsPersons,
-            'usernames' => $usernames,
-            'meetupAvailabe'=>$meetupAvailable,
-            'upcoming' => $upcomingRequests,
-            'books' => $books,
-            'books2' =>$books2,
-            'books3' => $books3
-
+            'userId' => $userId,
+            'upcomingRequests' => $upcomingRequests,
+            'booksUpcomingRequests' => $booksUpcomingRequests,
+            'meetupRequests' => $meetupRequests,
+            'booksMeetupRequests' => $booksMeetupRequests,
+            'meetupAvailabes'=>$meetupAvailables,
+            'booksMeetupAvailables' => $booksMeetupAvailables,
         ]);
     }
-
 }

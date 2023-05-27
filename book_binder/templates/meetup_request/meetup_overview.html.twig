@@ -9,17 +9,18 @@
                         <h5>Upcoming meetups</h5>
                     </div>
                     <div class="d-flex flex-column overflow-auto">
-                        {% for meetupRequest in upcoming %}
+                        {% for upcomingRequest in upcomingRequests %}
                             <div class="card mb-3" style="max-width: 540px;">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="{{ books2[meetupRequest.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="card-img-top" alt="{{ books2[meetupRequest.getBookID()].getVolumeInfo().getTitle() }}">                                        </div>
+                                        <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}"
+                                             class="card-img-top" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}"></div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ books2[meetupRequest.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                            <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
-                                            <p class="card-text">Number of people: {{ meetupRequest.getMaxNumber() }}</p>
-                                            <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
+                                            <h5 class="card-title">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                            <p class="card-text">Date: {{ upcomingRequest.getDatetime()|date('F j') }}</p>
+                                            <p class="card-text">Number of people: {{ upcomingRequest.getMaxNumber() }}</p>
+                                            <p class="card-text">library: {{ upcomingRequest.getLibraryID().getLibraryName() }}</p>
                                             <p class="card-text"><small class="text-muted">See more</small></p>
                                         </div>
                                     </div>
@@ -35,28 +36,28 @@
                         <h5>Meetup requests</h5>
                     </div>
                     <div class="d-flex flex-column overflow-auto">
-                        {% for meetupId, usernamesForMeetupId in usernames %}
-                            {% for username in usernamesForMeetupId.usernames %}
-                                <div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="{{ books[usernamesForMeetupId.meetupId.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ books[usernamesForMeetupId.meetupId.getBookID()].getVolumeInfo().getTitle() }}">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ books[usernamesForMeetupId.meetupId.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                                <h5 class="card-title"><a href="#" class="text-decoration-none">{{ username }}</a></h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <button type="button" class="btn btn-success me-2">Accept</button>
-                                                        <button type="button" class="btn btn-danger">Deny</button>
-                                                    </div>
+                        {% for meetupRequest in meetupRequests %}
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top"
+                                             alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}"></div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                            <h5 class="card-title"><a href="#" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
+                                                        <button type="submit" class="btn btn-success me-2" name="action" value="accept">Accept</button>
+                                                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -68,17 +69,18 @@
                         <h5>Meetups at your library</h5>
                     </div>
                     <div class="d-flex flex-column overflow-auto">
-                        {% for meetup in meetupAvailabe %}
+                        {% for meetupAvailabe in meetupAvailabes %}
                             <div class="card mb-3" style="max-width: 540px;">
                                 <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="{{ books3[meetup.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ books3[meetup.getBookID()].getVolumeInfo().getTitle() }}">                                        </div>
+                                        <img src="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top"
+                                             alt="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}"></div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ books3[meetup.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                            <p class="card-text">host: {{ meetup.getHostUser().getUserPersonalInfo().getName() }}</p>
-                                            <p class="card-text">Max participants: {{ meetup.getMaxNumber() }}</p>
-                                            <button class="btn btn-primary mb-2">Join</button>
+                                            <h5 class="card-title">{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                            <p class="card-text">host: {{ meetupAvailabe.getHostUser().getUserPersonalInfo().getName() }}</p>
+                                            <p class="card-text">Max participants: {{ meetupAvailabe.getMaxNumber() }}</p>
+                                            <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailabe.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
                                             <p class="card-text"><small class="text-muted">See more</small></p>
                                         </div>
                                     </div>
