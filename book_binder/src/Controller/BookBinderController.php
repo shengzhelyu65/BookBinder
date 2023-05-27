@@ -28,6 +28,7 @@ class BookBinderController extends AbstractController
         // Define an array of genres to search for.
         $genres = $user->getUserReadingInterest()->getGenres();
 
+
         // Create an empty array to hold the results.
         $results = [];
 
