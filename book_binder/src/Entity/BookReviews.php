@@ -37,6 +37,9 @@ class BookReviews
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
+    #[ORM\Column(length: 200)]
+    private ?string $book_title = null;
+
     public function getReviewID(): ?int
     {
         return $this->review_ID;
@@ -114,11 +117,15 @@ class BookReviews
         return $this;
     }
 
-    public function getTitleOfBook(): string {
-        $ApiClient = new GoogleBooksApiClient();
+    public function getBookTitle(): ?string
+    {
+        return $this->book_title;
+    }
 
-        $book = $ApiClient->getBookById($this->book_ID);
+    public function setBookTitle(string $book_title): self
+    {
+        $this->book_title = $book_title;
 
-        return $book->getVolumeInfo()->getTitle();
+        return $this;
     }
 }

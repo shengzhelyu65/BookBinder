@@ -23,8 +23,6 @@ class GoogleBooksApiClient
 {
 
     // TODO: MOVE THIS KEY TO A SAFER PLACE LATER?
-    // AIzaSyCKrBJQwWhsGg4hnW6-3CxUmdWR-s5tGV4
-    // AIzaSyDqRjtenxk_Dp8BJv6-Sqo0VvaL2y-6K2g
     private string $API_KEY = "AIzaSyCKrBJQwWhsGg4hnW6-3CxUmdWR-s5tGV4";
 
     /**
@@ -72,7 +70,7 @@ class GoogleBooksApiClient
      *
      * @return array An array of book objects that match the specified subject.
      */
-    function getBooksBySubject(string $subject, int $maxResults = 3, int $startIndex = 0): array
+    function getBooksBySubject(string $subject, int $maxResults = 40, int $startIndex = 0): array
     {
         // Get Google Books API service
         $service = $this->getBooksService();
@@ -140,4 +138,3 @@ class GoogleBooksApiClient
 
         return new Google_Service_Books($client);
     }
-}
