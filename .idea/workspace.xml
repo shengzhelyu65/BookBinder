@@ -36,7 +36,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.1">
     <include_path>
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/event-dispatcher" />
@@ -285,10 +285,6 @@
   }
 }</component>
   <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
-    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
-      <option name="pathToComposerJson" value="$PROJECT_DIR$/book_binder/composer.json" />
-      <method v="2" />
-    </configuration>
     <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
       <method v="2" />
