@@ -9,13 +9,20 @@
                     {% for book in books %}
                         <a href="{{ path('bookPage', {'id': book.getId() }) }}" class="text-decoration-none text-black p-2">
                             <div class="card" style="width: 10rem; height: 100%">
-                                <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="card-img-top" alt="{{ book.getVolumeInfo().getTitle() }}" style="width: 100%; height: 16rem; object-fit: cover">
+                                {% if book.getThumbnail() %}
+                                    <img src="{{ book.getThumbnail() }}" class="card-img-top" alt="{{ book.getTitle() }}" style="width: 100%; height: 16rem; object-fit: cover">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top" alt="Empty Book Cover" style="width: 100%; height: 16rem; object-fit: cover">
+                                {% endif %}
+
                                 <div class="card-body d-none d-md-block">
-                                    <span class="card-title d-block text-truncate-2" style="max-height: 4rem; max-width: 100%">
-                                        <b>{{ book.getVolumeInfo().getTitle() }}</b>
-                                    </span>
+
+                                <span class="card-title d-block text-truncate-2" style="max-height: 4rem; max-width: 100%">
+                                    <b>{{ book.getTitle() }}</b>
+
+                                </span>
                                     <span class="card-text d-block text-truncate" style="max-height: 4rem; max-width: 100%">
-                                        {{ book.getVolumeInfo().getAuthors()|join(', ') }}
+                                        {{ book.getAuthor() }}
                                     </span>
                                 </div>
                             </div>

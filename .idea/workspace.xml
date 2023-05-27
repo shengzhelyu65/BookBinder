@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with some queries" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with some queries">
+      <change afterPath="$PROJECT_DIR$/book_binder/src/Message/AddBookToDatabase.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/book_binder/src/MessageHandler/AddBookToDatabaseHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/BookBinderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Entity/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/index.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +36,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.1">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/book_binder/vendor/psr/event-dispatcher" />
@@ -276,6 +285,10 @@
   }
 }</component>
   <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
+    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
+      <option name="pathToComposerJson" value="$PROJECT_DIR$/book_binder/composer.json" />
+      <method v="2" />
+    </configuration>
     <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
       <method v="2" />

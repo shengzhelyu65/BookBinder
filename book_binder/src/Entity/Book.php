@@ -41,6 +41,21 @@ class Book
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $published_date = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $category = null;
+
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
