@@ -79,11 +79,8 @@ class MeetupRequestsController extends AbstractController
             }
         }
 
-        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
         // Redirect or return a response
-        return $this->render('meetup_request/meetup_request_list.html.twig', [
-            'meetupRequests' => $meetupRequests
-        ]);
+        return $this->redirectToRoute('meetup_overview');
     }
 
 
@@ -142,7 +139,7 @@ class MeetupRequestsController extends AbstractController
                         WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
                         )')
             ->setParameter('userId', $userId)
-            ->orderBy('mr.datetime', 'DESC')
+            ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
@@ -187,6 +184,7 @@ class MeetupRequestsController extends AbstractController
         return $this->render('meetup_request/meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
             'userEmail' => $email,
+            'userId' => $userId,
             'upcomingRequests' => $upcomingRequests,
             'booksUpcomingRequests' => $booksUpcomingRequests,
             'meetupRequests' => $meetupRequests,
