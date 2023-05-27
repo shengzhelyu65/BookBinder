@@ -14,11 +14,17 @@
                 <div class="col">
                     <h1>{{ book.getTitle() }}</h1>
                     <p>
-                        Author: {{ book.getAuthor() }}
+                        {% set authors = book.getAuthor() %}
+                        {% if authors|length == 1 %}
+                            Author:
+                        {% else %}
+                            Authors:
+                        {% endif %}
+                        {{ authors|join(', ') }}
                     </p>
-                    <p>Rating: {{ book.getRating() }}</p>
-                    {% if book.getReviewCount() is defined %}
-                        <p>Reviews: {{ book.getReviewCount() }}</p>
+                    <p>Rating: {{ book.getVolumeInfo().getAverageRating() }}</p>
+                    {% if book.getVolumeInfo().getRatingsCount() is defined %}
+                        <p>Reviews: {{ book.getVolumeInfo().getRatingsCount() }}</p>
                     {% endif %}
                     <div class="dropdown pb-2">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -52,8 +58,8 @@
                     </button>
                 </p>
                 <div class="card card-body">
-                    <p id="content1" style="display: block;">{{ book.getDescription() | raw }}</p>
-                    <p id="content2" style="display: none;">{% set authors = book.getAuthor() %}
+                    <p id="content1" style="display: block;">{{ book.getVolumeInfo().getDescription() | raw }}</p>
+                    <p id="content2" style="display: none;">{% set authors = book.getVolumeInfo().getAuthors() %}
                         {% if authors|length == 1 %}
                             Author:
                         {% else %}
