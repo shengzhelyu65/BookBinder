@@ -33,7 +33,9 @@
                             <li><a class="dropdown-item" href="#" onclick="changeButtonText('To read', this)">To read</a></li>
                         </ul>
                     </div>
-                    <button type="button" class="btn btn-primary  btn-lg" data-bs-toggle="modal" data-bs-target="#host" >Host Meetup</button>
+                    <form method="POST" action="{{ path('app_meetup_requests', {'bookId': book.getId()}) }}">
+                        <button type="submit" class="btn btn-primary btn-lg">Host Meetup</button>
+                    </form>
 
                     <script>
                         function changeButtonText(text, element) {
