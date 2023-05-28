@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\Security;
 
 class SearchController extends AbstractController
 {
-    #[Route('/bookSearch/{query}', name: 'bookSearch')]
+    #[Route('/book-search/{query}', name: 'book-search')]
     public function index($query): Response
     {
         $ApiClient = new GoogleBooksApiClient();
