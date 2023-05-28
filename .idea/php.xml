@@ -220,6 +220,9 @@
       <path value="$PROJECT_DIR$/book_binder/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/book_binder/vendor/psr/clock" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

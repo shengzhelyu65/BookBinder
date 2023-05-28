@@ -1,10 +1,9 @@
 {% extends 'base_website.html.twig' %}
-//what
 {% block body %}
     <h1>You searched for '{{ query }}'</h1>
     <p>{{ results|length }} result(s) found</p>
     {% for book in results %}
-        <a href="{{ path('bookPage', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">
+        <a href="{{ path('book-page', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">
             <div class="card mb-3">
                 <div class="d-flex flex-row h-100">
                     <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="rounded-start" alt="{{ book.getVolumeInfo().getTitle() }}" style="width: 6rem; height: 100%; object-fit: cover">

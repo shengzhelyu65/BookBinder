@@ -27,14 +27,14 @@
                     function searchBooks(event) {
                         event.preventDefault(); // prevent form submission
                         const query = event.target.querySelector('input').value;
-                        const url = `/bookSearch/${encodeURIComponent(query)}`;
+                        const url = `/book-search/${encodeURIComponent(query)}`;
                         console.log("Searching for: " + query);
                         window.location.href = url;
                     }
 
                     async function getSuggestion(event) {
                         const input = event.target.value;
-                        const url = `/bookSuggestion/${encodeURIComponent(input)}`;
+                        const url = `/book-suggestion/${encodeURIComponent(input)}`;
                         const response = await fetch(url);
                         const suggestions = await response.json();
                         const datalist = document.getElementById('book-list');
