@@ -6,6 +6,8 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\User;
+use App\Entity\UserReadingList;
+
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,7 +50,7 @@ class SearchController extends AbstractController
      * @throws \Google_Exception
      */
     #[Route('/book-page/{id}', name: 'book-page')]
-    public function clickBook($id, Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
+    public function clickBook($id, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
         // ============= API stuff =============
         // Check if book in cache
@@ -116,21 +118,17 @@ class SearchController extends AbstractController
             }
 
             // Dispatch a new AddBookToDatabase message
-            $messageBus->dispatch(new AddBookToDatabase($newBook));
+            $messageBus->dispatch(new AddBookToDatabase($newBook)); // why did you use a message bus here?
 
             $book = $newBook;
-            dump($book);
-            dump($bookData);
         }
 
         // ============= Meetup stuff =============
-        // current user for meetups
-        $this->security = $security;
-        $user = $this->security->getUser();
 
-        // Get current user entity object from the database using repository method by email
-        $email = $user->getEmail();
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
+        // Intelj as well
+        /** @var App\Entity\User $user **/
+        $user = $this->getUser();
         $userId = $user->getId();
 
         //$meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['book_ID' => $id], ['datetime' => 'DESC'], 10);
@@ -156,23 +154,41 @@ class SearchController extends AbstractController
             ->getResult();
         // Fetch the books based on book IDs in meetupRequests
 
+        // ============= Reading List =============
+        /** @var App\Entity\User $user **/
+        $userReadingList = $user->getUserReadingList();
+
+        // check if book is in one of the user's reading lists
+        $wantToRead = $userReadingList->getWantToRead();
+        $currentlyReading = $userReadingList->getCurrentlyReading();
+        $haveRead = $userReadingList->getHaveRead();
+
+        $bookId = $book->getId();
+
+        $is_in_want_to_read = in_array($bookId, $wantToRead);
+        $is_in_currently_reading = in_array($bookId, $currentlyReading);
+        $is_in_have_read = in_array($bookId, $haveRead);
+
+
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
-            'meetupRequests' => $meetupRequests
+            'meetupRequests' => $meetupRequests,
+            'is_in_want_to_read' => $is_in_want_to_read,
+            'is_in_currently_reading' => $is_in_currently_reading,
+            'is_in_have_read' => $is_in_have_read,
         ]);
     }
-    #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
-    public function joinMeetupRequest(String $bookId, int $meetupRequestId, Security $security, EntityManagerInterface $entityManager): Response
-    {
-        $this->security = $security;
-        $user = $this->security->getUser();
 
-        // Get current user entity object from the database using repository method by email
-        $email = $user->getEmail();
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
+    public function joinMeetupRequest(String $bookId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
+    {
+
+        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
+        // Intelj as well
+        /** @var \App\Entity\User $user **/
+        $user = $this->getUser();
 
         // Get the User and MeetupRequest entities based on the provided IDs
-
         $meetupRequest = $entityManager->getRepository(MeetupRequests::class)->find($meetupRequestId);
 
         if ($user && $meetupRequest) {
@@ -208,7 +224,7 @@ class SearchController extends AbstractController
      * @Route("/book-suggestion/{input}", name="book_suggestion", requirements={"input"=".*"})
      */
     #[Route("/book-suggestion/{input}", name: 'book_suggestion')]
-    public function book_suggestion($input, EntityManagerInterface $entityManager): JsonResponse
+    public function bookSuggestion($input, EntityManagerInterface $entityManager): JsonResponse
     {
         $books = $entityManager->getRepository(Book::class)->createQueryBuilder('b')
             ->where('b.title LIKE :title')
@@ -227,5 +243,79 @@ class SearchController extends AbstractController
         }
 
         return new JsonResponse($suggestions);
+    }
+
+    #[Route('/handle-dropdown-selection', name: 'handle-dropdown-selection', methods: ['POST'])]
+    public function handleDropdownSelection(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $selection = $request->request->get('selection');
+        $bookId = $request->request->get('book_id');
+
+        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
+        // Intelj as well
+        /** @var \App\Entity\User $user **/
+        $user = $this->getUser();
+        $userReadingList = $user->getUserReadingList();
+
+        $wantToRead = $userReadingList->getWantToRead();
+        $currentlyReading = $userReadingList->getCurrentlyReading();
+        $haveRead = $userReadingList->getHaveRead();
+
+        $is_in_want_to_read = in_array($bookId, $wantToRead);
+        $is_in_currently_reading = in_array($bookId, $currentlyReading);
+        $is_in_have_read = in_array($bookId, $haveRead);
+
+        // Perform actions based on the selected value and book ID
+        switch ($selection) {
+            case 'To Read':
+                if ($is_in_want_to_read) {
+                    // do nothing
+                } else if ($is_in_currently_reading) {
+                    // remove from currently reading
+                    $currentlyReading = array_diff($currentlyReading, [$bookId]);
+                } else if ($is_in_have_read) {
+                    // remove from have read
+                    $haveRead = array_diff($haveRead, [$bookId]);
+                }
+                array_push($wantToRead, $bookId);
+                break;
+            case 'Currently Reading':
+                if ($is_in_want_to_read) {
+                    // remove from want to read
+                    $wantToRead = array_diff($wantToRead, [$bookId]);
+                } else if ($is_in_currently_reading) {
+                    // do nothing
+                } else if ($is_in_have_read) {
+                    // remove from have read
+                    $haveRead = array_diff($haveRead, [$bookId]);
+                }
+                array_push($currentlyReading, $bookId);
+                break;
+            case 'Have Read':
+                if ($is_in_want_to_read) {
+                    // remove from want to read
+                    $wantToRead = array_diff($wantToRead, [$bookId]);
+                } else if ($is_in_currently_reading) {
+                    // remove from currently reading
+                    $currentlyReading = array_diff($currentlyReading, [$bookId]);
+                } else if ($is_in_have_read) {
+                    // do nothing
+                }
+                array_push($haveRead, $bookId);
+                break;
+            default:
+                // Handle the case where no or an invalid selection is made
+                break;
+        }
+
+        // Persist the changes to the database
+        $userReadingList->setWantToRead($wantToRead);
+        $userReadingList->setCurrentlyReading($currentlyReading);
+        $userReadingList->setHaveRead($haveRead);
+
+        $entityManager->persist($userReadingList);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'Book added to reading list']); // not sure if that's needed
     }
 }
