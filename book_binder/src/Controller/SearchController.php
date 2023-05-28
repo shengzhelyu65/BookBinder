@@ -26,6 +26,7 @@ use Symfony\Component\Security\Core\Security;
  * GoogleBooksApiClient, it shows examples on how to
  * use the class.
  */
+
 class SearchController extends AbstractController
 {
     #[Route('/book-search/{query}', name: 'book-search')]
@@ -46,7 +47,7 @@ class SearchController extends AbstractController
     /**
      * @throws \Google_Exception
      */
-    #[Route('/bookPage/{id}', name: 'bookPage')]
+    #[Route('/book-page/{id}', name: 'book-page')]
     public function clickBook($id, Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
         // ============= API stuff =============
@@ -74,8 +75,7 @@ class SearchController extends AbstractController
 
             if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
                 $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
-            }
-            else {
+            } else {
                 $newBook->setThumbnail("");
             }
 
@@ -105,15 +105,13 @@ class SearchController extends AbstractController
 
             if (isset($bookData['volumeInfo']['publishedDate'])) {
                 $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
-            }
-            else {
+            } else {
                 $newBook->setPublishedDate(new \DateTime());
             }
 
             if (isset($bookData['volumeInfo']['categories'])) {
                 $newBook->setCategory($bookData['volumeInfo']['categories'][0]);
-            }
-            else {
+            } else {
                 $newBook->setCategory("");
             }
 
@@ -123,7 +121,6 @@ class SearchController extends AbstractController
             $book = $newBook;
             dump($book);
             dump($bookData);
-
         }
 
         // ============= Meetup stuff =============
@@ -164,8 +161,8 @@ class SearchController extends AbstractController
             'meetupRequests' => $meetupRequests
         ]);
     }
-    #[Route('/bookPage/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
-    public function joinMeetupRequest(String $bookId, int $meetupRequestId,Security $security, EntityManagerInterface $entityManager): Response
+    #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
+    public function joinMeetupRequest(String $bookId, int $meetupRequestId, Security $security, EntityManagerInterface $entityManager): Response
     {
         $this->security = $security;
         $user = $this->security->getUser();
@@ -204,7 +201,7 @@ class SearchController extends AbstractController
         }
 
         // Redirect or return a response
-        return $this->redirectToRoute('bookPage', ['id' => $bookId]);
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
     }
 
     /**
