@@ -34,7 +34,7 @@
 
                     async function getSuggestion(event) {
                         const input = event.target.value;
-                        const url = `/bookSuggestion/${encodeURIComponent(input)}`;
+                        const url = `/book-suggestion/${encodeURIComponent(input)}`;
                         const response = await fetch(url);
                         const suggestions = await response.json();
                         const datalist = document.getElementById('book-list');

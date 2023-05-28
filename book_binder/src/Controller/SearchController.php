@@ -135,10 +135,10 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @Route("/bookSuggestion/{input}", name="book_suggestion", requirements={"input"=".*"})
+     * @Route("/book-suggestion/{input}", name="book_suggestion", requirements={"input"=".*"})
      */
-    #[Route("/bookSuggestion/{input}", name: 'book_suggestion')]
-    public function bookSuggestion($input, EntityManagerInterface $entityManager): JsonResponse
+    #[Route("/book-suggestion/{input}", name: 'book_suggestion')]
+    public function book_suggestion($input, EntityManagerInterface $entityManager): JsonResponse
     {
         $books = $entityManager->getRepository(Book::class)->createQueryBuilder('b')
             ->where('b.title LIKE :title')
