@@ -97,6 +97,9 @@
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/firebase/php-jwt" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/paragonie/constant_time_encoding" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/book_binder/vendor/symfony/messenger" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

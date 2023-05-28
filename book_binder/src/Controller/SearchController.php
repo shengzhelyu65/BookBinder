@@ -6,9 +6,11 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\User;
+use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Api\GoogleBooksApiClient;
 use App\Entity\MeetupRequestList;
@@ -24,7 +26,6 @@ use Symfony\Component\Security\Core\Security;
  * GoogleBooksApiClient, it shows examples on how to
  * use the class.
  */
-
 class SearchController extends AbstractController
 {
     #[Route('/bookSearch/{query}', name: 'bookSearch')]
@@ -45,12 +46,87 @@ class SearchController extends AbstractController
     /**
      * @throws \Google_Exception
      */
-    #[Route('/book-page/{id}', name: 'book-page')]
-    public function clickBook($id, Security $security, EntityManagerInterface $entityManager): Response
+    #[Route('/bookPage/{id}', name: 'bookPage')]
+    public function clickBook($id, Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
-        // Look up the book by ID in the database
-        $book = $entityManager->getRepository(Book::class)->find($id);
+        // ============= API stuff =============
+        // Check if book in cache
+        $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $id]);
+        if ($book === null) { // If no book in cache, add it
+            $ApiClient = new GoogleBooksApiClient();
+            $bookData = $ApiClient->getBookById($id);
 
+            $newBook = new Book();
+            $newBook->setGoogleBooksId($bookData['id']);
+
+            if (isset($bookData['volumeInfo']['title'])) {
+                $newBook->setTitle($bookData['volumeInfo']['title']);
+            } else {
+                $newBook->setTitle("");
+            }
+
+            if (isset($bookData['volumeInfo']['description'])) {
+                Continuation:
+                $newBook->setDescription($bookData['volumeInfo']['description']);
+            } else {
+                $newBook->setDescription("");
+            }
+
+            if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
+                $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
+            }
+            else {
+                $newBook->setThumbnail("");
+            }
+
+            if (isset($bookData['volumeInfo']['averageRating'])) {
+                $newBook->setRating($bookData['volumeInfo']['averageRating']);
+            } else {
+                $newBook->setRating(0);
+            }
+
+            if (isset($bookData['volumeInfo']['ratingsCount'])) {
+                $newBook->setReviewCount($bookData['volumeInfo']['ratingsCount']);
+            } else {
+                $newBook->setReviewCount(0);
+            }
+
+            if (isset($bookData['volumeInfo']['authors'][0])) {
+                $newBook->setAuthor($bookData['volumeInfo']['authors'][0]);
+            } else {
+                $newBook->setAuthor("");
+            }
+
+            if (isset($bookData['volumeInfo']['pageCount'])) {
+                $newBook->setPages($bookData['volumeInfo']['pageCount']);
+            } else {
+                $newBook->setPages(0);
+            }
+
+            if (isset($bookData['volumeInfo']['publishedDate'])) {
+                $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
+            }
+            else {
+                $newBook->setPublishedDate(new \DateTime());
+            }
+
+            if (isset($bookData['volumeInfo']['categories'])) {
+                $newBook->setCategory($bookData['volumeInfo']['categories'][0]);
+            }
+            else {
+                $newBook->setCategory("");
+            }
+
+            // Dispatch a new AddBookToDatabase message
+            $messageBus->dispatch(new AddBookToDatabase($newBook));
+
+            $book = $newBook;
+            dump($book);
+            dump($bookData);
+
+        }
+
+        // ============= Meetup stuff =============
         // current user for meetups
         $this->security = $security;
         $user = $this->security->getUser();
@@ -59,8 +135,6 @@ class SearchController extends AbstractController
         $email = $user->getEmail();
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
         $userId = $user->getId();
-
-        $thumbnailUrl = $book->getThumbnail();
 
         //$meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy(['book_ID' => $id], ['datetime' => 'DESC'], 10);
         $meetupRequests = $entityManager->createQueryBuilder()
@@ -87,12 +161,11 @@ class SearchController extends AbstractController
 
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
-            'thumbnailUrl' => $thumbnailUrl,
             'meetupRequests' => $meetupRequests
         ]);
     }
-    #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
-    public function joinMeetupRequest(String $bookId, int $meetupRequestId, Security $security, EntityManagerInterface $entityManager): Response
+    #[Route('/bookPage/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
+    public function joinMeetupRequest(String $bookId, int $meetupRequestId,Security $security, EntityManagerInterface $entityManager): Response
     {
         $this->security = $security;
         $user = $this->security->getUser();
@@ -131,7 +204,7 @@ class SearchController extends AbstractController
         }
 
         // Redirect or return a response
-        return $this->redirectToRoute('book-page', ['id' => $bookId]);
+        return $this->redirectToRoute('bookPage', ['id' => $bookId]);
     }
 
     /**
@@ -143,6 +216,7 @@ class SearchController extends AbstractController
         $books = $entityManager->getRepository(Book::class)->createQueryBuilder('b')
             ->where('b.title LIKE :title')
             ->setParameter('title', '%' . $input . '%')
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult();
 
