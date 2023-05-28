@@ -23,26 +23,49 @@
                     {% if book.getReviewCount() is defined %}
                         <p>Reviews: {{ book.getReviewCount() }}</p>
                     {% endif %}
+
                     <div class="dropdown pb-2">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Add to
+                            {% if is_in_want_to_read %}
+                                To Read
+                            {% elseif is_in_currently_reading %}
+                                Currently Reading
+                            {% elseif is_in_have_read %}
+                                Have Read
+                            {% else %}
+                                Add to
+                            {% endif %}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#" onclick="changeButtonText('Read', this)">Read</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="changeButtonText('Currently reading', this)">Currently reading</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="changeButtonText('To read', this)">To read</a></li>
+                            <li><button type="button" class="dropdown-item" onclick="handleSelection('To Read', {{ book.getId() }})" {% if is_in_want_to_read %}disabled{% endif %}>To Read</button></li>
+                            <li><button type="button" class="dropdown-item" onclick="handleSelection('Currently Reading', {{ book.getId() }})" {% if is_in_currently_reading %}disabled{% endif %}>Currently Reading</button></li>
+                            <li><button type="button" class="dropdown-item" onclick="handleSelection('Have Read', {{ book.getId() }})" {% if is_in_have_read %}disabled{% endif %}>Have Read</button></li>
                         </ul>
                     </div>
+
+                    <!-- Todo: Move this script to a separate file  -->
+                    <script>
+                        function handleSelection(selection, bookId) {
+                            var dropdownButton = document.getElementById('dropdownMenuButton1');
+                            dropdownButton.innerHTML = selection;
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '{{ path('handle-dropdown-selection') }}', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === 4 && xhr.status === 200) {
+                                    // Handle the response here if needed
+                                    console.log(xhr.responseText);
+                                }
+                            };
+                            xhr.send('selection=' + encodeURIComponent(selection) + '&book_id=' + encodeURIComponent(bookId));
+                        }
+                    </script>
+
                     <form method="POST" action="{{ path('app_meetup_requests', {'bookId': book.getId()}) }}">
                         <button type="submit" class="btn btn-primary btn-lg">Host Meetup</button>
                     </form>
 
-                    <script>
-                        function changeButtonText(text, element) {
-                            var dropdownButton = document.getElementById('dropdownMenuButton1');
-                            dropdownButton.innerHTML = text;
-                        }
-                    </script>
                 </div>
             </div>
             <div class="container pt-3">
