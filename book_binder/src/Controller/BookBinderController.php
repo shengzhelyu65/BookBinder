@@ -28,6 +28,7 @@ class BookBinderController extends AbstractController
         $user = $this->getUser();
 
         // Define an array of genres to search for.
+        /** @var \App\Entity\User $user **/
         $genres = $user->getUserReadingInterest()->getGenres();
 
 
@@ -73,8 +74,7 @@ class BookBinderController extends AbstractController
 
                         if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
                             $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
-                        }
-                        else {
+                        } else {
                             $newBook->setThumbnail("");
                         }
 
@@ -104,8 +104,7 @@ class BookBinderController extends AbstractController
 
                         if (isset($bookData['volumeInfo']['publishedDate'])) {
                             $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
-                        }
-                        else {
+                        } else {
                             $newBook->setPublishedDate(new \DateTime());
                         }
 
@@ -119,18 +118,15 @@ class BookBinderController extends AbstractController
                             // Add the Book object to the array
                             $bookObjects[] = $newBook;
                         }
-
                     }
                 }
 
                 // Assign the Book objects to the $results array
                 if ($results[$genre] === null) {
                     $results[$genre] = $bookObjects;
-                }
-                else {
+                } else {
                     $results[$genre] = array_merge($results[$genre], $bookObjects);
                 }
-
             }
         }
         // ============= Reviews
