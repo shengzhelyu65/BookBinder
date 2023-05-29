@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Added autosuggestion functionality to the searchbar">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with Correct Queries">
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Meetup" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
