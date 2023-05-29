@@ -26,8 +26,8 @@ class BookReviewsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bookReview->setUserID($user);
-            $bookReview->setBookID($bookId);
+            $bookReview->setUserId($user);
+            $bookReview->setBookId($bookId);
             $bookReview->setBookTitle($bookTitle);
             $bookReview->setCreatedAt(new \DateTime());
 

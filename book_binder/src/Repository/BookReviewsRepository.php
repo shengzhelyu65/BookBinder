@@ -47,6 +47,11 @@ class BookReviewsRepository extends ServiceEntityRepository
         return $this->findBy([], ['created_at' => 'DESC'], $number);
     }
 
+    public function findByUser(int $userId): array
+    {
+        return $this->findBy(['user_id' => $userId]);
+    }
+
 //    /**
 //     * @return BookReviews[] Returns an array of BookReviews objects
 //     */

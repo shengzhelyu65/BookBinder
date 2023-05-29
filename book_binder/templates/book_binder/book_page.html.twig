@@ -1,11 +1,11 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        <div class="col">
+    <div class="container-fluid d-flex flex-column flex-lg-row">
+        <div style="width: available">
             <div class="row">
                 <div class="col-auto">
-                    <img src="{{ book.getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ book.getTitle() }}">
+                    <img src="{{ book.getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="card-img-top" alt="{{ book.getTitle() }}">
 
                 </div>
                 <div class="col">
@@ -94,28 +94,25 @@
                 </div>
             </div>
         </div>
-        <div class = "col-md-4">
+        <div style="width: fit-content">
             <h3>Join Meetups:</h3>
             {% for meetupRequest in meetupRequests %}
-                <div class="card mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top" alt="{{ book.getVolumeInfo().getTitle() }}">                        </div>
-                        <div class="col-md-8 ps-3">
-                            <div class="card-body p-0">
-                                <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
-                                <p class="card-text">participants: {{ meetupRequest.getMaxNumber() }}</p>
-                                <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
-                                <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
-                                <a href="{{ path('meetup_requests_list_join_book', {'bookId': book.getID(),'meetupRequestId': meetupRequest.getMeetupId()}) }}" class="btn btn-primary">Join</a>
-                            </div>
+                <div class="card mb-3" style="min-width: 300px">
+                    <div class="d-flex flex-row h-100">
+                        <img src="{{ book.getThumbnail() ?? asset('images/book_cover_empty.png') }}"
+                             class="rounded-start" alt="{{ book.getTitle() }}" style="width: 140px; object-fit: cover">
+                        <div class="card-body">
+                            <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
+                            <p class="card-text">participants: {{ meetupRequest.getMaxNumber() }}</p>
+                            <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
+                            <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
+                            <a href="{{ path('meetup_requests_list_join_book', {'bookId': book.getID(),'meetupRequestId': meetupRequest.getMeetupId()}) }}" class="btn btn-primary">Join</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-
 
     <div class="modal fade" id="host" tabindex="-1" style="display: none;">
         <div class="modal-dialog">
@@ -161,8 +158,5 @@
             });
         }
     </script>
-
-
-
 
 {% endblock %}

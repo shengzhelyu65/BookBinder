@@ -25,29 +25,29 @@
             <hr>
             <h2>My reading lists</h2>
             <div class="d-flex flex-row justify-content-between">
-                {%  if user.getUserReadingList() is null  %}
-                    <a href="#" class="text-decoration-none text-black"> read (0) </a>
-                    <a href="#" class="text-decoration-none text-black"> currently-reading (0) </a>
-                    <a href="#" class="text-decoration-none text-black"> to-read (0) </a>
-                {%  else %}
-                    <a href="#" class="text-decoration-none text-black"> read ({{ user.getUserReadingList().getHaveRead()|length }}) </a>
-                    <a href="#" class="text-decoration-none text-black"> currently-reading ({{ user.getUserReadingList().getCurrentlyReading()|length }}) </a>
-                    <a href="#" class="text-decoration-none text-black"> to-read ({{ user.getUserReadingList().getWantToRead()|length }}) </a>
-                {% endif %}
+                <a href="{{ path('reading_list') }}" class="text-decoration-none text-black"> read ({{ user.getUserReadingList().getHaveRead()|length }}) </a>
+                <a href="{{ path('reading_list') }}" class="text-decoration-none text-black"> currently-reading ({{ user.getUserReadingList().getCurrentlyReading()|length }}) </a>
+                <a href="{{ path('reading_list') }}" class="text-decoration-none text-black"> to-read ({{ user.getUserReadingList().getWantToRead()|length }}) </a>
             </div>
         </div>
         <div class="col-md-6">
             <hr class="d-md-none">
             <h2>My reviews</h2>
-            <div class="card">
-                <div class="card-header">
-                    Book title
+            {% for bookReview in reviews %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black">{{ bookReview.getBookTitle() }}</a>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{ bookReview.getReview() }}</p>
+                        </blockquote>
+                    </div>
+                    <div class="card-footer text-muted">
+                        On {{ bookReview.getCreatedAt()|date('Y-m-d') }}
+                    </div>
                 </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>Review on the book</p>
-                    </blockquote>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+    </div>
 {% endblock %}

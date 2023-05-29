@@ -15,14 +15,14 @@ class BookReviews
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $review_ID = null;
+    private ?int $review_id = null;
 
     #[ORM\Column]
-    private ?string $book_ID = null;
+    private ?string $book_id = null;
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    private ?User $user_ID = null;
+    private ?User $user_id = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     #[Assert\Range(min: 1, max: 5)]
@@ -40,31 +40,31 @@ class BookReviews
     #[ORM\Column(length: 200)]
     private ?string $book_title = null;
 
-    public function getReviewID(): ?int
+    public function getReviewId(): ?int
     {
-        return $this->review_ID;
+        return $this->review_id;
     }
 
-    public function getBookID(): ?string
+    public function getBookId(): ?string
     {
-        return $this->book_ID;
+        return $this->book_id;
     }
 
-    public function setBookID(string$book_ID): self
+    public function setBookId(string $book_id): self
     {
-        $this->book_ID = $book_ID;
+        $this->book_id = $book_id;
 
         return $this;
     }
 
-    public function getUserID(): ?User
+    public function getUserId(): ?User
     {
-        return $this->user_ID;
+        return $this->user_id;
     }
 
-    public function setUserID(User $user_ID): self
+    public function setUserId(User $user_id): self
     {
-        $this->user_ID = $user_ID;
+        $this->user_id = $user_id;
 
         return $this;
     }
