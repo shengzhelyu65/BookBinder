@@ -185,8 +185,8 @@ class MeetupRequestsController extends AbstractController
 
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $ApiClient->getBooksBySubject($genre, 5);
-            $results[$genre] = $books;
+            $books2 = $ApiClient->getBooksBySubject($genre, 5);
+            $results[$genre] = $books2;
         }
 
         // =============
@@ -208,11 +208,45 @@ class MeetupRequestsController extends AbstractController
             $includeProfileForm = true;
         }
 
-        return $this->render('meetup_request/Meetup_overview.html.twig', [
+        $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
+
+        $userId = $user->getId();
+
+        $meetupAvailable = $entityManager->createQueryBuilder()
+            ->select('mr')
+            ->from('App\Entity\MeetupRequests', 'mr')
+            ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
+            ->where('mr.host_user != :userId AND NOT EXISTS (
+                        SELECT 1 FROM App\Entity\MeetupList subml
+                        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+                        )')
+            ->setParameter('userId', $userId)
+            ->orderBy('mr.datetime', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+
+
+
+
+        // Fetch the books based on book IDs in meetupRequests
+        $books = [];
+        foreach ($meetupRequests as $meetupRequest) {
+            $bookId = $meetupRequest->getBookID();
+            $book = $ApiClient->getBookById($bookId); // Assuming there's a method to fetch a book by ID from the API
+            $books[$bookId] = $book;
+
+        }
+        return $this->render('meetup_request/meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
             'includeProfileForm' => $includeProfileForm,
             'userEmail' => $email,
-            'results' => $results
+            'results' => $results,
+            'meetupRequests' => $meetupRequests,
+            "meetupAvailabe"=>$meetupAvailable,
+            'books' => $books,
+
         ]);
     }
 

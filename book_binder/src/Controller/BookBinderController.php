@@ -13,7 +13,6 @@ use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
-    #[Route("/index", name: 'app_home')]
     #[Route("/home", name: 'app_home')]
     #[Route("/", name: 'app_home')]
     public function home(EntityManagerInterface $entityManager): Response
@@ -21,8 +20,10 @@ class BookBinderController extends AbstractController
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
+        $user = $this->getUser();
+
         // Define an array of genres to search for.
-        $genres = ['fantasy', 'mystery', 'romance'];
+        $genres = $user->getUserReadingInterest()->getGenres();
 
         // Create an empty array to hold the results.
         $results = [];
@@ -43,6 +44,15 @@ class BookBinderController extends AbstractController
             'controller_name' => 'BookBinderController',
             'results' => $results,
             'reviews' => $reviews
+        ]);
+    }
+
+    #[Route("/profile", name: 'profile')]
+    public function profile(): Response
+    {
+        return $this->render('book_binder/profile.html.twig', [
+            'controller_name' => 'BookBinderController',
+            'user' => $this->getUser()
         ]);
     }
 }

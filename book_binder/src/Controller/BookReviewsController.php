@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BookReviewsController extends AbstractController
 {
-    #[Route('/book/review/{userId}/{bookId}', name: 'app_book_review')]
-    public function addBookReview(Request $request, int $userId, int $bookId, EntityManagerInterface $entityManager): Response
+    #[Route('/book/review/{userId}/{bookId}/{bookTitle}', name: 'app_book_review')]
+    public function addBookReview(Request $request, int $userId, int $bookId, string $bookTitle, EntityManagerInterface $entityManager): Response
     {
         $bookReview = new BookReviews();
 
@@ -28,6 +28,7 @@ class BookReviewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bookReview->setUserID($user);
             $bookReview->setBookID($bookId);
+            $bookReview->setBookTitle($bookTitle);
             $bookReview->setCreatedAt(new \DateTime());
 
             $entityManager->persist($bookReview);
