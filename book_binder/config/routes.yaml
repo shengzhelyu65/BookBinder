@@ -11,8 +11,13 @@ login:
 index:
     path: /index
     defaults:
-        _controller: App\Controller\YourController::index
+        _controller: App\Controller\BookBinderController::index
 home:
     path: /home
     defaults:
-        _controller: App\Controller\YourController::index
+        _controller: App\Controller\BookBinderController::index
+
+handle-dropdown-selection:
+  path: /handle-dropdown-selection
+  controller: App\Controller\SearchController::handleDropdownSelection
+

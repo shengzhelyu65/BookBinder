@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="meetup querie">
-      <change beforePath="$PROJECT_DIR$/.idea/Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Added autosuggestion functionality to the searchbar">
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Meetup with Correct Queries">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/base_website.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/bookPage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/meetup_request/Meetup_overview.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="Meetup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -440,7 +434,35 @@
       <option name="project" value="LOCAL" />
       <updated>1685105811778</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Meetup with some queries">
+      <created>1685109678630</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1685109678630</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Meetup with some queries">
+      <created>1685119756522</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1685119756522</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Homepage Caching works">
+      <created>1685204250232</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1685204250232</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Composer.json update for symfony/messenger">
+      <created>1685204448111</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1685204448111</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +506,10 @@
     <MESSAGE value="Added meetup functionality to book page" />
     <MESSAGE value="Made some changes to Search and google API that should be looked at" />
     <MESSAGE value="meetup querie" />
-    <option name="LAST_COMMIT_MESSAGE" value="meetup querie" />
+    <MESSAGE value="Meetup with some queries" />
+    <MESSAGE value="Homepage Caching works" />
+    <MESSAGE value="Composer.json update for symfony/messenger" />
+    <option name="LAST_COMMIT_MESSAGE" value="Composer.json update for symfony/messenger" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

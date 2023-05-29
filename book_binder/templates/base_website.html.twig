@@ -20,15 +20,30 @@
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
                 <form class="w-100 me-3" onsubmit="searchBooks(event)">
-                    <input type="search" class="form-control" placeholder="Search...">
+                    <input type="search" class="form-control" placeholder="Search..." list="book-list" onkeyup="getSuggestion(event)">
+                    <datalist id="book-list"></datalist>
                 </form>
                 <script>
                     function searchBooks(event) {
                         event.preventDefault(); // prevent form submission
                         const query = event.target.querySelector('input').value;
-                        const url = `/bookSearch/${encodeURIComponent(query)}`;
+                        const url = `/book-search/${encodeURIComponent(query)}`;
                         console.log("Searching for: " + query);
                         window.location.href = url;
+                    }
+
+                    async function getSuggestion(event) {
+                        const input = event.target.value;
+                        const url = `/book-suggestion/${encodeURIComponent(input)}`;
+                        const response = await fetch(url);
+                        const suggestions = await response.json();
+                        const datalist = document.getElementById('book-list');
+                        datalist.innerHTML = ''; // clear previous suggestions
+                        suggestions.forEach(suggestion => {
+                            const option = document.createElement('option');
+                            option.value = suggestion.title;
+                            datalist.appendChild(option);
+                        });
                     }
                 </script>
 
@@ -73,7 +88,7 @@
                     </ul>
                 </div>
             </aside>
-            <main class="col-lg-10 h-100">
+            <main class="col-lg-10">
                 <div class="bg-light border rounded-3 p-3 overflow-auto">
                     {% block body %} {% endblock %}
                 </div>
