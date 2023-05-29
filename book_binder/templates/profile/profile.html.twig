@@ -1,4 +1,4 @@
-{% extends '/base_website.html.twig' %}
+{% extends 'base_website.html.twig' %}
 
 {% block body %}
     <div class="row">
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <hr>
-            <h2>Preferences</h2>
+            <h3>Preferences</h3>
             <p><b>Languages</b></p>
                 {% for language in user.getUserReadingInterest().getLanguages() %}
                     <p>{{ language }}   </p>
@@ -23,7 +23,7 @@
                     <p>{{ genre }}   </p>
                 {% endfor %}
             <hr>
-            <h2>My reading lists</h2>
+            <h3>My reading lists</h3>
             <div class="d-flex flex-row justify-content-between">
                 <a href="{{ path('reading_list') }}" class="text-decoration-none text-black"> read ({{ user.getUserReadingList().getHaveRead()|length }}) </a>
                 <a href="{{ path('reading_list') }}" class="text-decoration-none text-black"> currently-reading ({{ user.getUserReadingList().getCurrentlyReading()|length }}) </a>
@@ -32,7 +32,7 @@
         </div>
         <div class="col-md-6">
             <hr class="d-md-none">
-            <h2>My reviews</h2>
+            <h3>My reviews</h3>
             {% for bookReview in reviews %}
                 <div class="card mb-3">
                     <div class="card-header">

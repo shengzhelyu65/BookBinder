@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserPersonalInfo;
+use App\Entity\UserReadingList;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,10 +90,21 @@ class SecurityController extends AbstractController
         // store the token in the token storage
         $tokenStorage->setToken($token);
 
+        if (!$user->getUserReadingList()) {
+            $userReadingList = new UserReadingList();
+            $userReadingList->setUser($user);
+            $userReadingList->setCurrentlyReading([]);
+            $userReadingList->setWantToRead([]);
+            $userReadingList->setHaveRead([]);
+            $entityManager->persist($userReadingList);
+            $entityManager->flush();
+        }
+
         // redirect the user to the home page or the reading interest page
         if (!$user->getUserReadingInterest()) {
             return $this->redirectToRoute('reading_interest');
         }
+
         return $this->redirectToRoute('app_home');
     }
 }

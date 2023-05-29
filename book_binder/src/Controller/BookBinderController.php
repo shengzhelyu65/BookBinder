@@ -141,16 +141,4 @@ class BookBinderController extends AbstractController
             'reviews' => $reviews
         ]);
     }
-
-    #[Route("/profile", name: 'profile')]
-    public function profile(EntityManagerInterface $entityManager): Response
-    {
-        $reviews = $entityManager->getRepository(BookReviews::class)->findByUser($this->getUser()->getId());
-
-        return $this->render('book_binder/profile.html.twig', [
-            'controller_name' => 'BookBinderController',
-            'user' => $this->getUser(),
-            'reviews' => $reviews
-        ]);
-    }
 }

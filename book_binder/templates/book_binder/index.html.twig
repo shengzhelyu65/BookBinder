@@ -42,7 +42,9 @@
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
                                 <p>{{ bookReview.getReview() }}</p>
-                                <footer class="blockquote-footer">{{ bookReview.getUserID().getUserPersonalInfo().getNickname() }}</footer>
+                                <footer class="blockquote-footer">
+                                    <a href="{{ path('profile_other', {'username': bookReview.getUserID().getUserPersonalInfo().getNickname() }) }}" class="link-secondary text-decoration-none">{{ bookReview.getUserID().getUserPersonalInfo().getNickname() }}</a>
+                                </footer>
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
