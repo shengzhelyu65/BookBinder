@@ -1,96 +1,82 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row gx-3">
-            <div class="col-md-4">
-                <div class="p-3 border">
-                    <div class="border-bottom mb-3 d-flex justify-content-center">
-                        <h5>Upcoming meetups</h5>
-                    </div>
-                    <div class="d-flex flex-column overflow-auto">
-                        {% for upcomingRequest in upcomingRequests %}
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}"
-                                             class="card-img-top" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}"></div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                            <p class="card-text">Date: {{ upcomingRequest.getDatetime()|date('F j') }}</p>
-                                            <p class="card-text">Number of people: {{ upcomingRequest.getMaxNumber() }}</p>
-                                            <p class="card-text">library: {{ upcomingRequest.getLibraryID().getLibraryName() }}</p>
-                                            <p class="card-text"><small class="text-muted">See more</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+<div class="container-fluid">
+    <div class="d-flex flex-row overflow-auto gx-3">
+        <div class="col-12 p-3 border my-3 rounded-3">
+            <div class="border-bottom mb-3 d-flex justify-content-left">
+                <h5>Upcoming meetups</h5>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 border bg-light">
-                    <div class="border-bottom mb-3 d-flex justify-content-center">
-                        <h5>Meetup requests</h5>
-                    </div>
-                    <div class="d-flex flex-column overflow-auto">
-                        {% for meetupRequest in meetupRequests %}
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top"
-                                             alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}"></div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                            <h5 class="card-title"><a href="#" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
-                                                        <button type="submit" class="btn btn-success me-2" name="action" value="accept">Accept</button>
-                                                        <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="d-flex flex-row overflow-auto gx-3">
+                {% for upcomingRequest in upcomingRequests %}
+                    <div class="card ms-3" style="min-width: 400px">
+                        <div class="d-flex flex-row h-100">
+                            <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}"
+                                 class="rounded-start" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                <p class="card-text">Date: {{ upcomingRequest.getDatetime()|date('F j') }}</p>
+                                <p class="card-text">Number of people: {{ upcomingRequest.getMaxNumber() }}</p>
+                                <p class="card-text">library: {{ upcomingRequest.getLibraryID().getLibraryName() }}</p>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
-                </div>
-
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 border bg-light">
-                    <div class="border-bottom mb-3 d-flex justify-content-center">
-                        <h5>Meetups at your library</h5>
-                    </div>
-                    <div class="d-flex flex-column overflow-auto">
-                        {% for meetupAvailabe in meetupAvailabes %}
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}" class="card-img-top"
-                                             alt="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}"></div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                            <p class="card-text">host: {{ meetupAvailabe.getHostUser().getUserPersonalInfo().getName() }}</p>
-                                            <p class="card-text">Max participants: {{ meetupAvailabe.getMaxNumber() }}</p>
-                                            <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailabe.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
-                                            <p class="card-text"><small class="text-muted">See more</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+    <div class="d-flex flex-row overflow-auto gx-3">
+        <div class="col-12 p-3 border my-3 rounded-3">
+            <div class="border-bottom mb-3 d-flex justify-content-left">
+                <h5>Meetup requests</h5>
+            </div>
+            <div class="d-flex flex-row overflow-auto">
+                {% for meetupRequest in meetupRequests %}
+                    <div class="card ms-3" style="min-width: 400px">
+                        <div class="d-flex flex-row h-100">
+                            <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}"
+                                 class="rounded-start" alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                <h5 class="card-title"><a href="#" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
+                                            <button type="submit" class="btn btn-success me-2" name="action" value="accept">Accept</button>
+                                            <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row overflow-auto gx-3">
+        <div class="col-12 p-3 border my-3 rounded-3">
+            <div class="border-bottom mb-3 d-flex justify-content-left">
+                <h5>Meetups at your library</h5>
+            </div>
+            <div class="d-flex flex-row overflow-auto">
+                {% for meetupAvailabe in meetupAvailabes %}
+                    <div class="card ms-3" style="min-width: 400px">
+                        <div class="d-flex flex-row h-100">
+                            <img src="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}"
+                                     class="rounded-start" alt="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                <p class="card-text">host: {{ meetupAvailabe.getHostUser().getUserPersonalInfo().getName() }}</p>
+                                <p class="card-text">Max participants: {{ meetupAvailabe.getMaxNumber() }}</p>
+                                <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailabe.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
