@@ -8,7 +8,7 @@ before_script:
   - mkdir -p ~/.ssh
   # start the ssh-agent and add the private key to the system  
   - eval $(ssh-agent -s)  
-  - echo "$SSH_PRIVATE_KEY"
+  - echo "$SSH_PRIVATE_KEY" | ssh-add 
   # add the fingerprint for shell.studev.groept.be as a trusted host
   - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
   # install rsync to copy files to the web server
