@@ -36,7 +36,7 @@ class MeetupRequestFormType extends AbstractType
             ])
             ->add('datetime', DateTimeType::class, [
                 'required' => true,
-                'label' => 'Date and Time',
+                'label' => 'Meetup Date',
                 'constraints' => [
                     new NotBlank(),
                     new GreaterThan([
@@ -45,8 +45,10 @@ class MeetupRequestFormType extends AbstractType
                     ]),
                 ],
                 'attr' => [
-                    'min' => (new \DateTime())->format(\DateTimeInterface::ISO8601),
+                    'min' => (new \DateTime())->format('Y-m-d'),
                 ],
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('maxNumber', IntegerType::class, [
                 'required' => true,
