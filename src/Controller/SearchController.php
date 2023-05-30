@@ -50,9 +50,8 @@ class SearchController extends AbstractController
      * @throws \Google_Exception
      */
     #[Route('/book-page/{id}', name: 'book-page')]
-    public function clickBook($id, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
+    public function clickBook($id, Request $request, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
-        // ============= API stuff =============
         // Check if book in cache
         $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $id]);
         if ($book === null) { // If no book in cache, add it
@@ -123,11 +122,7 @@ class SearchController extends AbstractController
             $book = $newBook;
         }
 
-        // ============= Meetup stuff =============
-
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var App\Entity\User $user **/
+        // Derive the book's meetup requests
         $user = $this->getUser();
         $userId = $user->getId();
 
@@ -138,13 +133,13 @@ class SearchController extends AbstractController
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
             ->leftJoin('App\Entity\MeetupRequestList', 'mrl', 'WITH', 'mr.meetup_ID = mrl.meetup_ID')
             ->where('mr.host_user != :userId AND NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupList subml
-        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupList subml
+                WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+            )')
             ->andWhere('NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupRequestList submrl
-        WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupRequestList submrl
+                WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
+            )')
             ->andWhere('mr.book_ID = :bookId')
             ->setParameter('userId', $userId)
             ->setParameter('bookId', $id)
@@ -152,10 +147,8 @@ class SearchController extends AbstractController
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-        // Fetch the books based on book IDs in meetupRequests
 
-        // ============= Reading List =============
-        /** @var App\Entity\User $user **/
+        // Add to reading list
         $userReadingList = $user->getUserReadingList();
 
         // check if book is in one of the user's reading lists
@@ -169,6 +162,22 @@ class SearchController extends AbstractController
         $is_in_currently_reading = in_array($bookId, $currentlyReading);
         $is_in_have_read = in_array($bookId, $haveRead);
 
+        // Host meetup request form
+        $meetupRequest = new MeetupRequests();
+        // Create the form
+        $form = $this->createForm(MeetupRequestFormType::class, $meetupRequest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $meetupRequest->setHostUser($user);
+            $meetupRequest->setBookID($book->getGoogleBooksId());
+
+            $entityManager->persist($meetupRequest);
+            $entityManager->flush();
+
+            // Redirect to a success page or do other actions
+            return $this->redirectToRoute('book-page', ['id' => $id]);
+        }
 
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
@@ -176,16 +185,13 @@ class SearchController extends AbstractController
             'is_in_want_to_read' => $is_in_want_to_read,
             'is_in_currently_reading' => $is_in_currently_reading,
             'is_in_have_read' => $is_in_have_read,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
     public function joinMeetupRequest(String $bookId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
-
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var \App\Entity\User $user **/
         $user = $this->getUser();
 
         // Get the User and MeetupRequest entities based on the provided IDs
@@ -251,9 +257,6 @@ class SearchController extends AbstractController
         $selection = $request->request->get('selection');
         $bookId = $request->request->get('book_id');
 
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var \App\Entity\User $user **/
         $user = $this->getUser();
         $userReadingList = $user->getUserReadingList();
 
