@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
+use App\Entity\UserPersonalInfo;
 use App\Entity\User;
 use App\Entity\UserReadingList;
 
@@ -169,6 +171,17 @@ class SearchController extends AbstractController
         $is_in_currently_reading = in_array($bookId, $currentlyReading);
         $is_in_have_read = in_array($bookId, $haveRead);
 
+        // ======== BOOK REVIEWS ========= //
+        $reviews = $entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id]);
+        $reviewData = [];
+        foreach ($reviews as $review) {
+            $UserPersonalInfo = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['user' => $review->getUserId()]);
+            // Put review and username in a 2D array reviewData
+            $reviewData[] = [
+                'review' => $review,
+                'username' => $UserPersonalInfo->getNickname()
+            ];
+        }
 
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
@@ -176,7 +189,34 @@ class SearchController extends AbstractController
             'is_in_want_to_read' => $is_in_want_to_read,
             'is_in_currently_reading' => $is_in_currently_reading,
             'is_in_have_read' => $is_in_have_read,
+            'reviewData' => $reviewData
         ]);
+    }
+
+    //"/book/{bookId}/add-review/{userId}", name="add_review", methods={"POST"})
+    #[Route('/add-review/{bookId}', name: 'add_review')]
+    public function addReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+
+        $comment = $request->request->get('comment');
+
+        // Remove later maybe when bookTitle gets removed from book_reviews?
+        $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
+
+        $review = new BookReviews();
+        $review->setBookID($bookId);
+        $user = $this->getUser();
+        $review->setUserId($user);
+        $review->setReview($comment);
+        $review->setCreatedAt(new \DateTime());
+        $review->setBookTitle($book->getTitle());
+        $review->setRating(1);
+        $review->setTags("Hi");
+
+        $entityManager->persist($review);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
     }
 
     #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
