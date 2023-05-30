@@ -86,11 +86,10 @@ class MeetupRequestsController extends AbstractController
     }
 
     #[Route('/meetup/overview', name: 'meetup_overview')]
-    public function showMeetupOverview(Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
+    public function showMeetupOverview(EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
         // Get the current user
-        $this->security = $security;
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         // Get current user entity object from the database using repository method by email
         $email = $user->getEmail();
