@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Google\Client as Google_Client;
 use GuzzleHttp\ClientInterface;
+use http\Env;
 
 /**
  * Class used for interacting with the google books API
@@ -22,8 +23,12 @@ use GuzzleHttp\ClientInterface;
 class GoogleBooksApiClient
 {
 
-    // TODO: MOVE THIS KEY TO A SAFER PLACE LATER?
-    private string $API_KEY = "AIzaSyCKrBJQwWhsGg4hnW6-3CxUmdWR-s5tGV4";
+    // Get API key from .env
+    private string $API_KEY;
+
+    public function __construct() {
+        $this->API_KEY = getenv('GOOGLE_BOOKS_API_KEY');
+    }
 
     /**
      * Retrieves an array of books from the Google Books API that match a specified title.
