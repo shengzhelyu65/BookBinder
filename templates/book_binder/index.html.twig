@@ -1,0 +1,58 @@
+{% extends 'base_website.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+            {% for genre, books in results %}
+                <h3>{{ genre }}</h3>
+                <div class="d-flex flex-row overflow-auto">
+                    {% for book in books %}
+                        <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
+                            <div class="card" style="width: 10rem; height: 100%">
+                                {% if book.getThumbnail() %}
+                                    <img src="{{ book.getThumbnail() }}" class="card-img-top" alt="{{ book.getTitle() }}" style="width: 100%; height: 16rem; object-fit: cover">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top" alt="Empty Book Cover" style="width: 100%; height: 16rem; object-fit: cover">
+                                {% endif %}
+
+                                <div class="card-body d-none d-md-block">
+
+                                <span class="card-title d-block text-truncate-2" style="max-height: 4rem; max-width: 100%">
+                                    <b>{{ book.getTitle() }}</b>
+
+                                </span>
+                                    <span class="card-text d-block text-truncate" style="max-height: 4rem; max-width: 100%">
+                                        {{ book.getAuthor() }}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4 d-none d-md-block">
+            <h3>Reviews</h3>
+            <div class="d-flex flex-column">
+                {% for bookReview in reviews %}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black">{{ bookReview.getBookTitle() }}</a>
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>{{ bookReview.getReview() }}</p>
+                                <footer class="blockquote-footer">
+                                    <a href="{{ path('profile_other', {'username': bookReview.getUserID().getUserPersonalInfo().getNickname() }) }}" class="link-secondary text-decoration-none">{{ bookReview.getUserID().getUserPersonalInfo().getNickname() }}</a>
+                                </footer>
+                            </blockquote>
+                        </div>
+                        <div class="card-footer text-muted">
+                            On {{ bookReview.getCreatedAt()|date('Y-m-d') }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

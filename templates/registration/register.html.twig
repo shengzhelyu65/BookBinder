@@ -1,0 +1,31 @@
+{% extends 'base_login_registration.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <!-- Jumbotron -->
+    <div class="px-4 py-4 px-md-5 text-lg-start">
+        <div class="container">
+            <div class="d-flex flex-wrap flex-row justify-content-center gx-lg-3 align-items-top">
+                <div class="col-lg-4 mb-5 mb-lg-0 mx-4">
+                    <h1 class="mb-5 display-3 fw-bold ls-tight">
+                    Welcome to <br />
+                    <span class="text-primary">BookBinder</span>
+                    </h1>
+                    <p style="color: hsl(217, 10%, 50.8%)">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                    quibusdam tempora at cupiditate quis eum maiores libero
+                    veritatis? Dicta facilis sint aliquid ipsum atque?
+                    </p>
+                </div>
+
+                {% if includeReadingInterestForm %}
+                    {% include './registration/reading_interest_form.html.twig' %}
+                {% else %}
+                    {% include './registration/register_form.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

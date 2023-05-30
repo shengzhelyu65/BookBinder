@@ -1,0 +1,24 @@
+{% extends 'base_website.html.twig' %}
+
+{% block title %}All book Reviews{% endblock %}
+
+{% block body %}
+    <h1>Book Reviews</h1>
+
+    {% if bookReviews is empty %}
+        <p>No book reviews yet.</p>
+    {% else %}
+        <ul>
+            {% for bookReview in bookReviews %}
+                <li>
+                    <h2>{{ bookReview.getBookID() }}</h2>
+                    <p>Rating: {{ bookReview.getRating() }}/5</p>
+                    <p>Tags: {{ bookReview.getTags() }}</p>
+                    <p>Review: {{ bookReview.getReview() }}</p>
+                    <p>By {{ bookReview.getUserID().getEmail() }}</p>
+                    <p>On {{ bookReview.getCreatedAt()|date('Y-m-d') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

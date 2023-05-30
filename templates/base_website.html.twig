@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookBinder</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="d-flex flex-column vh-100">
+    <header class="py-3 mb-4 shadow">
+        <div class="container-fluid align-items-center d-flex">
+            <div class="flex-shrink-1">
+                <img src="{{ asset('images/logo_light.jpg') }}" alt="" style="width: 40px; height: 40px">
+            </div>
+            <div class="flex-grow-1 d-flex align-items-center">
+                <form class="w-100 me-3" onsubmit="searchBooks(event)">
+                    <input type="search" class="form-control" placeholder="Search..." list="book-list" onkeyup="getSuggestion(event)">
+                    <datalist id="book-list"></datalist>
+                </form>
+                <script>
+                    function searchBooks(event) {
+                        event.preventDefault(); // prevent form submission
+                        const query = event.target.querySelector('input').value;
+                        const url = `/book-search/${encodeURIComponent(query)}`;
+                        console.log("Searching for: " + query);
+                        window.location.href = url;
+                    }
+
+                    async function getSuggestion(event) {
+                        const input = event.target.value;
+                        const url = `/book-suggestion/${encodeURIComponent(input)}`;
+                        const response = await fetch(url);
+                        const suggestions = await response.json();
+                        const datalist = document.getElementById('book-list');
+                        datalist.innerHTML = ''; // clear previous suggestions
+                        suggestions.forEach(suggestion => {
+                            const option = document.createElement('option');
+                            option.value = suggestion.title;
+                            datalist.appendChild(option);
+                        });
+                    }
+                </script>
+
+                <div class="flex-shrink-0 dropdown">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser2" style="z-index: 2000">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="{{ path('profile') }}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid pb-3 flex-grow-1 d-flex flex-column flex-lg-row overflow-auto m-0 row">
+        <div class="row" style="margin: 0">
+            <aside class="col-lg-2 sticky-top pb-lg-0 pb-3" style="background-color: white">
+                <div class="bg-light border rounded-3 p-1 sticky-top">
+                    <ul class="navbar-nav flex-lg-column flex-row mb-auto justify-content-between text-truncate">
+                        <li class="nav-item">
+                            <a href="{{ path('app_home') }}" class="nav-link active px-2 text-truncate">
+                                <i class="bi bi-house fs-5"></i>
+                                <span class="d-none d-sm-inline">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/reading-list" class="nav-link active px-2 text-truncate">
+                                <i class="bi bi-list-ul fs-5"></i>
+                                <span class="d-none d-sm-inline">My list</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('meetup_overview') }}" class="nav-link active px-2 text-truncate">
+                                <i class="bi bi-calendar fs-5"></i>
+                                <span class="d-none d-sm-inline">Meetups</span> </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <main class="col-lg-10">
+                <div class="bg-light border rounded-3 p-3 overflow-auto">
+                    {% block body %} {% endblock %}
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
