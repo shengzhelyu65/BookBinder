@@ -38,6 +38,15 @@
                     <div class="card mb-3">
                         <div class="card-header">
                             <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black">{{ bookReview.getBookTitle() }}</a>
+                            <div class="rating">
+                                {% for i in range(1, 5) %}
+                                    {% if i <= bookReview.getRating() %}
+                                        ★
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">

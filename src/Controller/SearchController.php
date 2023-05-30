@@ -199,6 +199,7 @@ class SearchController extends AbstractController
     {
 
         $comment = $request->request->get('comment');
+        $rating = $request->request->get('rating');
 
         // Remove later maybe when bookTitle gets removed from book_reviews?
         $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
@@ -210,7 +211,7 @@ class SearchController extends AbstractController
         $review->setReview($comment);
         $review->setCreatedAt(new \DateTime());
         $review->setBookTitle($book->getTitle());
-        $review->setRating(1);
+        $review->setRating($rating);
         $review->setTags("Hi");
 
         $entityManager->persist($review);
