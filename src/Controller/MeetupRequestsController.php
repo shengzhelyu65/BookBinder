@@ -2,51 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\MeetupList;
 use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Form\MeetupRequestFormType;
+use App\Message\AddBookToDatabase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use App\Api\GoogleBooksApiClient;
 class MeetupRequestsController extends AbstractController
 {
-    #[Route('/meetup/request/{bookId}', name: 'app_meetup_requests')]
-    public function createMeetupRequest(Request $request, String $bookId, EntityManagerInterface $entityManager): Response
-    {
-        if ($request->isMethod('POST')) {
-            $meetupRequest = new MeetupRequests();
-
-            // Get the currently logged-in user
-            $user = $this->getUser();
-
-            // Create the form
-            $form = $this->createForm(MeetupRequestFormType::class, $meetupRequest);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $meetupRequest->setHostUser($user);
-                $meetupRequest->setBookID($bookId);
-
-                $entityManager->persist($meetupRequest);
-                $entityManager->flush();
-
-                // Redirect to a success page or do other actions
-                return $this->redirectToRoute('meetup_overview');
-            }
-        }
-
-        return $this->render('meetup_request/meetup_request.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-
     #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
     public function joinMeetupRequest(int $userId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
@@ -114,10 +86,8 @@ class MeetupRequestsController extends AbstractController
     }
 
     #[Route('/meetup/overview', name: 'meetup_overview')]
-    public function showMeetupOverview(Security $security, EntityManagerInterface $entityManager): Response
+    public function showMeetupOverview(Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
-        $ApiClient = new GoogleBooksApiClient();
-
         // Get the current user
         $this->security = $security;
         $user = $this->security->getUser();
@@ -136,13 +106,13 @@ class MeetupRequestsController extends AbstractController
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
             ->leftJoin('App\Entity\MeetupRequestList', 'mrl', 'WITH', 'mr.meetup_ID = mrl.meetup_ID')
             ->where('mr.host_user != :userId AND NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupList subml
-        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupList subml
+                WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+            )')
             ->andWhere('NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupRequestList submrl
-        WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupRequestList submrl
+                WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
+            )')
             ->setParameter('userId', $userId)
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
@@ -152,7 +122,7 @@ class MeetupRequestsController extends AbstractController
         $booksMeetupAvailables = [];
         foreach ($meetupAvailables as $meetupAvailable) {
             $bookId = $meetupAvailable->getBookID();
-            $book = $ApiClient->getBookById($bookId);
+            $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
             $booksMeetupAvailables[$bookId] = $book;
         }
 
@@ -163,9 +133,10 @@ class MeetupRequestsController extends AbstractController
         $booksMeetupRequests = [];
         foreach ($meetupRequests as $meetupRequest) {
             $bookId = $meetupRequest->getMeetupID()->getBookID();
-            $book = $ApiClient->getBookById($bookId);
+            $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
             $booksMeetupRequests[$bookId] = $book;
         }
+
 
         // The first column
         // Get the joined meetup requests for the user
@@ -182,7 +153,7 @@ class MeetupRequestsController extends AbstractController
         $booksUpcomingRequests = [];
         foreach ($upcomingRequests as $upcomingRequest) {
             $bookId = $upcomingRequest->getBookID();
-            $book = $ApiClient->getBookById($bookId);
+            $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
             $booksUpcomingRequests[$bookId] = $book;
         }
 
