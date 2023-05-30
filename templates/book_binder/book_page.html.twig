@@ -94,6 +94,7 @@
                 </div>
             </div>
         </div>
+        {% if meetupRequests is not empty %}
         <div style="width: fit-content">
             <h3>Join Meetups:</h3>
             {% for meetupRequest in meetupRequests %}
@@ -112,6 +113,7 @@
                 </div>
             {% endfor %}
         </div>
+        {% endif %}
 
         <div class="container pt-3">
             <h2>Reviews</h2>
