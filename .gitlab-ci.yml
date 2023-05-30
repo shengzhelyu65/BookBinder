@@ -12,6 +12,8 @@ before_script:
   # install rsync to copy files to the web server
   # this container runs Alpine Linux, where apk is the package manager (not apt-get)
   - apk add rsync
+    # install Node.js and Yarn
+  - apk add --no-cache nodejs yarn
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
