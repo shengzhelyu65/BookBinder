@@ -68,16 +68,17 @@
             </div>
             <div class="container pt-3">
                 <p>
-                    <button class="btn btn-primary" type="button" onclick="showContent('content1')">
+                    <button class="btn btn-primary active" type="button" onclick="showContent('content1', this)">
                         Content
                     </button>
-                    <button class="btn btn-primary" type="button" onclick="showContent('content2')">
+                    <button class="btn btn-primary" type="button" onclick="showContent('content2', this)">
                         Details
                     </button>
                 </p>
                 <div class="card card-body">
-                    <p id="content1" style="display: block;">{{ book.getDescription() | raw }}</p>
-                    <p id="content2" style="display: none;">{% set authors = book.getAuthor() %}
+                    <div id="content1" style="display: block;">{{ book.getDescription() | raw }}</div>
+                    <div id="content2" style="display: none;">
+                        {% set authors = book.getAuthor() %}
                         {% if authors|length == 1 %}
                             Author:
                         {% else %}
@@ -85,10 +86,10 @@
                         {% endif %}
                         {{ authors|join(', ') }}
                         <br>
-                        Date of publish: {{  book.getPublishedDate()|date('Y-m-d') }}
+                        Date of publish: {{ book.getPublishedDate()|date('Y-m-d') }}
                         <br>
                         Pages: {{ book.getPages() }}
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,15 +132,24 @@
     </div>
 
     <script>
-        function showContent(contentId) {
-            var contentElements = document.querySelectorAll('.card.card-body p');
-            contentElements.forEach(function(content) {
-                if (content.id === contentId) {
-                    content.style.display = 'block';
-                } else {
-                    content.style.display = 'none';
-                }
+        function showContent(contentId, button) {
+            var contentElements = document.querySelectorAll('.card.card-body div');
+            var buttonElements = document.querySelectorAll('button');
+
+            // Hide all content elements and remove active class from buttons
+            contentElements.forEach(function (content) {
+                content.style.display = 'none';
             });
+            buttonElements.forEach(function (btn) {
+                btn.classList.remove('active');
+            });
+
+            // Show the clicked content and add active class to the corresponding button
+            var contentElement = document.getElementById(contentId);
+            if (contentElement) {
+                contentElement.style.display = 'block';
+                button.classList.add('active');
+            }
         }
     </script>
 

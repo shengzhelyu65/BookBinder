@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="changed twig based on new book">
-      <change afterPath="$PROJECT_DIR$/book_binder/tests/MeetupRequestsControllerTest.php" afterDir="false" />
+    <list default="true" id="6c7d8411-13f2-4241-9673-4148f20b203e" name="Changes" comment="Test that won't work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/src/Controller/MeetupRequestsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/book_binder/templates/book_binder/book_page.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -469,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685438969991</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Test that won't work">
+      <created>1685451843927</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1685451843927</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,7 +521,8 @@
     <MESSAGE value="Homepage Caching works" />
     <MESSAGE value="Composer.json update for symfony/messenger" />
     <MESSAGE value="changed twig based on new book" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed twig based on new book" />
+    <MESSAGE value="Test that won't work" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test that won't work" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
