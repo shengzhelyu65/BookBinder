@@ -278,7 +278,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="PHP Built-in Web Server.Php Local">
+  <component name="RunManager">
     <configuration name="UnitTests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/book_binder/phpunit.xml.dist" scope="XML" />
       <method v="2" />
