@@ -19,9 +19,18 @@
                         {% endif %}
                         {{ authors|join(', ') }}
                     </p>
-                    <p>Rating: {{ book.getRating() }}</p>
-                    {% if book.getReviewCount() is defined %}
-                        <p>Reviews: {{ book.getReviewCount() }}</p>
+                    {% set sumRating = 0 %}
+                    {% set reviewCount = 0 %}
+
+                    {% for reviewRecord in reviewData %}
+                        {% set sumRating = sumRating + reviewRecord['review'].getRating() %}
+                        {% set reviewCount = reviewCount + 1 %}
+                    {% endfor %}
+
+                    {% if reviewCount > 0 %}
+                        {% set bookRating = sumRating / reviewCount %}
+                        <p>Rating: {{ bookRating|round(1) }}</p>
+                        <p>Reviews: {{ reviewCount }}</p>
                     {% endif %}
 
                     <div class="dropdown pb-2">
