@@ -119,8 +119,6 @@ class MeetupRequestsController extends AbstractController
     #[Route('/meetup/overview', name: 'meetup_overview')]
     public function showMeetupOverview(Security $security, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
-        $ApiClient = new GoogleBooksApiClient();
-
         // Get the current user
         $this->security = $security;
         $user = $this->security->getUser();
@@ -139,13 +137,13 @@ class MeetupRequestsController extends AbstractController
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
             ->leftJoin('App\Entity\MeetupRequestList', 'mrl', 'WITH', 'mr.meetup_ID = mrl.meetup_ID')
             ->where('mr.host_user != :userId AND NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupList subml
-        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupList subml
+                WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+            )')
             ->andWhere('NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupRequestList submrl
-        WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupRequestList submrl
+                WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
+            )')
             ->setParameter('userId', $userId)
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
@@ -155,80 +153,9 @@ class MeetupRequestsController extends AbstractController
         $booksMeetupAvailables = [];
         foreach ($meetupAvailables as $meetupAvailable) {
             $bookId = $meetupAvailable->getBookID();
-
-            // Check if book exists in cache
             $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
-
-            if ($book === null) {
-                // Book not found in cache, retrieve it from the Google Books API
-                $bookData = $ApiClient->getBookById($bookId);
-
-                $newBook = new Book();
-                $newBook->setGoogleBooksId($bookData['id']);
-
-                if (isset($bookData['volumeInfo']['title'])) {
-                    $newBook->setTitle($bookData['volumeInfo']['title']);
-                } else {
-                    $newBook->setTitle("");
-                }
-
-                if (isset($bookData['volumeInfo']['description'])) {
-                    $newBook->setDescription($bookData['volumeInfo']['description']);
-                } else {
-                    $newBook->setDescription("");
-                }
-
-                if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
-                    $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
-                } else {
-                    $newBook->setThumbnail("");
-                }
-
-                if (isset($bookData['volumeInfo']['averageRating'])) {
-                    $newBook->setRating($bookData['volumeInfo']['averageRating']);
-                } else {
-                    $newBook->setRating(0);
-                }
-
-                if (isset($bookData['volumeInfo']['ratingsCount'])) {
-                    $newBook->setReviewCount($bookData['volumeInfo']['ratingsCount']);
-                } else {
-                    $newBook->setReviewCount(0);
-                }
-
-                if (isset($bookData['volumeInfo']['authors'][0])) {
-                    $newBook->setAuthor($bookData['volumeInfo']['authors'][0]);
-                } else {
-                    $newBook->setAuthor("");
-                }
-
-                if (isset($bookData['volumeInfo']['pageCount'])) {
-                    $newBook->setPages($bookData['volumeInfo']['pageCount']);
-                } else {
-                    $newBook->setPages(0);
-                }
-
-                if (isset($bookData['volumeInfo']['publishedDate'])) {
-                    $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
-                } else {
-                    $newBook->setPublishedDate(new \DateTime());
-                }
-
-                if (isset($bookData['volumeInfo']['categories'])) {
-                    $newBook->setCategory($bookData['volumeInfo']['categories'][0]);
-                } else {
-                    $newBook->setCategory("");
-                }
-
-                // Dispatch a new AddBookToDatabase message
-                $messageBus->dispatch(new AddBookToDatabase($newBook));
-
-                $book = $newBook;
-            }
-
             $booksMeetupAvailables[$bookId] = $book;
         }
-
 
         // The second column
         // Retrieve the meetups hosted by the user
@@ -237,77 +164,7 @@ class MeetupRequestsController extends AbstractController
         $booksMeetupRequests = [];
         foreach ($meetupRequests as $meetupRequest) {
             $bookId = $meetupRequest->getMeetupID()->getBookID();
-
-            // Check if book exists in cache
             $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
-
-            if ($book === null) {
-                // Book not found in cache, retrieve it from the Google Books API
-                $bookData = $ApiClient->getBookById($bookId);
-
-                $newBook = new Book();
-                $newBook->setGoogleBooksId($bookData['id']);
-
-                if (isset($bookData['volumeInfo']['title'])) {
-                    $newBook->setTitle($bookData['volumeInfo']['title']);
-                } else {
-                    $newBook->setTitle("");
-                }
-
-                if (isset($bookData['volumeInfo']['description'])) {
-                    $newBook->setDescription($bookData['volumeInfo']['description']);
-                } else {
-                    $newBook->setDescription("");
-                }
-
-                if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
-                    $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
-                } else {
-                    $newBook->setThumbnail("");
-                }
-
-                if (isset($bookData['volumeInfo']['averageRating'])) {
-                    $newBook->setRating($bookData['volumeInfo']['averageRating']);
-                } else {
-                    $newBook->setRating(0);
-                }
-
-                if (isset($bookData['volumeInfo']['ratingsCount'])) {
-                    $newBook->setReviewCount($bookData['volumeInfo']['ratingsCount']);
-                } else {
-                    $newBook->setReviewCount(0);
-                }
-
-                if (isset($bookData['volumeInfo']['authors'][0])) {
-                    $newBook->setAuthor($bookData['volumeInfo']['authors'][0]);
-                } else {
-                    $newBook->setAuthor("");
-                }
-
-                if (isset($bookData['volumeInfo']['pageCount'])) {
-                    $newBook->setPages($bookData['volumeInfo']['pageCount']);
-                } else {
-                    $newBook->setPages(0);
-                }
-
-                if (isset($bookData['volumeInfo']['publishedDate'])) {
-                    $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
-                } else {
-                    $newBook->setPublishedDate(new \DateTime());
-                }
-
-                if (isset($bookData['volumeInfo']['categories'])) {
-                    $newBook->setCategory($bookData['volumeInfo']['categories'][0]);
-                } else {
-                    $newBook->setCategory("");
-                }
-
-                // Dispatch a new AddBookToDatabase message
-                $messageBus->dispatch(new AddBookToDatabase($newBook));
-
-                $book = $newBook;
-            }
-
             $booksMeetupRequests[$bookId] = $book;
         }
 
@@ -327,77 +184,7 @@ class MeetupRequestsController extends AbstractController
         $booksUpcomingRequests = [];
         foreach ($upcomingRequests as $upcomingRequest) {
             $bookId = $upcomingRequest->getBookID();
-
-            // Check if book exists in cache
             $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
-
-            if ($book === null) {
-                // Book not found in cache, retrieve it from the Google Books API
-                $bookData = $ApiClient->getBookById($bookId);
-
-                $newBook = new Book();
-                $newBook->setGoogleBooksId($bookData['id']);
-
-                if (isset($bookData['volumeInfo']['title'])) {
-                    $newBook->setTitle($bookData['volumeInfo']['title']);
-                } else {
-                    $newBook->setTitle("");
-                }
-
-                if (isset($bookData['volumeInfo']['description'])) {
-                    $newBook->setDescription($bookData['volumeInfo']['description']);
-                } else {
-                    $newBook->setDescription("");
-                }
-
-                if (isset($bookData['volumeInfo']['imageLinks']['thumbnail'])) {
-                    $newBook->setThumbnail($bookData['volumeInfo']['imageLinks']['thumbnail']);
-                } else {
-                    $newBook->setThumbnail("");
-                }
-
-                if (isset($bookData['volumeInfo']['averageRating'])) {
-                    $newBook->setRating($bookData['volumeInfo']['averageRating']);
-                } else {
-                    $newBook->setRating(0);
-                }
-
-                if (isset($bookData['volumeInfo']['ratingsCount'])) {
-                    $newBook->setReviewCount($bookData['volumeInfo']['ratingsCount']);
-                } else {
-                    $newBook->setReviewCount(0);
-                }
-
-                if (isset($bookData['volumeInfo']['authors'][0])) {
-                    $newBook->setAuthor($bookData['volumeInfo']['authors'][0]);
-                } else {
-                    $newBook->setAuthor("");
-                }
-
-                if (isset($bookData['volumeInfo']['pageCount'])) {
-                    $newBook->setPages($bookData['volumeInfo']['pageCount']);
-                } else {
-                    $newBook->setPages(0);
-                }
-
-                if (isset($bookData['volumeInfo']['publishedDate'])) {
-                    $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
-                } else {
-                    $newBook->setPublishedDate(new \DateTime());
-                }
-
-                if (isset($bookData['volumeInfo']['categories'])) {
-                    $newBook->setCategory($bookData['volumeInfo']['categories'][0]);
-                } else {
-                    $newBook->setCategory("");
-                }
-
-                // Dispatch a new AddBookToDatabase message
-                $messageBus->dispatch(new AddBookToDatabase($newBook));
-
-                $book = $newBook;
-            }
-
             $booksUpcomingRequests[$bookId] = $book;
         }
 
