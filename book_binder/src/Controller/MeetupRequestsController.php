@@ -19,37 +19,6 @@ use Symfony\Component\Security\Core\Security;
 use App\Api\GoogleBooksApiClient;
 class MeetupRequestsController extends AbstractController
 {
-    #[Route('/meetup/request/{bookId}', name: 'app_meetup_requests')]
-    public function createMeetupRequest(Request $request, String $bookId, EntityManagerInterface $entityManager): Response
-    {
-        if ($request->isMethod('POST')) {
-            $meetupRequest = new MeetupRequests();
-
-            // Get the currently logged-in user
-            $user = $this->getUser();
-
-            // Create the form
-            $form = $this->createForm(MeetupRequestFormType::class, $meetupRequest);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $meetupRequest->setHostUser($user);
-                $meetupRequest->setBookID($bookId);
-
-                $entityManager->persist($meetupRequest);
-                $entityManager->flush();
-
-                // Redirect to a success page or do other actions
-                return $this->redirectToRoute('meetup_overview');
-            }
-        }
-
-        return $this->render('meetup_request/meetup_request.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-
     #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
     public function joinMeetupRequest(int $userId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
