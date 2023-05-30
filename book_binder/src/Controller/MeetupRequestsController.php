@@ -197,7 +197,7 @@ class MeetupRequestsController extends AbstractController
             'meetupRequests' => $meetupRequests,
             'booksMeetupRequests' => $booksMeetupRequests,
             'meetupAvailabes'=>$meetupAvailables,
-            'booksMeetupAvailables' => $booksMeetupAvailables,
+            'booksMeetupAvailables' => $booksMeetupAvailables
         ]);
     }
 }
