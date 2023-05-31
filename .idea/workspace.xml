@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Responsive login screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_login_registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_login_registration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_website.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/reading_interest_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/reading_interest_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register_form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -674,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685356917354</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Responsive login screen">
+      <created>1685560684295</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1685560684296</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -705,7 +712,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Position body website" />
     <MESSAGE value="Homepage with books and reviews" />
     <MESSAGE value="Responsive sidebar and homepage" />
     <MESSAGE value="Base with whitespace" />
@@ -730,7 +736,8 @@
     <MESSAGE value="Responsive meetup overview page" />
     <MESSAGE value="Fix bug with width on book page" />
     <MESSAGE value="Profile for other users and make user reading list entry when login with google" />
-    <option name="LAST_COMMIT_MESSAGE" value="Profile for other users and make user reading list entry when login with google" />
+    <MESSAGE value="Responsive login screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Responsive login screen" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/a22web31@SecurityControllerTest_testLogin__2_.xml" NAME="SecurityControllerTest.testLogin (2) Coverage Results" MODIFIED="1683288492210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

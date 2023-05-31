@@ -4,14 +4,14 @@
 
 {% block body %}
     <div class="container-fluid p-5">
-        <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center align-items-lg-start gap-3">
-            <div class="mb-lg-5 mx-lg-5 text-center text-lg-start">
-                <h1 class="mb-5 display-3 fw-bold ls-tight">
-                Welcome to <br class="d-none d-lg-block">
-                <span class="text-primary">BookBinder</span>
+        <div class="d-flex flex-lg-row flex-column justify-content-center align-items-center align-items-lg-start gap-5">
+            <div class="text-center text-lg-start">
+                <h1 class="display-3 fw-bold ls-tight">
+                    Welcome to <br class="d-none d-lg-block">
+                    <span class="text-primary">BookBinder</span>
                 </h1>
             </div>
-            <div class="col-lg-5 mb-lg-5 mx-lg-5">
+            <div class="col-lg-5">
                 {% include './security/login_form.html.twig' %}
             </div>
         </div>

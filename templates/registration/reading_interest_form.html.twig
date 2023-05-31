@@ -1,31 +1,26 @@
-
-
-<div class="col-lg-5 mb-5 mb-lg-0">
-    <div class="card">
-        <div class="card-body px-5 pb-5 pt-4 px-md-5">
-            <h2 class="fw-bold mb-4 pb-2">Book Preferences</h2>
-            {% for flash_message in app.session.flashbag.get('error') %}
-                <div class="alert alert-danger">{{ flash_message }}</div>
-            {% endfor %}
-            {{ form_start(readingInterestForm, {'attr': {'class': 'form-group', 'needs-validation': false}}) }}
-                <!-- Language inputs -->
-                <div class="row mb-0">
-                    <div class="col-md-12 mb-3">
-                        {{ form_label(readingInterestForm.languages, 'Languages') }}
-                        {{ form_widget(readingInterestForm.languages) }}
-                        {{ form_errors(readingInterestForm.languages) }}
-                    </div>
+<div class="card">
+    <div class="card-body px-5 pb-5 pt-4 px-md-5">
+        <h2 class="fw-bold mb-4 pb-2">Book Preferences</h2>
+        {% for flash_message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flash_message }}</div>
+        {% endfor %}
+        {{ form_start(readingInterestForm, {'attr': {'class': 'form-group', 'needs-validation': false}}) }}
+            <!-- Language inputs -->
+            <div class="row mb-0">
+                <div class="col-md-12 mb-3">
+                    {{ form_label(readingInterestForm.languages, 'Languages') }}
+                    {{ form_widget(readingInterestForm.languages) }}
+                    {{ form_errors(readingInterestForm.languages) }}
                 </div>
-                <!-- Genre inputs -->
-                <div class="row mb-0">
-                    <div class="col-md-12 mb-3">
-                        {{ form_label(readingInterestForm.genres, 'Genres') }}
-                        {{ form_widget(readingInterestForm.genres) }}
-                        {{ form_errors(readingInterestForm.genres) }}
-                    </div>
+            </div>
+            <!-- Genre inputs -->
+            <div class="row mb-0">
+                <div class="col-md-12 mb-3">
+                    {{ form_label(readingInterestForm.genres, 'Genres') }}
+                    {{ form_widget(readingInterestForm.genres) }}
+                    {{ form_errors(readingInterestForm.genres) }}
                 </div>
-            {{ form_end(readingInterestForm) }}
-        </div>
+            </div>
+        {{ form_end(readingInterestForm) }}
     </div>
 </div>
-

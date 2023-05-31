@@ -1,96 +1,95 @@
-<div class="col-lg-5 mb-5 mb-lg-0">
-    <div class="card">
-        <div class="card-body px-5 pb-5 pt-4 px-md-5">
-            <h2 class="fw-bold mb-4 pb-2">Register</h2>
-            {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-            {% endfor %}
-            {% for flash_message in app.session.flashbag.get('error') %}
-                <div class="alert alert-danger">{{ flash_message }}</div>
-            {% endfor %}
-            {{ form_start(registrationForm, {'attr': {'class': 'form-signin', 'needs-validation':false}}) }}
-                <!-- 2 column grid layout with text inputs for the first and last names -->
-                <div class="row mb-0">
-                    <div class="col-md-5 mb-3">
-                        <div class="form-outline">
-                            {{ form_label(registrationForm.name, 'Name') }}
-                            {{ form_widget(registrationForm.name, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputName'}}) }}
-                            {{ form_errors(registrationForm.name) }}
-                        </div>
-                    </div>
-                    <div class="col-md-7 mb-3">
-                        <div class="form-outline">
-                            {{ form_label(registrationForm.name, 'Surname') }}
-                            {{ form_widget(registrationForm.surname, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputSurname'} }) }}
-                            {{ form_errors(registrationForm.surname) }}
-                        </div>
+<div class="card">
+    <div class="card-body px-5 pb-5 pt-4 px-md-5">
+        <h2 class="fw-bold mb-4 pb-2">Register</h2>
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        {% for flash_message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flash_message }}</div>
+        {% endfor %}
+        {{ form_start(registrationForm, {'attr': {'class': 'form-signin', 'needs-validation':false}}) }}
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-0">
+                <div class="col-md-5 mb-3">
+                    <div class="form-outline">
+                        {{ form_label(registrationForm.name, 'Name') }}
+                        {{ form_widget(registrationForm.name, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputName'}}) }}
+                        {{ form_errors(registrationForm.name) }}
                     </div>
                 </div>
-
-                <!-- 2 column grid layout with text inputs for the nickname and email -->
-                <div class="row mb-0">
-                    <div class="col-md-4 mb-3">
-                        <div class="form-outline">
-                            {{ form_label(registrationForm.nickname, 'Nickname') }}
-                            {{ form_widget(registrationForm.nickname, { 'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputNickname'} }) }}
-                            {{ form_errors(registrationForm.nickname) }}
-                        </div>
-                    </div>
-                    <div class="col-md-8 mb-3">
-                        <div class="form-outline">
-                            {{ form_label(registrationForm.email, 'Email') }}
-                            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputEmail'}}) }}
-                            {{ form_errors(registrationForm.email) }}
-                        </div>
+                <div class="col-md-7 mb-3">
+                    <div class="form-outline">
+                        {{ form_label(registrationForm.name, 'Surname') }}
+                        {{ form_widget(registrationForm.surname, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputSurname'} }) }}
+                        {{ form_errors(registrationForm.surname) }}
                     </div>
                 </div>
+            </div>
 
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                    {{ form_label(registrationForm.plainPassword, 'Password') }}
-                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputPassword'}}) }}
-                    {{ form_errors(registrationForm.plainPassword) }}
+            <!-- 2 column grid layout with text inputs for the nickname and email -->
+            <div class="row mb-0">
+                <div class="col-md-4 mb-3">
+                    <div class="form-outline">
+                        {{ form_label(registrationForm.nickname, 'Nickname') }}
+                        {{ form_widget(registrationForm.nickname, { 'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputNickname'} }) }}
+                        {{ form_errors(registrationForm.nickname) }}
+                    </div>
                 </div>
+                <div class="col-md-8 mb-3">
+                    <div class="form-outline">
+                        {{ form_label(registrationForm.email, 'Email') }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputEmail'}}) }}
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
+                </div>
+            </div>
 
-                <!-- Checkbox to agree with terms -->
-                {{ form_row(registrationForm.agreeTerms) }}
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                {{ form_label(registrationForm.plainPassword, 'Password') }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputPassword'}}) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
 
+            <!-- Checkbox to agree with terms -->
+            {{ form_row(registrationForm.agreeTerms) }}
+
+            <div class="">
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary w-100 mb-4">
+                    Sign up
+                </button>
+
+                <!-- Sign Up with Google -->
                 <div class="">
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary w-100 mb-4">
-                        Sign up
-                    </button>
+                    <div id="g_id_onload"
+                        data-client_id="773315199188-t2bualn3k6id1gsokusqrueq55lkg4e4"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-login_uri="/login/google"
+                        data-auto_prompt="false">
+                    </div>
 
-                    <!-- Sign Up with Google -->
-                    <div class="">
-                        <div id="g_id_onload"
-                            data-client_id="773315199188-t2bualn3k6id1gsokusqrueq55lkg4e4"
-                            data-context="signin"
-                            data-ux_mode="popup"
-                            data-login_uri="/login/google"
-                            data-auto_prompt="false">
-                        </div>
-
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-shape="rectangular"
-                            data-theme="outline"
-                            data-text="signin_with"
-                            data-size="large"
-                            data-locale="en"
-                            data-logo_alignment="left">
-                        </div>
+                    <div class="g_id_signin"
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-theme="outline"
+                        data-text="signin_with"
+                        data-size="large"
+                        data-locale="en"
+                        data-logo_alignment="left">
                     </div>
                 </div>
+            </div>
 
-                <div class="a-row mt-4 text-center">
-                    Already have an account?
-                    <a class="a-link-emphasis" href="/login">
-                        Sign in
-                    </a>
-                </div>
-            {{ form_end(registrationForm) }}
-        </div>
+            <div class="a-row mt-4 text-center">
+                Already have an account?
+                <a class="a-link-emphasis" href="/login">
+                    Sign in
+                </a>
+            </div>
+        {{ form_end(registrationForm) }}
     </div>
 </div>
+
 
