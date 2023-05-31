@@ -45,6 +45,9 @@ class MeetupRequestsControllerTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertTrue($response->isRedirect('/meetup/overview'));
+        // TODO: check db
+
+        // TODO: delete db entry
 
     }
     public function testAcceptMeetupRequest(): void
