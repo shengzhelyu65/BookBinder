@@ -57,7 +57,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/reading-list" class="nav-link active px-2 text-truncate">
+                            <a href="{{ path('reading_list') }}" class="nav-link active px-2 text-truncate">
                                 <i class="bi bi-list-ul fs-5"></i>
                                 <span class="d-none d-sm-inline">My list</span>
                             </a>
