@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Controller;
+namespace Controller;
 
 use App\Entity\User;
 use App\Entity\BookReviews;
 use App\Entity\Book;
 use App\Entity\UserReadingInterest;
-
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-
 use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
@@ -31,6 +29,7 @@ class BookBinderController extends AbstractController
         /** @var \App\Entity\User $user **/
         $genres = $user->getUserReadingInterest()->getGenres();
 
+        array_push($genres, 'popular', 'classic');
 
         // Create an empty array to hold the results.
         $results = [];
@@ -131,7 +130,7 @@ class BookBinderController extends AbstractController
         }
         // ============= Reviews
 
-        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(10);
+        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(5);
 
         // =============
 
