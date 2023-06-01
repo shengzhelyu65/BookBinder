@@ -8,6 +8,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class LibraryFixtures extends Fixture
 {
+    public const LIBRARY_REFERENCE = 'library_ref';
+
     public function load(ObjectManager $manager): void
     {
         $libraries = [
@@ -63,9 +65,12 @@ class LibraryFixtures extends Fixture
             ],
         ];
 
-        foreach ($libraries as $libraryData) {
-            $library = $this->createLibrary($libraryData);
+        for ($i = 1; $i <= count($libraries); ++$i) {
+            $library = $this->createLibrary($libraries[$i-1]);
             $manager->persist($library);
+
+            // Create unique reference for each library
+            $this->addReference(self::LIBRARY_REFERENCE . $i, $library);
         }
 
         $manager->flush();
