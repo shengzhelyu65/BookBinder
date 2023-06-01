@@ -12,23 +12,18 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $existingUser = $manager->getRepository(User::class)->findOneBy(['email' => 'ref@ref.com']);
+        for ($i = 1; $i <= 10; $i++) {
+            $user = new User();
+            $user->setEmail("user{$i}@example.com");
+            $user->setEmail('ref@ref.com');
+            $user->setPassword(''); // Password is not used in this application
+            $user->setPassword(''); // Password is not used in this application
+            $manager->persist($user);
 
-        if ($existingUser) {
-            // User already exists, remove it first
-            $manager->remove($existingUser);
-            $manager->flush();
+            // Create unique reference for each user
+            $this->addReference(self::USER_REFERENCE . $i, $user);
         }
 
-        // Create and persist user objects
-        $user = new User();
-        $user->setEmail('ref@ref.com');
-        $user->setPassword(''); // Password is not used in this application
-        // $manager->persist($user);
-
-        // other fixtures can get this object using the UserFixtures::USER_REFERENCE constant
-        $this->addReference(self::USER_REFERENCE, $user);
-
-        // $manager->flush();
+        $manager->flush();
     }
 }
