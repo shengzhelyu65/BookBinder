@@ -1,7 +1,7 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <h1>You searched for '{{ query }}'</h1>
+    <h4>You searched for '{{ query }}'</h4>
     <p>{{ results|length }} result(s) found</p>
     {% for book in results %}
         <a href="{{ path('book-page', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">

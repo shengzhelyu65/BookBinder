@@ -1,10 +1,5 @@
 {% extends 'base_website.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('truncate') }}
-{% endblock %}
-
 {% block body %}
     <div class="row">
         <div class="col-md-8">
@@ -31,11 +26,11 @@
         </div>
         <div class="col-md-4 d-none d-md-block">
             <h4>Reviews</h4>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column gap-3">
                 {% for bookReview in reviews %}
-                    <div class="card mb-3">
+                    <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate">{{ bookReview.getBookTitle() }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
