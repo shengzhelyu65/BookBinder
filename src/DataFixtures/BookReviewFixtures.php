@@ -16,12 +16,15 @@ class BookReviewFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 0; $i < 10; $i++) {
             $bookReview = new BookReviews();
-            $bookReview->setBookId($faker->numberBetween(1, 1000));
+
+            $book = $this->getReference(BookFixtures::BOOK_REFERENCE . $faker->numberBetween(1, 10));
+            $bookReview->setBookId($book->getGoogleBooksId());
+            $bookReview->setBookTitle($book->getTitle());
             $bookReview->setRating($faker->numberBetween(1, 5));
             $bookReview->setTags($faker->words(1, true));
-            $bookReview->setReview('#' . $bookReview->getTags() . '# ' . $faker->paragraphs(3, true));
+            $bookReview->setReview($faker->text(20));
             $bookReview->setCreatedAt($faker->dateTimeBetween('-1 days', 'now'));
-            $user = $this->getReference(UserFixtures::USER_REFERENCE);
+            $user = $this->getReference(UserFixtures::USER_REFERENCE . $faker->numberBetween(1, 10));
             $bookReview->setUserId($user);
 
             $manager->persist($bookReview);
@@ -34,6 +37,7 @@ class BookReviewFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            BookFixtures::class,
         ];
     }
 }
