@@ -19,6 +19,8 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
     {
         $faker = Factory::create();
 
+        $users = [];
+
         for ($i = 1; $i <= 10; $i++) {
             $meetupRequest = new MeetupRequests();
             $library = $this->getReference(LibraryFixtures::LIBRARY_REFERENCE . $faker->numberBetween(1, 5));
@@ -27,7 +29,7 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
 
             // Create users array with size maxNumber
             for ($k = 1; $k <= $maxNumber; $k++) {
-                $users[] = $this->getReference(UserFixtures::USER_REFERENCE . $faker->numberBetween(1, 10));
+                $users[$k-1] = $this->getReference(UserFixtures::USER_REFERENCE . $k);
             }
             $meetupRequest->setMaxNumber($maxNumber);
             $meetupRequest->setHostUser($users[0]);
@@ -41,7 +43,7 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
             $this->addReference(self::MEETUP_REQUEST_REFERENCE . $i, $meetupRequest);
 
             // Create meetup request list
-            $requestsNumber = $faker->numberBetween(1, $maxNumber);
+            $requestsNumber = $faker->numberBetween(1, $maxNumber - 1);
             for ($j = 1; $j <= $requestsNumber; $j++) {
                 $meetupRequestList = new MeetupRequestList();
                 $meetupRequestList->setUserID($users[$j]);
@@ -50,10 +52,10 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
             }
 
             // Create meetup list
-            $meetupNumber = $faker->numberBetween(0, $maxNumber - $requestsNumber);
-            for ($j = 1; $j <= $meetupNumber; $j++) {
+            $meetupNumber = $faker->numberBetween(0, $maxNumber - $requestsNumber - 1);
+            for ($j = 0; $j < $meetupNumber; $j++) {
                 $meetupList = new MeetupRequestList();
-                $meetupRequestList->setUserID($users[$j+$requestsNumber]);
+                $meetupRequestList->setUserID($users[$requestsNumber + $j + 1]);
                 $meetupRequestList->setMeetupID($meetupRequest);
                 $manager->persist($meetupRequestList);
             }
