@@ -7,11 +7,12 @@ use App\Entity\UserReadingInterest;
 use App\Enum\GenreEnum;
 use App\Enum\LanguageEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public const USER_REFERENCE = 'user_ref';
 
@@ -49,5 +50,12 @@ class UserFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ResetAutoincrementFixture::class,
+        ];
     }
 }
