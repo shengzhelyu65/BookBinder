@@ -130,7 +130,7 @@ class BookBinderController extends AbstractController
         }
         // ============= Reviews
 
-        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(5);
+        $reviews = $entityManager->getRepository(BookReviews::class)->findLatest(10);
 
         // =============
 

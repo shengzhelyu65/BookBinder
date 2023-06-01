@@ -135,7 +135,9 @@
                     {% for reviewRecord in reviewData %}
                         <div class="card mb-3">
                             <div class="card-header">
-                                <strong>{{ reviewRecord['username'] }}</strong> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
+                                <a href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
+                            </div>
+                            <div class="card-body">
                                 <div class="rating">
                                     {% for i in range(1, 5) %}
                                         {% if i <= reviewRecord['review'].getRating() %}
@@ -145,9 +147,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">{{ reviewRecord['review'].getReview() }}</p>
+                                <p class="card-text text-truncate-3">{{ reviewRecord['review'].getReview() }}</p>
                             </div>
                         </div>
                     {% endfor %}

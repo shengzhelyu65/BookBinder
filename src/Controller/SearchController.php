@@ -182,7 +182,7 @@ class SearchController extends AbstractController
             return $this->redirectToRoute('book-page', ['id' => $id]);
         }
         // ======== BOOK REVIEWS ========= //
-        $reviews = array_slice($entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id]),0,7);
+        $reviews = array_slice($entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id], ['created_at' => 'DESC']),0,7);
         $reviewData = [];
         foreach ($reviews as $review) {
             $UserPersonalInfo = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['user' => $review->getUserId()]);

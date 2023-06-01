@@ -78,8 +78,8 @@
                                 <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100" alt="Empty Book Cover" style="width: 140px; object-fit: cover">
                             {% endif %}
                             <div class="card-body">
-                                <h5 class="card-title text-truncate-2">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</h5>
-                                <p class="card-text">Host: {{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</p>
+                                <h5 class="card-title text-truncate-2"><a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</a></h5>
+                                <p class="card-text">Host: <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a></p>
                                 <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
                                 <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
                             </div>

@@ -43,7 +43,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
-                                <p>{{ bookReview.getReview() }}</p>
+                                <p class="text-truncate-3">{{ bookReview.getReview() }}</p>
                                 <footer class="blockquote-footer">
                                     <a href="{{ path('profile_other', {'username': bookReview.getUserID().getUserPersonalInfo().getNickname() }) }}" class="link-secondary text-decoration-none">{{ bookReview.getUserID().getUserPersonalInfo().getNickname() }}</a>
                                 </footer>
