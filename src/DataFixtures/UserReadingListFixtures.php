@@ -30,27 +30,27 @@ class UserReadingListFixtures extends Fixture implements DependentFixtureInterfa
             $readingList->setUser($user);
 
             $fakerBooks = new ArrayCollection($books);
-            $currentReadingNumber = $faker->numberBetween(1, 10);
-            $wantToReadNumber = $faker->numberBetween(1, 10 - $currentReadingNumber);
+            $currentReadingNumber = $faker->numberBetween(1, 10 - 2);
+            $wantToReadNumber = $faker->numberBetween(1, 10 - $currentReadingNumber - 1);
             $readNumber = $faker->numberBetween(1, 10 - $currentReadingNumber - $wantToReadNumber);
             $currentReadingArray = [];
             $wantToReadArray = [];
             $readArray = [];
             for ($i = 1; $i <= $currentReadingNumber; $i++) {
-                $randomIndex = $faker->numberBetween(0, $fakerBooks->count() - 1);
-                $currentReadingArray[$i] = $fakerBooks->get($randomIndex);
+                $currentReadingArray[$i] = $fakerBooks->get($i-1);
             }
             for ($i = 1; $i <= $wantToReadNumber; $i++) {
-                $randomIndex = $faker->numberBetween(0, $fakerBooks->count() - 1);
-                $wantToReadArray[$i] = $fakerBooks->get($randomIndex);
+                $wantToReadArray[$i-1] = $fakerBooks->get($i + $currentReadingNumber - 1);
             }
             for ($i = 1; $i <= $readNumber; $i++) {
-                $randomIndex = $faker->numberBetween(0, $fakerBooks->count() - 1);
-                $readArray[$i] = $fakerBooks->get($randomIndex);
+                $readArray[$i-1] = $fakerBooks->get($i + $currentReadingNumber + $wantToReadNumber - 1);
             }
             $currentReadingArray = array_values($currentReadingArray);
             $wantToReadArray = array_values($wantToReadArray);
             $readArray = array_values($readArray);
+            shuffle($currentReadingArray);
+            shuffle($wantToReadArray);
+            shuffle($readArray);
             $readingList->setCurrentlyReading($currentReadingArray);
             $readingList->setWantToRead($wantToReadArray);
             $readingList->setHaveRead($readArray);
