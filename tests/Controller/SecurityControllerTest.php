@@ -31,6 +31,6 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertStringContainsString('/', $client->getCurrentURL());
 
         // Assert that the home page is displayed
-        $this->assertSelectorTextContains('h3', 'mystery');
+        $this->assertSelectorTextContains('h4', 'mystery');
     }
 }

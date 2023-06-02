@@ -15,7 +15,7 @@ class BookBinderControllerTest extends WebTestCase
 
         // Find a user
         $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => 'shengzhe.lyu@gmail.com']);
+        $user = $userRepository->findOneBy(['email' => 'user1@example.com']);
         $this->assertInstanceOf(User::class, $user);
         $client->loginUser($user);
 
