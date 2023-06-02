@@ -59,7 +59,6 @@ class MeetupRequestsController extends AbstractController
         $action = $request->request->get('action');
 
         $meetupRequest = $entityManager->getRepository(MeetupRequestList::class)->find($meetupRequestId);
-        $host = $meetupRequest->getMeetupID()->getHostUser()->getId();
 
         if ($action === 'accept') {
             // Retrieve the meetup request details
@@ -87,6 +86,10 @@ class MeetupRequestsController extends AbstractController
     {
         // Get the current user
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
 
         // Get current user entity object from the database using repository method by email
         $email = $user->getEmail();

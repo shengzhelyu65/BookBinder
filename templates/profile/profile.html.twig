@@ -8,7 +8,7 @@
                 <div class="d-flex flex-column">
                     <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
                     {% if  user.getUserPersonalInfo().getName() is not null or user.getUserPersonalInfo().getSurname() is not null %}
-                        <p><b>{{ user.getUserPersonalInfo().getName() }} {{ user.getUserPersonalInfo().getSurname() }}<</b></p>
+                        <p><b>{{ user.getUserPersonalInfo().getName() }} {{ user.getUserPersonalInfo().getSurname() }}</b></p>
                     {% endif %}
                 </div>
             </div>

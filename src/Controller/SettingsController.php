@@ -16,6 +16,11 @@ class SettingsController extends AbstractController
     public function settings(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $userPersonalInfo = $user->getUserPersonalInfo();
         $userReadingInterest = $user->getUserReadingInterest();
 

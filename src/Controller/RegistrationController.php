@@ -72,18 +72,14 @@ class RegistrationController extends AbstractController
             //handle user personal info if any
             $userPersonalInfo->setUser($user);
             // try to add name, if not set, set it to null
-            try {
+            if (!empty($form->get('name')->getData())) {
                 $userPersonalInfo->setName($form->get('name')->getData());
-            } catch (\Throwable $th) {
-                $userPersonalInfo->setName(null);
             }
             // try to add surname, if not set, set it to null
-            try {
+            if (!empty($form->get('surname')->getData())) {
                 $userPersonalInfo->setSurname($form->get('surname')->getData());
-            } catch (\Throwable $th) {
-                $userPersonalInfo->setSurname(null);
             }
-            // check if nickname is already registered and add nickname
+            // check if nickname is already used and add nickname
             $nickname = $form->get('nickname')->getData();
             $nickname = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $nickname]);
             if ($nickname) {
@@ -189,7 +185,7 @@ class RegistrationController extends AbstractController
 
         $user = $userRepository->find($id);
 
-        if (null === $user) {
+        if (is_null($user)) {
             return $this->redirectToRoute('app_register');
         }
 

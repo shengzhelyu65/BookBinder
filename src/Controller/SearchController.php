@@ -230,10 +230,14 @@ class SearchController extends AbstractController
     {
         $user = $this->getUser();
 
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // Get the User and MeetupRequest entities based on the provided IDs
         $meetupRequest = $entityManager->getRepository(MeetupRequests::class)->find($meetupRequestId);
 
-        if ($user && $meetupRequest) {
+        if ($meetupRequest) {
             // Check if the user is already the host
             if ($user != $meetupRequest->getHostUser()) {
                 // Check if the maximum number of participants has been reached
@@ -316,7 +320,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($wantToRead, $bookId);
+                $wantToRead[] = $bookId;
                 break;
             case 'Currently Reading':
                 if ($is_in_want_to_read) {
@@ -328,7 +332,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($currentlyReading, $bookId);
+                $currentlyReading[] = $bookId;
                 break;
             case 'Have Read':
                 if ($is_in_want_to_read) {
@@ -340,7 +344,7 @@ class SearchController extends AbstractController
                 } else if ($is_in_have_read) {
                     // do nothing
                 }
-                array_push($haveRead, $bookId);
+                $haveRead[] = $bookId;
                 break;
             default:
                 // Handle the case where no or an invalid selection is made

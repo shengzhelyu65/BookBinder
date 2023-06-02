@@ -14,7 +14,13 @@ class ProfileController extends AbstractController  {
     #[Route("/profile", name: 'profile')]
     public function myProfile(EntityManagerInterface $entityManager): Response
     {
-        $reviews = $entityManager->getRepository(BookReviews::class)->findByUser($this->getUser()->getId());
+        $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $reviews = $entityManager->getRepository(BookReviews::class)->findByUser($user->getId());
 
         return $this->render('profile/profile.html.twig', [
             'controller_name' => 'ProfileController',
@@ -26,7 +32,12 @@ class ProfileController extends AbstractController  {
     #[Route('/profile/{username}', name: 'profile_other')]
     public function userProfile($username, EntityManagerInterface $entityManager): Response
     {
-        $user = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $username])->getUser();
+        try {
+            $user = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $username])->getUser();
+        } catch(\Throwable $th) {
+            return $this->redirectToRoute('app_home');
+        }
+
         $user_reading_list = $user->getUserReadingList();
         $currently_reading = $user_reading_list->getCurrentlyReading();
         $want_to_read = $user_reading_list->getWantToRead();
@@ -37,7 +48,7 @@ class ProfileController extends AbstractController  {
         // For the ids in currently_reading, add the book objects to $books
         foreach ($currently_reading as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($currently_reading_books, $book);
+            $currently_reading_books[] = $book;
         }
 
         // For the ids in want_to_read, add the book objects to $books
@@ -45,7 +56,7 @@ class ProfileController extends AbstractController  {
 
         foreach ($want_to_read as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($want_to_read_books, $book);
+            $want_to_read_books[] = $book;
         }
 
         // For the ids in have_read, add the book objects to $books
@@ -53,7 +64,7 @@ class ProfileController extends AbstractController  {
 
         foreach ($have_read as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($have_read_books, $book);
+            $have_read_books[] = $book;
         }
 
         $reviews = $entityManager->getRepository(BookReviews::class)->findByUser($user->getId());

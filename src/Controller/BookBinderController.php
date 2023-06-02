@@ -14,17 +14,19 @@ use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
-    #[Route("/home", name: 'app_home')]
     #[Route("/", name: 'app_home')]
     public function home(EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
+        $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
-        $user = $this->getUser();
-
         // Define an array of genres to search for.
-        /** @var \App\Entity\User $user **/
         $genres = $user->getUserReadingInterest()->getGenres();
 
         array_push($genres, 'popular', 'classic');
@@ -36,7 +38,7 @@ class BookBinderController extends AbstractController
         // ==================== If no books were found in the database, query the API to retrieve them.
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $entityManager->getRepository(Book::class)->findBy(['category' => $genre], limit: 40);
+            $books = $entityManager->getRepository(Book::class)->findBy(['category' => $genre], ['id' => 'DESC'], limit: 40);
             $results[$genre] = $books;
             $cachedCount = count($books);
 
