@@ -32,6 +32,10 @@ class ProfileController extends AbstractController  {
     #[Route('/profile/{username}', name: 'profile_other')]
     public function userProfile($username, EntityManagerInterface $entityManager): Response
     {
+        if ($username == $this->getUser()->getUserPersonalInfo()->getNickname()) {
+            return $this->redirectToRoute('profile');
+        }
+
         try {
             $user = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $username])->getUser();
         } catch(\Throwable $th) {
