@@ -33,8 +33,15 @@ class UserRepositoryTest extends KernelTestCase
     public function testUpdatePassword()
     {
         $user = $this->userRepository->findOneBy(['email' => 'test@example.com']);
-        $newPassword = 'newPassword123';
-        $this->userRepository->updatePassword($user, $newPassword, true);
+
+        $newHashedPassword = 'new_hashed_password';
+
+        $this->userRepository->upgradePassword($user, $newHashedPassword);
+
+        $this->assertEquals($newHashedPassword, $user->getPassword());
+
+        $savedUser = $this->userRepository->find($user->getId());
+        $this->assertEquals($user->getPassword(), $savedUser->getPassword());
     }
 
     public function testRemove()
