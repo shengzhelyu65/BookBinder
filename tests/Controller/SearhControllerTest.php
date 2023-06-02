@@ -69,11 +69,10 @@ class SearhControllerTest extends WebTestCase
         $this->assertStringContainsString('Hamlet', $crawler->filter('b')->text());
         $cardElements = $crawler->filter('.card');
         $this->assertGreaterThan(5, $cardElements->count());
-
     }
+
     public function testAddReview(): void
     {
-
         $client = static::createClient();
         $container = self::getContainer();
         $entityManager = $container->get('doctrine')->getManager();
