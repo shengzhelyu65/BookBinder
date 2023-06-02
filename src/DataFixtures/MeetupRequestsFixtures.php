@@ -48,7 +48,7 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
             $manager->persist($meetupRequest);
 
             // Create meetup request list
-            $requestsNumber = $faker->numberBetween(1, $maxNumber - 1);
+            $requestsNumber = $faker->numberBetween(2, $maxNumber - 1);
             for ($j = 1; $j <= $requestsNumber; $j++) {
                 $meetupRequestList = new MeetupRequestList();
                 $meetupRequestList->setUserID($users[$j]);
