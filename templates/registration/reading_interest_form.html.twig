@@ -9,7 +9,7 @@
             <div class="row mb-0">
                 <div class="col-md-12 mb-3">
                     {{ form_label(readingInterestForm.languages, 'Languages') }}
-                    {{ form_widget(readingInterestForm.languages) }}
+                    {{ form_widget(readingInterestForm.languages, { 'attr': {'class': 'multiple-select-field'} }) }}
                     {{ form_errors(readingInterestForm.languages) }}
                 </div>
             </div>
@@ -17,7 +17,7 @@
             <div class="row mb-0">
                 <div class="col-md-12 mb-3">
                     {{ form_label(readingInterestForm.genres, 'Genres') }}
-                    {{ form_widget(readingInterestForm.genres) }}
+                    {{ form_widget(readingInterestForm.genres, { 'attr': {'class': 'multiple-select-field'} }) }}
                     {{ form_errors(readingInterestForm.genres) }}
                 </div>
             </div>

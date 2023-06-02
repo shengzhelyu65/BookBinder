@@ -4,20 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Settings to change user personal information and preferences">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/truncate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/truncate.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookBinderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReadingListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReadingListController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/BookReviewsRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/BookReviewsRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/profile/profile.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile/profile.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profile/profile_user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile/profile_user.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/reading_interest_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/reading_interest_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -682,7 +680,28 @@
       <option name="project" value="LOCAL" />
       <updated>1685356917354</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Fixed text truncate and added routing to every page">
+      <created>1685615302945</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1685615302945</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Remove unused imports statements and add unique nicknames">
+      <created>1685697784516</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1685697784516</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Settings to change user personal information and preferences">
+      <created>1685705439498</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1685705439498</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -713,9 +732,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Position body website" />
-    <MESSAGE value="Homepage with books and reviews" />
-    <MESSAGE value="Responsive sidebar and homepage" />
     <MESSAGE value="Base with whitespace" />
     <MESSAGE value="Add profile.html.twig" />
     <MESSAGE value="Homescreen with books from Google API" />
@@ -738,7 +754,10 @@
     <MESSAGE value="Responsive meetup overview page" />
     <MESSAGE value="Fix bug with width on book page" />
     <MESSAGE value="Profile for other users and make user reading list entry when login with google" />
-    <option name="LAST_COMMIT_MESSAGE" value="Profile for other users and make user reading list entry when login with google" />
+    <MESSAGE value="Fixed text truncate and added routing to every page" />
+    <MESSAGE value="Remove unused imports statements and add unique nicknames" />
+    <MESSAGE value="Settings to change user personal information and preferences" />
+    <option name="LAST_COMMIT_MESSAGE" value="Settings to change user personal information and preferences" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/a22web31@SecurityControllerTest_testLogin__2_.xml" NAME="SecurityControllerTest.testLogin (2) Coverage Results" MODIFIED="1683288492210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
