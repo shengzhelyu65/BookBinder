@@ -7,9 +7,6 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\UserPersonalInfo;
-use App\Entity\User;
-use App\Entity\UserReadingList;
-
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,11 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Api\GoogleBooksApiClient;
 use App\Entity\MeetupRequestList;
 use App\Form\MeetupRequestFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-
 
 /*
  * This controller meant for the development of the

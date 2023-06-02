@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\UserPersonalInfo;
-use App\Entity\UserReadingInterest;
-use App\Entity\UserReadingList;
 use App\Entity\Book;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +18,6 @@ class ReadingListController extends AbstractController
         // fetch the user's reading list
         // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
         // Intelj as well
-        /** @var App\Entity\User $user **/
         $user = $this->getUser();
         $user_reading_list = $user->getUserReadingList();
 

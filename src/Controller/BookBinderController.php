@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\BookReviews;
 use App\Entity\Book;
-use App\Entity\UserReadingInterest;
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

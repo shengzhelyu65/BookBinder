@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use App\Api\GoogleBooksApiClient;
 use App\Repository\BookReviewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Google\Service\Books\VolumeVolumeInfo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookReviewsRepository::class)]

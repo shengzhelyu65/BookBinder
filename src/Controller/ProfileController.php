@@ -2,20 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\BookReviews;
 use App\Entity\Book;
 use App\Entity\UserPersonalInfo;
-use App\Entity\UserReadingInterest;
-
-use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-
-use App\Api\GoogleBooksApiClient;
 
 class ProfileController extends AbstractController  {
     #[Route("/profile", name: 'profile')]
