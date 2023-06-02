@@ -52,7 +52,6 @@ class MeetupRequestsController extends AbstractController
         return $this->redirectToRoute('meetup_overview');
     }
 
-
     #[Route('/meetup/request/host/accept/{meetupRequestId}', name: 'meetup_request_host_accept')]
     public function acceptMeetupRequest(int $meetupRequestId, EntityManagerInterface $entityManager, Request $request): Response
     {

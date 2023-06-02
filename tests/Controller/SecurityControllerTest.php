@@ -2,8 +2,16 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
+use App\Security\LoginAuthenticator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\Panther\PantherTestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityControllerTest extends PantherTestCase
 {
@@ -31,6 +39,76 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertStringContainsString('/', $client->getCurrentURL());
 
         // Assert that the home page is displayed
-        $this->assertSelectorTextContains('h3', 'mystery');
+        $this->assertSelectorTextContains('h4', 'mystery');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testAuthenticate()
+    {
+        $client = static::createClient();
+        $container = $client->getContainer();
+
+        // Mock the necessary services
+        $csrfTokenManager = $this->createMock(CsrfTokenManagerInterface::class);
+        $csrfTokenManager->expects($this->once())
+            ->method('isTokenValid')
+            ->willReturn(true);
+
+        $authenticationUtils = $this->getMockBuilder(AuthenticationUtils::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $authenticationUtils->expects($this->once())
+            ->method('getLastUsername')
+            ->willReturn('test@example.com');
+
+        // Set the mock services in the container
+        $container->set(CsrfTokenManagerInterface::class, $csrfTokenManager);
+        $container->set(AuthenticationUtils::class, $authenticationUtils);
+
+        // Create a request and set the necessary data
+        $request = Request::create('/login', 'POST', [
+            'email' => 'test@example.com',
+            'password' => 'password123',
+            '_csrf_token' => 'valid_csrf_token',
+        ]);
+
+        // Call the authenticate method
+        $response = $client->getKernel()->handle($request);
+
+        // Assertions
+        $this->assertEquals(RedirectResponse::class, get_class($response));
+    }
+
+    public function testOnAuthenticationSuccess()
+    {
+        // Create a Panther client to make the request
+        $client = static::createPantherClient();
+
+        // Mock the necessary services
+        $token = $this->createMock(TokenInterface::class);
+        $firewallName = 'main';
+        $targetPath = '/login';
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+
+        // Create an instance of the authenticator
+        $authenticator = new LoginAuthenticator($urlGenerator);
+
+        // Create a session and set the target path
+        $session = new Session(new MockArraySessionStorage());
+        $session->set('_security.'.$firewallName.'.target_path', $targetPath);
+
+        // Create a request and set the session
+        $request = Request::create('/dummy', 'GET');
+        $request->setSession($session);
+
+        // Call the onAuthenticationSuccess method
+        $response = $authenticator->onAuthenticationSuccess($request, $token, $firewallName);
+
+        // Assertions
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals($targetPath, $response->getTargetUrl());
     }
 }
