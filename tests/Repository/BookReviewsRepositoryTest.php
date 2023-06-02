@@ -40,6 +40,22 @@ class BookReviewsRepositoryTest extends KernelTestCase
         $this->assertSame($bookReview->getBookId(), 'abcd123');
     }
 
+    public function testFindLatest()
+    {
+        $bookReviews = $this->entityManager->getRepository(BookReviews::class)->findLatest(1);
+
+        $this->assertCount(1, $bookReviews);
+        $this->assertSame($bookReviews[0]->getBookId(), 'abcd123');
+    }
+
+    public function testFindByUser()
+    {
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => 'user1@example.com']);
+        $bookReviews = $this->entityManager->getRepository(BookReviews::class)->findByUser($user->getId());
+
+        $this->assertGreaterThan(0, count($bookReviews));
+    }
+
     public function testRemove()
     {
         $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['book_title' => 'Test Book', 'user_id' => 1]);
