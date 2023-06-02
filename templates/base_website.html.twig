@@ -87,6 +87,98 @@
                         </li>
                     </ul>
                 </div>
+                <div class="bg-light border rounded-3 p-1 sticky-top" style="margin-top: 20px;">
+                    <div class="d-flex align-items-center">
+                        <a href="#collapsePanel" class="btn btn-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsePanel">
+                            <img src="{{ asset('images/logo_openAI.png') }}" alt="Logo" width="32" height="32" class="me-2">
+                        </a>
+                        <p class="text-center mb-0">Not sure what to read?</p>
+                    </div>
+                    <div class="collapse" id="collapsePanel">
+                        <form id="chatForm" style="margin-bottom: 20px;">
+                            <div class="mb-3">
+                                <label for="inputText" class="form-label">What are you looking for?</label>
+                                <input type="text" class="form-control form-control-lg" id="inputText" placeholder="E.g. A book about spaceships...">
+                                <style>
+                                    #inputText::placeholder {
+                                        font-size: 16px;
+                                    }
+                                </style>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate</button>
+                        </form>
+
+                        <div id="recommendations">
+                            <!-- Your content here -->
+                        </div>
+                    </div>
+
+                    <script>
+                        async function chatWithGPT35Turbo(prompt) {
+                            const apiKey = "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"
+                            const apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+                            const requestBody = {
+                                model: 'gpt-3.5-turbo',
+                                messages: [
+                                    { role: 'system', content: 'You are a book assistant, recommend a single book to the user based on their input.' },
+                                    { role: 'user', content: "Only respond with the title of the book, no author, no punctuation, recommend me a book about: " + prompt },
+                                ],
+                            };
+
+                            const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${apiKey}`,
+                                },
+                                body: JSON.stringify(requestBody),
+                            });
+
+                            const responseData = await response.json();
+                            return responseData.choices[0].message.content;
+                        }
+
+                        document.querySelector('#chatForm').addEventListener('submit', async (event) => {
+                            event.preventDefault();
+                            const inputText = document.querySelector('#inputText').value;
+
+                            // Disable the button and change its text
+                            const generateButton = document.querySelector('button[type="submit"]');
+                            generateButton.disabled = true;
+                            generateButton.textContent = 'Generating...';
+
+                            const response = await chatWithGPT35Turbo(inputText);
+                            console.log(response);
+
+                            // Display the response text (should be the title of the book)
+                            const recommendationDiv = document.querySelector('#recommendations');
+                            const responseDiv = document.createElement('div');
+                            responseDiv.textContent = response;
+                            recommendationDiv.appendChild(responseDiv);
+
+                            // Add thumbnail with link to bookPage
+                            const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(response)}`);
+                            const data = await APIResponse.json();
+
+                            const thumbnail = data.thumbnail;
+                            const id = data.id;
+
+                            const thumbnailLink = document.createElement('a');
+                            thumbnailLink.href = `/book-page/${id}`;
+                            const thumbnailImg = document.createElement('img');
+                            thumbnailImg.src = thumbnail;
+                            thumbnailLink.appendChild(thumbnailImg);
+                            recommendationDiv.appendChild(thumbnailLink);
+
+                            // Enable the button and change its text back to "Generate"
+                            generateButton.disabled = false;
+                            generateButton.textContent = 'Generate';
+                        });
+
+                    </script>
+
+                </div>
             </aside>
             <main class="col-lg-10">
                 <div class="bg-light border rounded-3 p-3 overflow-auto">

@@ -48,6 +48,26 @@ class SearchController extends AbstractController
         ]);
     }
 
+    #[Route('/book-search/ai/{query}', name: 'book-search/ai')]
+    public function bookSearchAI($query): JsonResponse
+    {
+        $ApiClient = new GoogleBooksApiClient();
+
+        // Result is a size 1 array of Google\Service\Books\Volume
+        $result = $ApiClient->searchBooksByTitle($query, 1);
+
+        $thumbnail = $result[0]->getVolumeInfo()->getImageLinks()->getThumbnail();
+        $id = $result[0]->getId();
+
+        $data = [
+            'thumbnail' => $thumbnail,
+            'id' => $id,
+        ];
+
+        return new JsonResponse($data);
+    }
+
+
     /**
      * @throws \Google_Exception
      */
