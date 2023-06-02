@@ -7,9 +7,6 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\UserPersonalInfo;
-use App\Entity\User;
-use App\Entity\UserReadingList;
-
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,11 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Api\GoogleBooksApiClient;
 use App\Entity\MeetupRequestList;
 use App\Form\MeetupRequestFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-
 
 /*
  * This controller meant for the development of the
@@ -256,10 +250,14 @@ class SearchController extends AbstractController
     {
         $user = $this->getUser();
 
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // Get the User and MeetupRequest entities based on the provided IDs
         $meetupRequest = $entityManager->getRepository(MeetupRequests::class)->find($meetupRequestId);
 
-        if ($user && $meetupRequest) {
+        if ($meetupRequest) {
             // Check if the user is already the host
             if ($user != $meetupRequest->getHostUser()) {
                 // Check if the maximum number of participants has been reached
@@ -342,7 +340,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($wantToRead, $bookId);
+                $wantToRead[] = $bookId;
                 break;
             case 'Currently Reading':
                 if ($is_in_want_to_read) {
@@ -354,7 +352,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($currentlyReading, $bookId);
+                $currentlyReading[] = $bookId;
                 break;
             case 'Have Read':
                 if ($is_in_want_to_read) {
@@ -366,7 +364,7 @@ class SearchController extends AbstractController
                 } else if ($is_in_have_read) {
                     // do nothing
                 }
-                array_push($haveRead, $bookId);
+                $haveRead[] = $bookId;
                 break;
             default:
                 // Handle the case where no or an invalid selection is made

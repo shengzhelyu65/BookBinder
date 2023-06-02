@@ -2,16 +2,11 @@
 
 namespace App\Api;
 
-use App\Entity\Book;
-use Google\Exception;
 use Google_Exception;
 use Google_Service_Books;
 use Google_Service_Books_Volume;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Google\Client as Google_Client;
-use GuzzleHttp\ClientInterface;
-use http\Env;
 
 /**
  * Class used for interacting with the google books API

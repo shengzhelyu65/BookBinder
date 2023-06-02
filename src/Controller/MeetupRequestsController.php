@@ -7,16 +7,13 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
-use App\Form\MeetupRequestFormType;
-use App\Message\AddBookToDatabase;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
-use App\Api\GoogleBooksApiClient;
+
 class MeetupRequestsController extends AbstractController
 {
     #[Route('/meetup/requests/list/join/{userId}/{meetupRequestId}', name: 'meetup_requests_list_join')]
@@ -88,6 +85,10 @@ class MeetupRequestsController extends AbstractController
     {
         // Get the current user
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
 
         // Get current user entity object from the database using repository method by email
         $email = $user->getEmail();

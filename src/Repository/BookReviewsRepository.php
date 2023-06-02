@@ -49,7 +49,7 @@ class BookReviewsRepository extends ServiceEntityRepository
 
     public function findByUser(int $userId): array
     {
-        return $this->findBy(['user_id' => $userId]);
+        return $this->findBy(['user_id' => $userId], ['created_at' => 'DESC']);
     }
 
 //    /**

@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Entity\UserPersonalInfo;
 use App\Entity\UserReadingInterest;
 use App\Entity\UserReadingList;
-
 use App\Form\RegistrationFormType;
 use App\Form\ReadingInterestFormType;
 use App\Repository\UserRepository;
@@ -45,8 +44,6 @@ class RegistrationController extends AbstractController
         $userPersonalInfo = new UserPersonalInfo();
         $userReadingList = new UserReadingList();
 
-        $includeReadingInterestForm = false;
-
         // pass the UserPersonalInfo and user objects to the form
         $form = $this->createForm(RegistrationFormType::class, [$user, $userPersonalInfo]);
         $form->handleRequest($request);
@@ -75,19 +72,22 @@ class RegistrationController extends AbstractController
             //handle user personal info if any
             $userPersonalInfo->setUser($user);
             // try to add name, if not set, set it to null
-            try {
+            if (!empty($form->get('name')->getData())) {
                 $userPersonalInfo->setName($form->get('name')->getData());
-            } catch (\Throwable $th) {
-                $userPersonalInfo->setName(null);
             }
             // try to add surname, if not set, set it to null
-            try {
+            if (!empty($form->get('surname')->getData())) {
                 $userPersonalInfo->setSurname($form->get('surname')->getData());
-            } catch (\Throwable $th) {
-                $userPersonalInfo->setSurname(null);
             }
-            // add nickname
-            $userPersonalInfo->setNickname($form->get('nickname')->getData());
+            // check if nickname is already used and add nickname
+            $nickname = $form->get('nickname')->getData();
+            $nickname = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $nickname]);
+            if ($nickname) {
+                $this->addFlash('error', 'Nickname already in use');
+                return $this->redirectToRoute('app_register');
+            } else {
+                $userPersonalInfo->setNickname($form->get('nickname')->getData());
+            }
 
             $entityManager->persist($userPersonalInfo);
 
@@ -126,7 +126,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'controller_name' => 'RegistrationController',
             'registrationForm' => $form->createView(),
-            'includeReadingInterestForm' => $includeReadingInterestForm,
+            'includeReadingInterestForm' => false,
         ]);
     }
 
@@ -185,7 +185,7 @@ class RegistrationController extends AbstractController
 
         $user = $userRepository->find($id);
 
-        if (null === $user) {
+        if (is_null($user)) {
             return $this->redirectToRoute('app_register');
         }
 

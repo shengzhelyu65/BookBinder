@@ -1,0 +1,51 @@
+{% extends 'base_website.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h4>Settings</h4>
+        {% for flash_message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flash_message }}</div>
+        {% endfor %}
+        {{ form_start(settingsForm, {'attr': {'class': 'form-group', 'needs-validation': false}}) }}
+        <h5>Change personal info</h5>
+        <div class="row mb-0">
+            <div class="col-md-5 mb-3">
+                <div class="form-outline">
+                    {{ form_label(settingsForm.name, 'Name') }}
+                    {{ form_widget(settingsForm.name) }}
+                    {{ form_errors(settingsForm.name) }}
+                </div>
+            </div>
+            <div class="col-md-7 mb-3">
+                <div class="form-outline">
+                    {{ form_label(settingsForm.name, 'Surname') }}
+                    {{ form_widget(settingsForm.surname) }}
+                    {{ form_errors(settingsForm.surname) }}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="form-outline">
+                {{ form_label(settingsForm.nickname, 'Nickname') }}
+                {{ form_widget(settingsForm.nickname) }}
+                {{ form_errors(settingsForm.nickname) }}
+            </div>
+        </div>
+        <h5>Change preferences</h5>
+        <div class="row mb-0">
+            <div class="col-md-12 mb-3">
+                {{ form_label(settingsForm.languages, 'Languages') }}
+                {{ form_widget(settingsForm.languages, {'required': false, 'attr': {'class': 'multiple-select-field'} }) }}
+                {{ form_errors(settingsForm.languages, {'required': false, }) }}
+            </div>
+        </div>
+        <div class="row mb-0">
+            <div class="col-md-12 mb-3">
+                {{ form_label(settingsForm.genres, 'Genres') }}
+                {{ form_widget(settingsForm.genres, {'required': false, 'attr': {'class': 'multiple-select-field'} }) }}
+                {{ form_errors(settingsForm.genres, {'required': false, }) }}
+            </div>
+        </div>
+        {{ form_end(settingsForm) }}
+    </div>
+{% endblock %}
