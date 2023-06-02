@@ -1,8 +1,11 @@
 
 // Searchbar
+const form = document.getElementById('searchbar_form');
+form.addEventListener('submit', searchBooks);
+
 function searchBooks(event) {
     event.preventDefault(); // prevent form submission
-    const query = event.target.querySelector('input').value;
+    const query = event.target.querySelector('#search_bar_input').value;
     const url = `/book-search/${encodeURIComponent(query)}`;
     console.log("Searching for: " + query);
     window.location.href = url;

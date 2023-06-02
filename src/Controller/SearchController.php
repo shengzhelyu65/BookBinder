@@ -315,7 +315,7 @@ class SearchController extends AbstractController
     public function handleDropdownSelection(Request $request, EntityManagerInterface $entityManager): Response
     {
         $selection = $request->request->get('selection');
-        $bookId = $request->request->get('book_id');
+        $bookId = (int) $request->request->get('book_id');
 
         $user = $this->getUser();
         $userReadingList = $user->getUserReadingList();

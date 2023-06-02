@@ -60,10 +60,6 @@ class SecurityControllerTest extends PantherTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $authenticationUtils->expects($this->once())
-            ->method('getLastUsername')
-            ->willReturn('test@example.com');
-
         // Set the mock services in the container
         $container->set(CsrfTokenManagerInterface::class, $csrfTokenManager);
         $container->set(AuthenticationUtils::class, $authenticationUtils);
