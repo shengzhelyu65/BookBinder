@@ -19,7 +19,6 @@ import $ from 'jquery';
 
 import 'select2';
 
-
 $(document).ready(function () {
     $('.multiple-select-field').select2({
         theme: "bootstrap-5",
