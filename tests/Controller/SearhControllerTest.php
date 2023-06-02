@@ -8,6 +8,8 @@ use App\Entity\Library;
 use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
+use App\Entity\UserReadingList;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Panther\PantherTestCase;
 
 class SearhControllerTest extends PantherTestCase
@@ -55,7 +57,7 @@ class SearhControllerTest extends PantherTestCase
         $bookRepository = $entityManager->getRepository(Book::class);
 
         // Find a user
-        $user = $userRepository->findOneBy(['email' => 'shengzhe.lyu@gmail.com']);
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
         $this->assertInstanceOf(User::class, $user);
         $client->loginUser($user);
 
@@ -71,7 +73,6 @@ class SearhControllerTest extends PantherTestCase
 
         $crawler = $client->request('GET', "/book-page/{$id}");
 
-        print_r($crawler->filter('div.p-0.ps-3.col')->text());
         // Check if the page is loaded successfully
         $this->assertStringContainsString('Superhobby', $crawler->filter('div.p-0.ps-3.col')->text());
     }
@@ -205,8 +206,200 @@ class SearhControllerTest extends PantherTestCase
         $this->assertInstanceOf(MeetupRequestList::class, $meetupRequestList);
     }
 
-    public function testHandleDropdownSelection(): void
+    public function testToRead(): void
     {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
 
+        $userRepository = $entityManager->getRepository(User::class);
+        $userReadingListRepository = $entityManager->getRepository(UserReadingList::class);
+        $bookRepository = $entityManager->getRepository(Book::class);
+
+        // Get the logged in user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        // Make a request to the book page and simulate adding the book to the reading list
+        $id = 'l5quhLiZEiwC';
+
+        // Visit the page
+        $client->request('GET', "/book-page/{$id}");
+        $bookId = $bookRepository->findOneBy(['google_books_id' => $id])->getId();
+
+        // Find the button that opens the modal
+        $modalOpenButton = $client->getCrawler()->filter('button.dropdown-item');
+        $this->assertCount(3, $modalOpenButton); // Ensure the button is found
+
+        // Check if the book is already in the reading list
+        $userReadingList = $userReadingListRepository->findOneBy(['user' => $user]);
+        if ($userReadingList) {
+            $currentlyReading = $userReadingList->getCurrentlyReading();
+            if (in_array($bookId, $currentlyReading)) {
+                $index = array_search($bookId, $currentlyReading);
+                unset($currentlyReading[$index]);
+                $userReadingList->setCurrentlyReading($currentlyReading);
+            }
+
+            $toRead = $userReadingList->getWantToRead();
+            if (in_array($bookId, $toRead)) {
+                $index = array_search($bookId, $toRead);
+                unset($toRead[$index]);
+                $userReadingList->setWantToRead($toRead);
+            }
+
+            $read = $userReadingList->getHaveRead();
+            if (in_array($bookId, $read)) {
+                $index = array_search($bookId, $read);
+                unset($read[$index]);
+                $userReadingList->setHaveRead($read);
+            }
+
+            $entityManager->flush();
+        }
+
+        // Get the selection value for the AJAX request
+        $selection = 'To Read';
+
+        // Send an AJAX request to add the book to the reading list
+        $client->request('POST', '/handle-dropdown-selection', [
+            'selection' => $selection,
+            'book_id' =>  $bookId,
+        ]);
+
+        // Verify the response
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // Check if the book is in the reading list
+        $userReadingList = $userReadingListRepository->findOneBy(['user' => $user]);
+        $this->assertInstanceOf(UserReadingList::class, $userReadingList);
+        $toRead = $userReadingList->getWantToRead();
+        $index = array_search($bookId, $toRead);
+        $this->assertGreaterThan(-1, $index);
+
+        // Rollback the database changes
+        unset($toRead[$index]);
+        $userReadingList->setCurrentlyReading($toRead);
+        $entityManager->flush();
+    }
+
+    public function testCurrentReading(): void
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $userReadingListRepository = $entityManager->getRepository(UserReadingList::class);
+        $bookRepository = $entityManager->getRepository(Book::class);
+
+        // Get the logged in user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        // Make a request to the book page and simulate adding the book to the reading list
+        $id = 'l5quhLiZEiwC';
+
+        // Visit the page
+        $client->request('GET', "/book-page/{$id}");
+        $bookId = $bookRepository->findOneBy(['google_books_id' => $id])->getId();
+        $selection = 'Currently Reading';
+
+        // Send an AJAX request to add the book to the reading list
+        $client->request('POST', '/handle-dropdown-selection', [
+            'selection' => $selection,
+            'book_id' => $bookId,
+        ]);
+
+        // Verify the response
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // Check if the book is in the reading list
+        $userReadingList = $userReadingListRepository->findOneBy(['user' => $user]);
+        $this->assertInstanceOf(UserReadingList::class, $userReadingList);
+        $currentlyReading = $userReadingList->getCurrentlyReading();
+        $index = array_search($bookId, $currentlyReading);
+        $this->assertGreaterThan(-1, $index);
+
+        // Rollback the database changes
+        unset($currentlyReading[$index]);
+        $userReadingList->setCurrentlyReading($currentlyReading);
+        $entityManager->flush();
+    }
+
+    public function testHaveRead(): void
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $userReadingListRepository = $entityManager->getRepository(UserReadingList::class);
+        $bookRepository = $entityManager->getRepository(Book::class);
+
+        // Get the logged in user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        // Make a request to the book page and simulate adding the book to the reading list
+        $id = 'l5quhLiZEiwC';
+
+        // Visit the page
+        $client->request('GET', "/book-page/{$id}");
+        $bookId = $bookRepository->findOneBy(['google_books_id' => $id])->getId();
+        $selection = 'Have Read';
+
+        // Send an AJAX request to add the book to the reading list
+        $client->request('POST', '/handle-dropdown-selection', [
+            'selection' => $selection,
+            'book_id' => $bookId,
+        ]);
+
+        // Verify the response
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // Check if the book is in the reading list
+        $userReadingList = $userReadingListRepository->findOneBy(['user' => $user]);
+        $this->assertInstanceOf(UserReadingList::class, $userReadingList);
+        $haveRead = $userReadingList->getHaveRead();
+        $index = array_search($bookId, $haveRead);
+        $this->assertGreaterThan(-1, $index);
+
+        // Rollback the database changes
+        unset($haveRead[$index]);
+        $userReadingList->setCurrentlyReading($haveRead);
+        $entityManager->flush();
+    }
+
+    public function testBookSuggestion()
+    {
+        $client = static::createClient();
+
+        // Send a request to the book suggestion endpoint
+        $input = 'prince';
+        $client->request('GET', "/book-suggestion/{$input}");
+
+        // Verify the response
+        $response = $client->getResponse();
+        $this->assertSame(200, $response->getStatusCode());
+
+        // Verify the response content
+        $content = $response->getContent();
+        $this->assertJson($content);
+
+        // Verify the response data type
+        $data = json_decode($content, true);
+        $this->assertIsArray($data);
+
+        // Assert the expected structure of each book suggestion
+        foreach ($data as $bookSuggestion) {
+            $this->assertArrayHasKey('id', $bookSuggestion);
+            $this->assertGreaterThan(0, $bookSuggestion['id']);
+            $this->assertArrayHasKey('title', $bookSuggestion);
+            $this->assertIsString($bookSuggestion['title']);
+        }
     }
 }
