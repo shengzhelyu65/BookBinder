@@ -61,7 +61,6 @@ class MeetupRequestsController extends AbstractController
         $action = $request->request->get('action');
 
         $meetupRequest = $entityManager->getRepository(MeetupRequestList::class)->find($meetupRequestId);
-        $host = $meetupRequest->getMeetupID()->getHostUser()->getId();
 
         if ($action === 'accept') {
             // Retrieve the meetup request details

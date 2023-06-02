@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\MeetupList;
 use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
@@ -47,17 +48,19 @@ class MeetupRequestsControllerTest extends WebTestCase
         $this->assertInstanceOf(MeetupRequests::class, $meetup);
         $meetupId = $meetup->getMeetupID();
         $client->request('GET', "/meetup/requests/list/join/{$userId}/{$meetupId}");
+
         // Check if the user is redirected to the overview page
         $response = $client->getResponse();
         $this->assertTrue($response->isRedirect('/meetup/overview'));
+
         // Check if there is a new entry in the meetup request list
         $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $user]);
         $this->assertNull($meetupRequestList);
 
         // Find a meetup that the user is not the host
         $user9 = $userRepository->findOneBy(['email' => 'user9@example.com']);
-        $userId9 = $user9->getId();
         $meetup = $meetupRepository->findOneBy(['host_user' => $user9]);
+
         // Find if the user is already a member of the meetup
         $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $user]);
         if ($meetupRequestList) {
@@ -66,9 +69,11 @@ class MeetupRequestsControllerTest extends WebTestCase
         }
         $meetupId = $meetup->getMeetupID();
         $client->request('GET', "/meetup/requests/list/join/{$userId}/{$meetupId}");
+
         // Check if the user is redirected to the overview page
         $response = $client->getResponse();
         $this->assertTrue($response->isRedirect('/meetup/overview'));
+
         // Check if there is a new entry in the meetup request list
         $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $user]);
         $this->assertInstanceOf(MeetupRequestList::class, $meetupRequestList);
@@ -80,19 +85,96 @@ class MeetupRequestsControllerTest extends WebTestCase
         $container = self::getContainer();
         $entityManager = $container->get('doctrine')->getManager();
 
-        // Find a user
         $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => 'thomas.goris2668@gmail.com']);
-        $this->assertInstanceOf(User::class, $user);
-        $client->loginUser($user);
+        $meetupRepository = $entityManager->getRepository(MeetupRequests::class);
+        $meetupRequestListRepository = $entityManager->getRepository(MeetupRequestList::class);
+        $meetupListRepository = $entityManager->getRepository(MeetupList::class);
 
-        // TODO: create a new meetuprequest db entry here
+        // Get the logged in user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
 
-        $meetupRequestId = 10;
-        $client->request('GET', "/meetup/request/host/accept/{$meetupRequestId}");
+        // Find a meetup that the user is the host
+        $meetup = $meetupRepository->findOneBy(['host_user' => $user]);
+        $this->assertInstanceOf(MeetupRequests::class, $meetup);
+
+        // Find all the requests for the meetup
+        $meetupRequestList = $meetupRequestListRepository->findBy(['meetup_ID' => $meetup]);
+
+        // Accept the first request
+        $meetupRequestId = $meetupRequestList[0]->getMeetupRequestListID();
+        $meetupRequestUser = $meetupRequestList[0]->getUserID();
+
+        // Simulate the POST request to the acceptMeetupRequest endpoint
+        $client->request('POST', "/meetup/request/host/accept/{$meetupRequestId}", ['action' => 'accept']);
+
+        // Check if the user is redirected to the overview page
         $response = $client->getResponse();
-
         $this->assertTrue($response->isRedirect('/meetup/overview'));
 
+        // Check if there is a new entry in the meetup list
+        $meetupList = $meetupListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
+        $this->assertInstanceOf(MeetupList::class, $meetupList);
+
+        // Check if the meetup request is deleted
+        $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
+        $this->assertNull($meetupRequestList);
+
+        // Rollback the changes
+        $entityManager->remove($meetupList);
+        $entityManager->flush();
+
+        $meetupRequestList = new MeetupRequestList();
+        $meetupRequestList->setMeetupID($meetup);
+        $meetupRequestList->setUserID($meetupRequestUser);
+        $entityManager->persist($meetupRequestList);
+        $entityManager->flush();
+    }
+
+    public function testRejectMeetupRequest(): void
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $meetupRepository = $entityManager->getRepository(MeetupRequests::class);
+        $meetupRequestListRepository = $entityManager->getRepository(MeetupRequestList::class);
+        $meetupListRepository = $entityManager->getRepository(MeetupList::class);
+
+        // Get the logged in user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+
+        // Find a meetup that the user is the host
+        $meetup = $meetupRepository->findOneBy(['host_user' => $user]);
+        $this->assertInstanceOf(MeetupRequests::class, $meetup);
+
+        // Find all the requests for the meetup
+        $meetupRequestList = $meetupRequestListRepository->findBy(['meetup_ID' => $meetup]);
+
+        // Reject the first request
+        $meetupRequestId = $meetupRequestList[0]->getMeetupRequestListID();
+        $meetupRequestUser = $meetupRequestList[0]->getUserID();
+
+        // Simulate the POST request to the acceptMeetupRequest endpoint
+        $client->request('POST', "/meetup/request/host/accept/{$meetupRequestId}", ['action' => 'reject']);
+
+        // Check if the user is redirected to the overview page
+        $response = $client->getResponse();
+        $this->assertTrue($response->isRedirect('/meetup/overview'));
+
+        // Check if there is no new entry in the meetup list
+        $meetupList = $meetupListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
+        $this->assertNull($meetupList);
+
+        // Check if the meetup request is deleted
+        $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
+        $this->assertNull($meetupRequestList);
+
+        // Rollback the changes
+        $meetupRequestList = new MeetupRequestList();
+        $meetupRequestList->setMeetupID($meetup);
+        $meetupRequestList->setUserID($meetupRequestUser);
+        $entityManager->persist($meetupRequestList);
+        $entityManager->flush();
     }
 }
