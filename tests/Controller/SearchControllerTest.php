@@ -102,6 +102,42 @@ class SearchControllerTest extends PantherTestCase
         $this->assertGreaterThan(5, $cardElements->count());
     }
 
+    public function testAddReview(): void
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
+
+        // Find a user
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        $bookId = "l5quhLiZEiwC";
+
+        // Check if the review already exists
+        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        if ($existingReview) {
+            $entityManager->remove($existingReview);
+            $entityManager->flush();
+        }
+
+        // Make a POST request to add a review
+        $client->request('POST', '/add-review/'. $bookId, [
+            'comment' => 'This is a test comment.',
+            'rating' => 4,
+        ]);
+
+        // Check if the review has been added
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user]);
+        $this->assertInstanceOf(BookReviews::class, $review);
+        $this->assertEquals('This is a test comment.', $review->getReview());
+        $this->assertEquals(4, $review->getRating());
+    }
+
     public function testUpdateReview()
     {
         $client = static::createClient();
