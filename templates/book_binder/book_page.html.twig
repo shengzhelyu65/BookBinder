@@ -108,7 +108,7 @@
                     <h4>Join Meetups:</h4>
                     <div class="d-flex flex-row overflow-auto">
                         {% for meetupRequest in meetupRequests %}
-                            <div class="card mb-3" style="min-width: 300px; max-width: 300px">
+                            <div class="card mb-3 me-2" style="min-width: 300px; max-width: 300px">
                                 <div class="d-flex flex-row h-100">
                                     <div class="card-body">
                                         <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>

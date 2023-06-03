@@ -25,32 +25,7 @@ async function getSuggestion(event) {
     });
 }
 
-// AI recommendation
-async function chatWithGPT35Turbo(prompt) {
-    const apiKey = "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"
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-    const requestBody = {
-        model: 'gpt-3.5-turbo',
-        messages: [
-            { role: 'system', content: 'You are a book assistant, recommend a single book to the user based on their input.' },
-            { role: 'user', content: "Only respond with the title of the book, no author, no punctuation, recommend me a book about: " + prompt },
-        ],
-    };
-
-    const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(requestBody),
-    });
-
-    const responseData = await response.json();
-    return responseData.choices[0].message.content;
-}
-
+// AI Recommendations
 document.querySelector('#chatForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     const inputText = document.querySelector('#inputText').value;
@@ -61,34 +36,43 @@ document.querySelector('#chatForm').addEventListener('submit', async (event) => 
     generateButton.textContent = 'Generating...';
 
     try {
-        const response = await chatWithGPT35Turbo(inputText);
+        const response = await fetch(`/book-search/openAI/${encodeURIComponent(inputText)}`);
         console.log(response);
 
-        // Add thumbnail with link to bookPage
-        const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(response)}`);
-        if (APIResponse.ok) {
-            const data = await APIResponse.json();
+        if (response.ok) {
+            const data = await response.json();
+            const generatedText = data.text;
 
-            // Check if thumbnail and id exist
-            if (data.thumbnail && data.id) {
-                // Display the response text (should be the title of the book)
-                const recommendationDiv = document.querySelector('#recommendations');
-                const responseDiv = document.createElement('div');
-                responseDiv.textContent = response;
-                recommendationDiv.appendChild(responseDiv);
+            const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(generatedText)}`);
 
-                const thumbnail = data.thumbnail;
-                const id = data.id;
+            if (APIResponse.ok) {
+                const data = await APIResponse.json();
 
-                const thumbnailLink = document.createElement('a');
-                thumbnailLink.href = `/book-page/${id}`;
-                const thumbnailImg = document.createElement('img');
-                thumbnailImg.src = thumbnail;
-                thumbnailLink.appendChild(thumbnailImg);
-                recommendationDiv.appendChild(thumbnailLink);
-            } else {
+                // Check if thumbnail and id exist
+                if (data.thumbnail && data.id) {
+                    // Display the response text (should be the title of the book)
+                    const recommendationDiv = document.querySelector('#recommendations');
+                    const responseDiv = document.createElement('div');
+                    responseDiv.textContent = generatedText;
+                    recommendationDiv.appendChild(responseDiv);
+
+                    const thumbnail = data.thumbnail;
+                    const id = data.id;
+
+                    const thumbnailLink = document.createElement('a');
+                    thumbnailLink.href = `/book-page/${id}`;
+                    const thumbnailImg = document.createElement('img');
+                    thumbnailImg.src = thumbnail;
+                    thumbnailLink.appendChild(thumbnailImg);
+                    recommendationDiv.appendChild(thumbnailLink);
+                } else {
+                    console.log('No thumbnail or id found.');
+                }
+            }
+            else {
                 console.log('Something went wrong with the API call.');
             }
+
         } else {
             console.log('Something went wrong with the API call.');
         }
