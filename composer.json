@@ -16,6 +16,7 @@
         "easycorp/easyadmin-bundle": "^4.6",
         "google/apiclient": "*",
         "guzzlehttp/guzzle": "*",
+        "openai-php/client": "*",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.20",
         "snapappointments/bootstrap-select": "^1.13",
@@ -25,6 +26,7 @@
         "symfony/flex": "^2",
         "symfony/form": "6.3.*",
         "symfony/framework-bundle": "6.3.*",
+        "symfony/http-client": "^6.3",
         "symfony/mailer": "6.3.*",
         "symfony/messenger": "6.3.*",
         "symfony/property-access": "6.3.*",
@@ -37,7 +39,8 @@
         "symfony/yaml": "6.3.*",
         "symfonycasts/verify-email-bundle": "*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "php-http/curl-client": "*"
     },
     "require-dev": {
         "dbrekelmans/bdi": "^1.0",

@@ -8,6 +8,7 @@ use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\UserPersonalInfo;
 use App\Message\AddBookToDatabase;
+use OpenAI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ use App\Entity\MeetupRequestList;
 use App\Form\MeetupRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use OpenAI\Client as OpenAIClient;
 
 /*
  * This controller meant for the development of the
@@ -61,6 +63,33 @@ class SearchController extends AbstractController
         return new JsonResponse($data);
     }
 
+    #[Route('/book-search/openAI/{prompt}', name: 'book-search/openAI')]
+    public function bookSearchOpenAI($prompt): JsonResponse
+    {
+        // Get API key from env
+        $apiKey = getenv('OPENAI_API_KEY');
+        $model = 'gpt-3.5-turbo';
+
+        $messages = [
+            ['role' => 'system', 'content' => 'You are a book assistant, recommend a single book to the user based on their input.'],
+            ['role' => 'user', 'content' => "Only respond with the title of the book, no author, no punctuation, recommend me a book about: " . $prompt],
+        ];
+
+        $requestBody = [
+            'model' => $model,
+            'messages' => $messages,
+        ];
+
+        $client = OpenAI::client($apiKey);
+        $responseData = $client->chat()->create($requestBody);
+
+        $generatedText = $responseData['choices'][0]['message']['content'];
+        $data = [
+            'text' => $generatedText,
+        ];
+
+        return new JsonResponse($data);
+    }
 
     /**
      * @throws \Google_Exception
