@@ -196,7 +196,17 @@ class SearchController extends AbstractController
             return $this->redirectToRoute('book-page', ['id' => $id]);
         }
         // ======== BOOK REVIEWS ========= //
-        $reviews = array_slice($entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id], ['created_at' => 'DESC']),0,7);
+
+        // Check if the book has any reviews by the current user
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy([
+            'user_id' => $user->getId(),
+            'book_id' => $book->getGoogleBooksId(),
+        ]);
+
+        // if $existingReview is not null then the user has already reviewed the book
+        $hasReviewed = $existingReview !== null;
+
+        $reviews = array_slice($entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id], ['created_at' => 'DESC']), 0, 7);
         $reviewData = [];
         foreach ($reviews as $review) {
             $UserPersonalInfo = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['user' => $review->getUserId()]);
@@ -214,7 +224,9 @@ class SearchController extends AbstractController
             'is_in_currently_reading' => $is_in_currently_reading,
             'is_in_have_read' => $is_in_have_read,
             'form' => $form->createView(),
-            'reviewData' => $reviewData
+            'reviewData' => $reviewData,
+            'hasReviewed' => $hasReviewed,
+            'review' => $existingReview,
         ]);
     }
 
@@ -237,9 +249,30 @@ class SearchController extends AbstractController
         $review->setCreatedAt(new \DateTime());
         $review->setBookTitle($book->getTitle());
         $review->setRating($rating);
-        $review->setTags("Hi");
+        $review->setTags("Hi"); // TODO: remove this later ?
 
         $entityManager->persist($review);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
+    }
+
+    #[Route('/update-review/{bookId}', name: 'update_review')]
+    public function updateReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $user = $this->getUser();
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy([
+            'user_id' => $user->getId(),
+            'book_id' => $bookId,
+        ]);
+
+        $comment = $request->request->get('comment');
+        $rating = $request->request->get('rating');
+
+        $existingReview->setReview($comment);
+        $existingReview->setRating($rating);
+
+        $entityManager->persist($existingReview);
         $entityManager->flush();
 
         return $this->redirectToRoute('book-page', ['id' => $bookId]);
