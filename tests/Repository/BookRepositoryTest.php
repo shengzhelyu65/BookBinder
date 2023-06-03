@@ -33,6 +33,10 @@ class BookRepositoryTest extends KernelTestCase
         $this->entityManager->getRepository(Book::class)->save($book, flush: true);
 
         $this->assertSame($book->getGoogleBooksId(), 'abcd123');
+        $this->assertSame($book->getCategory(), 'Test Category');
+        $this->assertSame($book->getRating(), 4);
+        $this->assertSame($book->getReviewCount(), 100);
+        $this->assertNotNull($book->getId());
     }
 
     public function testSearch()
