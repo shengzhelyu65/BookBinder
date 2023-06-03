@@ -38,6 +38,8 @@ class UserReadingInterestRepositoryTest extends KernelTestCase
 
         $this->userReadingInterestRepository->save($readingInterest, true);
 
+        $this->assertSame([LanguageEnum::ENGLISH], $readingInterest->getLanguages());
+        $this->assertSame([GenreEnum::FANTASY], $readingInterest->getGenres());
         $this->assertNotNull($readingInterest->getId());
     }
 

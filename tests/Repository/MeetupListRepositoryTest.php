@@ -29,6 +29,8 @@ class MeetupListRepositoryTest extends KernelTestCase
 
         $this->entityManager->getRepository(MeetupList::class)->save($meetupList, flush: true);
 
+        $this->assertSame($user, $meetupList->getUserID());
+        $this->assertSame($meetupRequest, $meetupList->getMeetupID());
         $this->assertNotNull($meetupList->getMeetupListID());
     }
 
