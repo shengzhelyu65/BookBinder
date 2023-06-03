@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Improved responsive layout">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Redirect profile to own profile if username for other profile screen is equal to user's nickname">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/book_binder/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -438,7 +438,8 @@
       <workItem from="1685650337871" duration="1392000" />
       <workItem from="1685651758242" duration="2345000" />
       <workItem from="1685709873855" duration="4005000" />
-      <workItem from="1685734817009" duration="964000" />
+      <workItem from="1685734817009" duration="1163000" />
+      <workItem from="1685777324182" duration="310000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>
@@ -713,7 +714,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685713531655</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Redirect profile to own profile if username for other profile screen is equal to user's nickname">
+      <created>1685735935429</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1685735935429</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -747,7 +755,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Add profile.html.twig" />
     <MESSAGE value="Homescreen with books from Google API" />
     <MESSAGE value="Update dependency bootstrap css" />
     <MESSAGE value="Profile screen with user information and reviews" />
@@ -772,7 +779,8 @@
     <MESSAGE value="add user and book fixtures" />
     <MESSAGE value="change BookReviewFixtures to use references" />
     <MESSAGE value="Improved responsive layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved responsive layout" />
+    <MESSAGE value="Redirect profile to own profile if username for other profile screen is equal to user's nickname" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redirect profile to own profile if username for other profile screen is equal to user's nickname" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -30,7 +30,7 @@
                 {% for bookReview in reviews %}
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle() }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
