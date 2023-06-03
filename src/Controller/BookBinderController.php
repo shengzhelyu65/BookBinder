@@ -21,18 +21,13 @@ class BookBinderController extends AbstractController
 
         if (is_null($user)) {
             return $this->redirectToRoute('app_login');
-        } else {
-            try {
-                $genres = $user->getUserReadingInterest()->getGenres();
-            } catch (\Throwable $th) {
-                return $this->redirectToRoute('reading_interest');
-            }
         }
 
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
         // if the user has no genres, add some default ones.
+        $genres = $user->getUserReadingInterest()->getGenres();
         if (count($genres) === 0) {
             array_push($genres, 'Fantasy', 'popular', 'classic');
         }

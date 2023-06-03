@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Book;
 use App\Entity\BookReviews;
 use App\Entity\User;
 use App\Entity\UserReadingInterest;
@@ -9,6 +10,41 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookBinderControllerTest extends WebTestCase
 {
+    public function testHomeRedirectsToLoginWhenUserIsNull()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/');
+
+        $this->assertNotNull($client->getResponse()->isRedirect('/login'));
+    }
+
+    public function testHomeRedirectsToReadingInterestWhenGenresNotFound()
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'user1@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        // Delete the user's reading interest
+        $userReadingInterestRepository = $entityManager->getRepository(UserReadingInterest::class);
+        $readingInterest = $userReadingInterestRepository->findOneBy(['user' => $user]);
+        $genres = $readingInterest->getGenres();
+        $readingInterest->setGenres([]);
+        $entityManager->flush();
+
+        // Visit the home page
+        $client->request('GET', '/');
+        $this->assertNotNull($client->getResponse()->isRedirect('/reading-interest'));
+
+        // Restore the user's reading interest
+        $readingInterest->setGenres($genres);
+        $entityManager->flush();
+    }
+
     public function testIndex(): void
     {
         $client = static::createClient();
@@ -20,6 +56,19 @@ class BookBinderControllerTest extends WebTestCase
         $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
         $this->assertInstanceOf(User::class, $user);
         $client->loginUser($user);
+
+        // Find the genre for the user
+        $userReadingInterestRepository = $entityManager->getRepository(UserReadingInterest::class);
+        $genre = $userReadingInterestRepository->findOneBy(['user' => $user]);
+        $this->assertIsString($genre->getGenres()[0]);
+
+        // Delete the books belonging to that genre
+        $bookRepository = $entityManager->getRepository(Book::class);
+        $books = $bookRepository->findBy(['category' => $genre->getGenres()[0]]);
+        foreach ($books as $book) {
+            $entityManager->remove($book);
+        }
+        $entityManager->flush();
 
         // test the index page
         $client->request('GET', '/');
