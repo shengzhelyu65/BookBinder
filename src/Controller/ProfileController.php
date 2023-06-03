@@ -16,10 +16,6 @@ class ProfileController extends AbstractController  {
     {
         $user = $this->getUser();
 
-        if (is_null($user)) {
-            return $this->redirectToRoute('app_login');
-        }
-
         $reviews = $entityManager->getRepository(BookReviews::class)->findByUser($user->getId());
 
         return $this->render('profile/profile.html.twig', [
