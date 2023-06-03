@@ -18,7 +18,7 @@ class BookReviews
     #[ORM\Column]
     private ?string $book_id = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookReviews')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private ?User $user_id = null;
 
