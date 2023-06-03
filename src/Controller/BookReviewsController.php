@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 class BookReviewsController extends AbstractController
 {
     #[Route('/book/review/{userId}/{bookId}/{bookTitle}', name: 'app_book_review')]
-    public function addBookReview(Request $request, int $userId, int $bookId, string $bookTitle, EntityManagerInterface $entityManager): Response
+    public function addBookReview(Request $request, int $bookId, string $bookTitle, EntityManagerInterface $entityManager): Response
     {
         $bookReview = new BookReviews();
 
         // Get the currently logged-in user from the database
-        $user = $entityManager->getRepository(User::class)->findOneBy(['id' => $userId]);
+        $user = $this->getUser();
 
         // Create the form
         $form = $this->createForm(BookReviewFormType::class, $bookReview);
