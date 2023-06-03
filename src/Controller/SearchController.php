@@ -263,7 +263,6 @@ class SearchController extends AbstractController
     #[Route('/add-review/{bookId}', name: 'add_review')]
     public function addReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-
         $comment = $request->request->get('comment');
         $rating = $request->request->get('rating');
 
@@ -278,7 +277,7 @@ class SearchController extends AbstractController
         $review->setCreatedAt(new \DateTime());
         $review->setBookTitle($book->getTitle());
         $review->setRating($rating);
-        $review->setTags("Hi"); // TODO: remove this later ?
+        $review->setTags("Hi");
 
         $entityManager->persist($review);
         $entityManager->flush();
