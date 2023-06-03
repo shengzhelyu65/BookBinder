@@ -8,6 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileControllerTest extends WebTestCase
 {
+    public function testSettingsPageWhenNotLoggedIn()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/profile');
+
+        $this->assertResponseRedirects('/login');
+    }
+
     public function testMyProfile(): void
     {
         $client = static::createClient();
