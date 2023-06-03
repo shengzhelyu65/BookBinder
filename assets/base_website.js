@@ -60,31 +60,43 @@ document.querySelector('#chatForm').addEventListener('submit', async (event) => 
     generateButton.disabled = true;
     generateButton.textContent = 'Generating...';
 
-    const response = await chatWithGPT35Turbo(inputText);
-    console.log(response);
+    try {
+        const response = await chatWithGPT35Turbo(inputText);
+        console.log(response);
 
-    // Display the response text (should be the title of the book)
-    const recommendationDiv = document.querySelector('#recommendations');
-    const responseDiv = document.createElement('div');
-    responseDiv.textContent = response;
-    recommendationDiv.appendChild(responseDiv);
+        // Add thumbnail with link to bookPage
+        const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(response)}`);
+        if (APIResponse.ok) {
+            const data = await APIResponse.json();
 
-    // Add thumbnail with link to bookPage
-    const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(response)}`);
-    const data = await APIResponse.json();
+            // Check if thumbnail and id exist
+            if (data.thumbnail && data.id) {
+                // Display the response text (should be the title of the book)
+                const recommendationDiv = document.querySelector('#recommendations');
+                const responseDiv = document.createElement('div');
+                responseDiv.textContent = response;
+                recommendationDiv.appendChild(responseDiv);
 
-    const thumbnail = data.thumbnail;
-    const id = data.id;
+                const thumbnail = data.thumbnail;
+                const id = data.id;
 
-    const thumbnailLink = document.createElement('a');
-    thumbnailLink.href = `/book-page/${id}`;
-    const thumbnailImg = document.createElement('img');
-    thumbnailImg.src = thumbnail;
-    thumbnailLink.appendChild(thumbnailImg);
-    recommendationDiv.appendChild(thumbnailLink);
+                const thumbnailLink = document.createElement('a');
+                thumbnailLink.href = `/book-page/${id}`;
+                const thumbnailImg = document.createElement('img');
+                thumbnailImg.src = thumbnail;
+                thumbnailLink.appendChild(thumbnailImg);
+                recommendationDiv.appendChild(thumbnailLink);
+            } else {
+                console.log('Something went wrong with the API call.');
+            }
+        } else {
+            console.log('Something went wrong with the API call.');
+        }
+    } catch (error) {
+        console.log('An error occurred:', error.message);
+    }
 
     // Enable the button and change its text back to "Generate"
     generateButton.disabled = false;
     generateButton.textContent = 'Generate';
 });
-
