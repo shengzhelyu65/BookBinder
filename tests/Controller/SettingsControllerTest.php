@@ -18,52 +18,6 @@ class SettingsControllerTest extends PantherTestCase
         $this->assertResponseRedirects('/login');
     }
 
-//    /**
-//     * @throws NoSuchElementException|Exception
-//     */
-//    public function testSettingsPageWhenLoggedIn()
-//    {
-//        $client = static::createPantherClient();
-//        $container = static::getContainer();
-//
-//        $userRepository = $container->get('doctrine')->getManager()->getRepository(User::class);
-//        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
-//
-//        // Login
-//        $crawler = $client->request('GET', '/login');
-//        $form = $crawler->filter('form.form-signin')->form();
-//        $form['email'] = 'test@test.com';
-//        $form['password'] = 'password123';
-//        $client->submit($form);
-//        $this->assertStringContainsString('/', $client->getCurrentURL());
-//
-//        // Send a GET request to the settings route
-//        $crawler = $client->request('GET', '/settings');
-//
-//        // Assert that the response is successful
-//        $this->assertStringContainsString('/settings', $client->getCurrentURL());
-//
-//        // Assert that the page contains the settings form
-//        $this->assertStringContainsString('Profile Settings', $crawler->filter('h4')->text());
-//        $form = $crawler->selectButton('Submit')->form();
-//
-//        // Fill in the form with valid data
-//        $form['settings_form[name]'] = 'Test';
-//        $form['settings_form[surname]'] = 'Test';
-//        $form['settings_form[nickname]'] = 'test';
-//        $form['settings_form[languages]'] = [LanguageEnum::ENGLISH, LanguageEnum::FRENCH];
-//        $form['settings_form[genres]'] = [GenreEnum::ADULT, GenreEnum::HISTORY];
-//        $client->submit($form);
-//
-//        // check the database for the updated userReadingInterest
-//        $userReadingInterest = $user->getUserReadingInterest();
-//        $this->assertSame('Test' ,$user->getUserPersonalInfo()->getName());
-//        $this->assertContains(LanguageEnum::ENGLISH, $userReadingInterest->getLanguages());
-//        $this->assertContains(LanguageEnum::FRENCH, $userReadingInterest->getLanguages());
-//        $this->assertContains(GenreEnum::ADULT, $userReadingInterest->getGenres());
-//        $this->assertContains(GenreEnum::HISTORY, $userReadingInterest->getGenres());
-//    }
-
     public function testSettingsFormSubmission()
     {
         $client = static::createClient();
