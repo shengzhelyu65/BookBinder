@@ -422,4 +422,31 @@ class SearchControllerTest extends PantherTestCase
             $this->assertIsString($bookSuggestion['title']);
         }
     }
+
+    public function testBookSearchAIGetsJsonResponseWithThumbnailAndId()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/book-search/ai/harry-potter');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseHeaderSame('content-type', 'application/json');
+
+        $responseData = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertArrayHasKey('thumbnail', $responseData);
+        $this->assertArrayHasKey('id', $responseData);
+    }
+
+    public function testBookSearchOpenAIGetsJsonResponseWithGeneratedText()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/book-search/openAI/fantasy');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseHeaderSame('content-type', 'application/json');
+
+        $responseData = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertArrayHasKey('text', $responseData);
+    }
 }
