@@ -33,7 +33,7 @@ class BookBinderController extends AbstractController
         $ApiClient = new GoogleBooksApiClient();
 
         // if the user has no genres, add some default ones.
-        if (count($genres) < 2) {
+        if (count($genres) === 0) {
             array_push($genres, 'Fantasy', 'popular', 'classic');
         }
 
