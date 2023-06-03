@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
 use App\Security\LoginAuthenticator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,5 +107,53 @@ class SecurityControllerTest extends PantherTestCase
         // Assertions
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($targetPath, $response->getTargetUrl());
+    }
+
+    public function testLoginPage()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/login');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Welcome to BookBinder');
+    }
+
+    public function testLoginAction()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('POST', '/login', [
+            'email' => 'test@test.com',
+            'password' => 'password123',
+        ]);
+
+        $this->assertResponseRedirects();
+    }
+
+    public function testLogoutAction()
+    {
+        $client = static::createClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'user1@example.com']);
+        $this->assertInstanceOf(User::class, $user);
+        $client->loginUser($user);
+
+        $client->request('GET', '/logout');
+
+        $this->assertResponseRedirects();
+        // Add assertions for any other expected behavior after logout
+    }
+
+    public function testGoogleCheckAction()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('POST', '/login/google', [
+            'credential' => 'google-credential',
+        ]);
+
+        $this->assertNotSame(200, $client->getResponse()->getStatusCode());
     }
 }
