@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
-use App\Entity\UserReadingList;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileControllerTest extends WebTestCase
