@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace App\Tests\Controller;
 
 use App\Entity\Book;
 use App\Entity\BookReviews;
@@ -9,10 +9,12 @@ use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Entity\UserReadingList;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeoutException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Panther\PantherTestCase;
 
-class SearhControllerTest extends PantherTestCase
+class SearchControllerTest extends PantherTestCase
 {
     public function testSearch(): void
     {
@@ -100,49 +102,31 @@ class SearhControllerTest extends PantherTestCase
         $this->assertGreaterThan(5, $cardElements->count());
     }
 
-    public function testAddReview(): void
+    public function testUpdateReview()
     {
         $client = static::createClient();
-        $container = self::getContainer();
-        $entityManager = $container->get('doctrine')->getManager();
+        $entityManager = $client->getContainer()->get('doctrine')->getManager();
 
-        $userRepository = $entityManager->getRepository(User::class);
-        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
-
-        // Find a user
-        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
-        $this->assertInstanceOf(User::class, $user);
+        // Simulate a logged-in user
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'user10@example.com']);
         $client->loginUser($user);
 
-        // Visit the page
-        $id = "l5quhLiZEiwC";
-        $crawler = $client->request('GET', "/book-page/{$id}");
+        // Find an existing review for a book
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy(['user_id' => $user]);
+        $bookId = $existingReview->getBookId();
 
-        // Find the button that opens the modal
-        $modalOpenButton = $crawler->filter('button[data-bs-target="#reviewModal"]');
-        $this->assertCount(1, $modalOpenButton); // Ensure the button is found
+        // Make a POST request to update the review
+        $client->request('POST', '/update-review/'. $bookId, [
+            'comment' => 'Updated review comment',
+            'rating' => 4,
+        ]);
 
-        // Get the form within the modal
-        $modal = $crawler->filter('#reviewModal');
-        $form = $modal->filter('form')->form();
+        // Refresh the review entity from the database
+        $entityManager->refresh($existingReview);
 
-        // Test the form
-        $comment = 'This is a test comment.';
-        $rating = 4;
-        $form['comment'] = $comment;
-        $form['rating'] = $rating;
-        $client->submit($form);
-
-        // Check if there is a data record in the database
-        $bookReview = $bookReviewRepository->findOneBy(['book_id' => $id, 'user_id' => $user]);
-        $this->assertInstanceOf(BookReviews::class, $bookReview);
-
-        // Check if the form submission redirects to the correct page
-        $response = $client->getResponse();
-        $this->assertTrue($response->isRedirect("/book-page/{$id}"));
-
-        // Check if review is present
-        $this->assertStringContainsString($comment, $crawler->filter('p.card-text.text-truncate-3')->text());
+        // Assert that the review has been updated
+        $this->assertEquals('Updated review comment', $existingReview->getReview());
+        $this->assertEquals(4, $existingReview->getRating());
     }
 
     public function testJoinMeetup(): void
