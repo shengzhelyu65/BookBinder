@@ -132,15 +132,26 @@ class SearchControllerTest extends PantherTestCase
         $this->assertNotNull($form);
         $library = $entityManager->getRepository(Library::class)->findOneBy(['library_ID' => 1]);
         // choose the first library
-        $form['meetup_request_form[library_ID]']->setValue($library->getLibraryID());
-        $form['meetup_request_form[datetime]']->setValue('2050-01-01 00:00:00');
-        $form['meetup_request_form[maxNumber]']->setValue('10');
+        $client->executeScript("document.querySelector('#host-meetup-form-in-book select[name=\"meetup_request_form[library_ID]\"]').value = '{$library->getLibraryID()}';");
+        $client->executeScript("document.querySelector('#host-meetup-form-in-book input[name=\"meetup_request_form[datetime]\"]').value = '2050-01-01 00:00:00';");
+        $client->executeScript("document.querySelector('#host-meetup-form-in-book input[name=\"meetup_request_form[maxNumber]\"]').value = '10';");
 
         // Find a button said "Confirm" and click it
-        $crawler->filter('#host-meetup-form-in-book #confirmButton')->click();
+        $client->executeScript("document.querySelector('#host-meetup-form-in-book #confirmButton').click();");
 
         // check if the page is redirected to the book page
         $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
+
+        // check if the meetup request is created
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        $meetupRequestRepository = $entityManager->getRepository(MeetupRequests::class);
+        $meetupRequest = $meetupRequestRepository->findOneBy(['book_ID' => $bookId, 'host_user' => $user]);
+        $this->assertNotNull($meetupRequest);
+
+        // Rollback the database
+        $entityManager->remove($meetupRequest);
+        $entityManager->flush();
     }
 
     public function testAddReview(): void
