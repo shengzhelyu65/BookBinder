@@ -4,6 +4,9 @@ namespace App\Tests\Controller;
 
 use App\Entity\Book;
 use App\Entity\BookReviews;
+use App\Entity\MeetupList;
+use App\Entity\MeetupRequestList;
+use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Entity\UserReadingInterest;
 use App\Entity\UserReadingList;
@@ -121,6 +124,31 @@ class BookBinderControllerTest extends WebTestCase
         // remove the test user if it exists
         $user = $userRepository->findOneBy(['email' => 'test@test.com']);
         if ($user) {
+            // Find all the relevant elements
+            $meetupRequestListRepository = $entityManager->getRepository(MeetupRequestList::class);;
+            $meetupListRepository = $entityManager->getRepository(MeetupList::class);
+            $meetupRequestRepository = $entityManager->getRepository(MeetupRequests::class);
+            $bookReviewsRepository = $entityManager->getRepository(BookReviews::class);
+
+            $meetupLists = $meetupListRepository->findBy(['user_ID' => $user]);
+            foreach ($meetupLists as $meetupList) {
+                $entityManager->remove($meetupList);
+            }
+
+            $meetupRequestLists = $meetupRequestListRepository->findBy(['user_ID' => $user]);
+            foreach ($meetupRequestLists as $meetupRequestList) {
+                $entityManager->remove($meetupRequestList);
+            }
+
+            $meetupRequests = $meetupRequestRepository->findBy(['host_user' => $user]);
+            foreach ($meetupRequests as $meetupRequest) {
+                $entityManager->remove($meetupRequest);
+            }
+
+            $bookReviews = $bookReviewsRepository->findBy(['user_id' => $user]);
+            foreach ($bookReviews as $bookReview) {
+                $entityManager->remove($bookReview);
+            }
             $entityManager->remove($user);
             $entityManager->flush();
         }
