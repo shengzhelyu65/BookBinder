@@ -18,7 +18,7 @@ class ReadingListControllerTest extends PantherTestCase
         $readingListRepository = $entityManager->getRepository(UserReadingList::class);
 
         // Get the logged in user
-        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $user = $userRepository->findOneBy(['email' => 'user3@example.com']);
         $client->loginUser($user);
 
         // view the reading list
