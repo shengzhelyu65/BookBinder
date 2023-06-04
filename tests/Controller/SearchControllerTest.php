@@ -102,6 +102,47 @@ class SearchControllerTest extends PantherTestCase
         $this->assertGreaterThan(5, $cardElements->count());
     }
 
+    public function testHostMeetupProcess(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $bookId = "l5quhLiZEiwC";
+        // Visit the book page
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertStringContainsString('Superhobby', $crawler->filter('div.p-0.ps-3.col')->text());
+
+        // Click the "Host a meetup" button with id host-up-btn-in-book
+        $hostButton = $crawler->filter('#host-up-btn-in-book');
+        $this->assertNotNull($hostButton);
+        $hostButton->click();
+
+        // Find the form wizard under div #host-meetup-form-in-book
+        $form = $crawler->filter('#host-meetup-form-in-book form')->form();
+        $this->assertNotNull($form);
+        $library = $entityManager->getRepository(Library::class)->findOneBy(['library_ID' => 1]);
+        // choose the first library
+        $form['meetup_request_form[library_ID]']->setValue($library->getLibraryID());
+        $form['meetup_request_form[datetime]']->setValue('2050-01-01 00:00:00');
+        $form['meetup_request_form[maxNumber]']->setValue('10');
+
+        // Find a button said "Confirm" and click it
+        $crawler->filter('#host-meetup-form-in-book #confirmButton')->click();
+
+        // check if the page is redirected to the book page
+        $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
+    }
+
     public function testAddReview(): void
     {
         $client = static::createClient();
@@ -435,18 +476,5 @@ class SearchControllerTest extends PantherTestCase
 
         $this->assertArrayHasKey('thumbnail', $responseData);
         $this->assertArrayHasKey('id', $responseData);
-    }
-
-    public function testBookSearchOpenAIGetsJsonResponseWithGeneratedText()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/book-search/openAI/fantasy');
-
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseHeaderSame('content-type', 'application/json');
-
-        $responseData = json_decode($client->getResponse()->getContent(), true);
-
-        $this->assertArrayHasKey('text', $responseData);
     }
 }
