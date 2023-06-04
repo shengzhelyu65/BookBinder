@@ -13,6 +13,7 @@ use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Panther\PantherTestCase;
+use Facebook\WebDriver\WebDriverKeys;
 
 class SearchControllerTest extends PantherTestCase
 {
@@ -488,4 +489,235 @@ class SearchControllerTest extends PantherTestCase
         $this->assertArrayHasKey('thumbnail', $responseData);
         $this->assertArrayHasKey('id', $responseData);
     }
+    public function testSearchResult(): void
+    {
+        $client = static::createPantherClient();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        // Search for "Harry"
+        $crawler = $client->request('GET', '/');
+        $searchBar = $crawler->filter('#search_bar_input');
+        $this->assertNotNull($searchBar);
+        $searchBar->sendKeys('Harry')->sendKeys(WebDriverKeys::ENTER);
+
+        // Find and click on the specific search result
+        $resultLink = $crawler->filter('a[href="/book-page/rjgQCwAAQBAJ"]')->first();
+        $this->assertNotNull($resultLink);
+        $resultLink->click();
+
+        // Check if the page is redirected to the book page
+        $this->assertStringContainsString("/book-page/rjgQCwAAQBAJ", $client->getCurrentURL());
+    }
+    public function testGenerateAIRecommendations(): void
+    {
+        $client = static::createPantherClient();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        // Open the recommendations form
+        $formToggle = $crawler->filter('.bg-light.border.rounded-3.py-1.mt-3 a[data-bs-toggle="collapse"]')->first();
+        $this->assertNotNull($formToggle);
+        $formToggle->click();
+
+        // Fill in the form and submit
+        $inputText = $crawler->filter('#inputText')->first();
+        $this->assertNotNull($inputText);
+        $inputText->sendKeys('harry');
+        $generateButton = $crawler->filter('#chatForm button[type="submit"]')->first();
+        $this->assertNotNull($generateButton);
+        $generateButton->click();
+
+        // Click on the recommendation
+        $recommendation = $crawler->filter('#recommendations')->first();
+        $this->assertNotNull($recommendation);
+        $recommendationLink = $recommendation->filter('a')->first();
+        $this->assertNotNull($recommendationLink);
+        $recommendationLink->click();
+
+        // Check if the page is redirected ( doesn't check to which book since ai could give different answers)
+        $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
+    }
+
+    public function testAddReviewPanther(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $bookId = "WDFWSwAACAAJ";
+        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
+        // Check if the review already exists and remove if it does
+        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        if ($existingReview) {
+            $entityManager->remove($existingReview);
+            $entityManager->flush();
+        }
+
+        // Go to the book page
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertStringContainsString('Add Review', $crawler->filter('button[data-bs-toggle="modal"]')->text());
+
+        // Click the "Add Review" button
+        $addReviewButton = $crawler->filter('button[data-bs-toggle="modal"][data-bs-target="#reviewModal"]')->first();
+        $this->assertNotNull($addReviewButton);
+        $addReviewButton->click();
+
+        // Check if the modal shows up
+        $reviewModal = $crawler->filter('.modal.fade.show')->first();
+        $this->assertNotNull($reviewModal);
+
+        // Fill in the form and submit
+        $client->executeScript("document.querySelector('#comment').value = 'This is a test comment.';");
+        $client->executeScript("document.querySelector('#rating').value = 4;");
+        $client->executeScript("document.querySelector('form').submit();");
+
+
+        // Check if the form was submitted
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        $this->assertInstanceOf(BookReviews::class, $review);
+        $this->assertEquals('This is a test comment.', $review->getReview());
+        $this->assertEquals(4, $review->getRating());
+
+        // Rollback the database
+        $entityManager->remove($review);
+        $entityManager->flush();
+    }
+    public function testEditReviewPanther(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $bookId = "WDFWSwAACAAJ";
+        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
+        // Check if the review already exists and remove if it does
+        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        if ($existingReview) {
+            $entityManager->remove($existingReview);
+            $entityManager->flush();
+        }
+
+        // Go to the book page
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertStringContainsString('Add Review', $crawler->filter('button[data-bs-toggle="modal"]')->text());
+
+        // Click the "Add Review" button
+        $addReviewButton = $crawler->filter('button[data-bs-toggle="modal"][data-bs-target="#reviewModal"]')->first();
+        $this->assertNotNull($addReviewButton);
+        $addReviewButton->click();
+
+        // Check if the modal shows up
+        $reviewModal = $crawler->filter('.modal.fade.show')->first();
+        $this->assertNotNull($reviewModal);
+
+        // Fill in the form and submit
+        $client->executeScript("document.querySelector('#comment').value = 'This is a test comment.';");
+        $client->executeScript("document.querySelector('#rating').value = 4;");
+        $client->executeScript("document.querySelector('form').submit();");
+
+
+        // Check if the form was submitted
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        $this->assertInstanceOf(BookReviews::class, $review);
+        $this->assertEquals('This is a test comment.', $review->getReview());
+        $this->assertEquals(4, $review->getRating());
+
+        // Update the review
+        $updatedComment = 'This is an updated comment.';
+        $updatedRating = 5;
+
+        // Switch the button to "Edit My Review"
+        $editButton = $client->getCrawler()->filter('button[data-bs-target="#reviewModal"]');
+        $editButton->text('Edit My Review');
+
+        // Click the "Edit My Review" button
+        $editButton->click();
+
+        // Check if the modal shows up
+        $reviewModal = $client->getCrawler()->filter('.modal#reviewModal');
+        $this->assertTrue($reviewModal->count() > 0);
+
+        // Fill in the form with updated values and submit
+        $form = $reviewModal->filter('form')->form();
+        $form['comment'] = $updatedComment;
+        $form['rating'] = $updatedRating;
+        $client->submit($form);
+
+        // Check if the form was submitted
+        $updatedReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        $this->assertInstanceOf(BookReviews::class, $updatedReview);
+        $this->assertEquals($updatedComment, $updatedReview->getReview());
+        $this->assertEquals($updatedRating, $updatedReview->getRating());
+
+        // Rollback the database
+        $entityManager->remove($updatedReview);
+        $entityManager->flush();
+    }
+    public function testReviewProfileRedirect(): void
+    {
+        $client = static::createPantherClient();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $bookId = "WDFWSwAACAAJ";
+
+        // Go to the book page
+        $client->request('GET', "/book-page/{$bookId}");
+        $this->assertStringContainsString('Harry Potter', $client->getPageSource());
+
+        // Click on the "Tommy" link
+        $tommyLink = $client->getCrawler()->filter('a[href="/profile/Tommy"]');
+        $this->assertNotNull($tommyLink);
+        $tommyLink->click();
+
+        // Check if the page is redirected to the profile page
+        $this->assertStringContainsString('/profile/Tommy', $client->getCurrentURL());
+    }
+
+
+
 }

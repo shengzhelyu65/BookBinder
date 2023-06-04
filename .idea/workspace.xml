@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Added nearest_library to UserPersonalInfo" />
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Revert previous commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +37,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="Fixissues" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -386,7 +389,25 @@
       <recent name="C:\Users\louis\IdeaProjects\a22web31\book_binder\assets\styles" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Built-in Web Server.localserver">
+  <component name="RunManager" selected="PHPUnit.SearchControllerTest.testSearchResult">
+    <configuration name="SearchControllerTest.testSearchRedirect" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner class="App\Tests\Controller\SearchControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" method="testSearchRedirect" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SearchControllerTest.testSearchResult" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner class="App\Tests\Controller\SearchControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" method="testSearchResult" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <CommandLine>
         <PhpTestInterpreterSettings>
@@ -402,7 +423,15 @@
     <list>
       <item itemvalue="PHP Built-in Web Server.localserver" />
       <item itemvalue="PHPUnit.test" />
+      <item itemvalue="PHPUnit.SearchControllerTest.testSearchResult" />
+      <item itemvalue="PHPUnit.SearchControllerTest.testSearchRedirect" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.SearchControllerTest.testSearchResult" />
+        <item itemvalue="PHPUnit.SearchControllerTest.testSearchRedirect" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -709,7 +738,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685800842629</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Revert previous commit">
+      <created>1685885751519</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1685885751519</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -743,7 +779,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Update dependency bootstrap css" />
     <MESSAGE value="Profile screen with user information and reviews" />
     <MESSAGE value="Search results screen template" />
     <MESSAGE value="Remove link from logo in navbar" />
@@ -768,7 +803,8 @@
     <MESSAGE value="Fix meetup display layout" />
     <MESSAGE value="Made confirm button disabled if date is in the past + only allow positive inputs" />
     <MESSAGE value="Added nearest_library to UserPersonalInfo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added nearest_library to UserPersonalInfo" />
+    <MESSAGE value="Revert previous commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert previous commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
