@@ -22,6 +22,9 @@ class UserPersonalInfo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nickname = null;
 
+    #[ORM\OneToOne(mappedBy: 'userPersonalInfo', cascade: ['persist', 'remove'])]
+    private ?Library $nearest_library = null;
+
     #[ORM\OneToOne(inversedBy: 'userPersonalInfo', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -77,5 +80,9 @@ class UserPersonalInfo
         $this->user = $user;
 
         return $this;
+    }
+    public function getUserLibrary(): ?Library
+    {
+        return $this->nearest_library;
     }
 }

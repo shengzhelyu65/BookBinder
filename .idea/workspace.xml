@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Fix meetup display layout">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Made confirm button disabled if date is in the past + only allow positive inputs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/controllers.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Library.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Library.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/UserPersonalInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/UserPersonalInfo.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="Fixissues" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -393,10 +392,6 @@
     </key>
   </component>
   <component name="RunManager" selected="PHP Built-in Web Server.localserver">
-    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
-      <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json" />
-      <method v="2" />
-    </configuration>
     <configuration name="test" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <CommandLine>
         <PhpTestInterpreterSettings>
@@ -444,6 +439,7 @@
       <workItem from="1685557534936" duration="195000" />
       <workItem from="1685650337871" duration="1392000" />
       <workItem from="1685651758242" duration="2345000" />
+      <workItem from="1685881479207" duration="1735000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>
@@ -711,7 +707,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685654104196</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Made confirm button disabled if date is in the past + only allow positive inputs">
+      <created>1685800842629</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1685800842629</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -728,7 +731,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="responsive_layout" />
+                        <option value="origin/dev" />
                       </list>
                     </value>
                   </entry>
@@ -745,7 +748,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Add profile.html.twig" />
     <MESSAGE value="Homescreen with books from Google API" />
     <MESSAGE value="Update dependency bootstrap css" />
     <MESSAGE value="Profile screen with user information and reviews" />
@@ -770,7 +772,8 @@
     <MESSAGE value="add user and book fixtures" />
     <MESSAGE value="change BookReviewFixtures to use references" />
     <MESSAGE value="Fix meetup display layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix meetup display layout" />
+    <MESSAGE value="Made confirm button disabled if date is in the past + only allow positive inputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made confirm button disabled if date is in the past + only allow positive inputs" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
