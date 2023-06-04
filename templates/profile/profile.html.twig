@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="d-flex flex-row justify-content-start align-items-center gap-3">
-                <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="80" height="80" class="rounded-circle">
+                <img src="{{ asset('images/default_avatar.png') }}" alt="user" class="rounded-circle size-80">
                 <div class="d-flex flex-column">
                     <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
                     {% if  user.getUserPersonalInfo().getName() is not null or user.getUserPersonalInfo().getSurname() is not null %}
@@ -33,7 +33,7 @@
                 {% for bookReview in reviews %}
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle() }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">

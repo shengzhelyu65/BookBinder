@@ -19,7 +19,7 @@
     <header class="py-3 mb-4 shadow">
         <div class="container-fluid align-items-center d-flex">
             <div class="flex-shrink-1">
-                <img src="{{ asset('images/logo_light.jpg') }}" alt="" style="width: 40px; height: 40px">
+                <img src="{{ asset('images/logo_light.jpg') }}" alt="" class="size-40">
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
                 <form id="searchbar_form" class="w-100 me-3" onsubmit="searchBooks(event)">
@@ -31,7 +31,7 @@
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="32" height="32" class="rounded-circle">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser2" style="z-index: 2000">
+                    <ul class="dropdown-menu dropdown-menu-end shadow z-2000" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item" href="{{ path('settings') }}">Settings</a></li>
                         <li><a class="dropdown-item" href="{{ path('profile') }}">Profile</a></li>
                         <li>
@@ -45,7 +45,7 @@
     </header>
     <div class="container-fluid pb-3 flex-grow-1 d-flex flex-column flex-lg-row overflow-auto m-0 row">
         <div class="m-0 row mh-lg-100 ">
-            <aside class="col-lg-3 pb-lg-0 pb-3 overflow-auto mh-lg-100" style="background-color: white">
+            <aside class="col-lg-3 pb-lg-0 pb-3 overflow-auto mh-lg-100 background-white">
                 <div class="bg-light border rounded-3 p-1">
                     <ul class="navbar-nav flex-lg-column flex-row mb-auto justify-content-between text-truncate">
                         <li class="nav-item">

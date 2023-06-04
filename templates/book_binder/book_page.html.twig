@@ -6,9 +6,9 @@
             <div class="container-fluid p-0 m-0 row mb-3">
                 <div class="p-0 col-auto">
                     {% if book.getThumbnail() %}
-                        <img src="{{ book.getThumbnail() }}" class="card-img-top" alt="{{ book.getTitle() }}" style="width: 10rem">
+                        <img src="{{ book.getThumbnail() }}" class="card-img-top width-10" alt="{{ book.getTitle() }}">
                     {% else %}
-                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top" alt="Empty Book Cover" style="width: 10rem">
+                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top width-10" alt="Empty Book Cover">
                     {% endif %}
                 </div>
                 <div class="p-0 ps-3 col">
@@ -87,8 +87,8 @@
                     </button>
                 </div>
                 <div class="card card-body">
-                    <div id="content1" style="display: block;">{{ book.getDescription() | raw }}</div>
-                    <div id="content2" style="display: none;">
+                    <div id="content1" class="d-block">{{ book.getDescription() | raw }}</div>
+                    <div id="content2" class="d-none">
                         {% set authors = book.getAuthor() %}
                         {% if authors|length == 1 %}
                             Author:
@@ -108,7 +108,7 @@
                     <h4>Join Meetups:</h4>
                     <div class="d-flex flex-row overflow-auto">
                         {% for meetupRequest in meetupRequests %}
-                            <div class="card mb-3 me-2" style="min-width: 300px; max-width: 300px">
+                            <div class="card mb-3 me-2 width-300-px">
                                 <div class="d-flex flex-row h-100">
                                     <div class="card-body">
                                         <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
@@ -138,7 +138,7 @@
                 </button>
             {% endif %}
 
-            <div class="card mt-3" style="width: 100%;">
+            <div class="card mt-3 w-100">
                 <div class="card-body">
                     {% for reviewRecord in reviewData %}
                         <div class="card mb-3">

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="d-flex flex-row justify-content-start align-items-center gap-3">
-                <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="80" height="80" class="rounded-circle">
+                <img src="{{ asset('images/default_avatar.png') }}" alt="user" class="rounded-circle size-80">
                 <div class="d-flex flex-column">
                     <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
                 </div>
@@ -25,11 +25,11 @@
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in want_to_read %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
-                                <div class="card h-100" style="width: 8rem">
+                                <div class="card h-100 width-8">
                                     {% if book.getThumbnail() %}
-                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100" alt="{{ book.getTitle() }}" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100 height-14 fit-cover" alt="{{ book.getTitle() }}">
                                     {% else %}
-                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100" alt="Empty Book Cover" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100 height-14 fit-cover" alt="Empty Book Cover">
                                     {% endif %}
                                 </div>
                             </a>
@@ -45,11 +45,11 @@
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in currently_reading %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
-                                <div class="card h-100" style="width: 8rem">
+                                <div class="card h-100 width-8">
                                     {% if book.getThumbnail() %}
-                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100" alt="{{ book.getTitle() }}" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100 height-14 fit-cover" alt="{{ book.getTitle() }}">
                                     {% else %}
-                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100" alt="Empty Book Cover" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100 height-14 fit-cover" alt="Empty Book Cover">
                                     {% endif %}
                                 </div>
                             </a>
@@ -65,11 +65,11 @@
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in have_read %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
-                                <div class="card h-100" style="width: 8rem">
+                                <div class="card h-100 width-8">
                                     {% if book.getThumbnail() %}
-                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100" alt="{{ book.getTitle() }}" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ book.getThumbnail() }}" class="card-img-top w-100 height-14 fit-cover" alt="{{ book.getTitle() }}">
                                     {% else %}
-                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100" alt="Empty Book Cover" style="height: 14rem; object-fit: cover">
+                                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top w-100 height-14 fit-cover" alt="Empty Book Cover">
                                     {% endif %}
                                 </div>
                             </a>
@@ -85,7 +85,7 @@
                 {% for bookReview in reviews %}
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle() }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
