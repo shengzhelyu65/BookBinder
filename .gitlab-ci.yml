@@ -26,8 +26,8 @@ test-job:
     # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
     - docker-php-ext-install pdo pdo_mysql
   script:
-    - composer install
     - composer update vendor/package --with-dependencies
+    - composer install
     # run the migration on the temporary database
     - php bin/console doctrine:migrations:migrate --env=test
     # load some test data in the temporary database
