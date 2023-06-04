@@ -6,6 +6,9 @@ use App\Entity\Book;
 use App\Entity\BookReviews;
 use App\Entity\User;
 use App\Entity\UserReadingInterest;
+use App\Entity\UserReadingList;
+use App\Enum\GenreEnum;
+use App\Enum\LanguageEnum;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookBinderControllerTest extends WebTestCase
@@ -102,5 +105,45 @@ class BookBinderControllerTest extends WebTestCase
         $this->assertStringContainsString('Reviews', $crawler->filter('div.col-md-4.d-none.d-md-block h4')->text());
         $review = $bookReviewsRepository->findLatest(1);
         $this->assertStringContainsString($review[0]->getReview(), $crawler->filter('div.col-md-4.d-none.d-md-block div.card-body p')->text());
+    }
+
+    public function testRegisterATestUser()
+    {
+        $client = static::createClient();
+
+        $container = static::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+        $userRepository = $entityManager->getRepository(User::class);
+
+        // Visit the registration page
+        $crawler = $client->request('GET', '/register');
+
+        // remove the test user if it exists
+        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        if ($user) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        // Fill in the registration form and submit it
+        $form = $crawler->filter('form[name="registration_form"]')->form([
+            'registration_form[name]' => '',
+            'registration_form[surname]' => '',
+            'registration_form[nickname]' => 'test',
+            'registration_form[email]' => 'test@test.com',
+            'registration_form[agreeTerms]' => true,
+            'registration_form[plainPassword]' => 'password123',
+        ]);
+        $client->submit($form);
+
+        $this->assertResponseRedirects('/reading-interest');
+        $crawler = $client->followRedirect();
+
+        // Fill in the reading interest form and submit it
+        $form = $crawler->filter('form[name="reading_interest_form"]')->form([
+            'reading_interest_form[languages]' => [LanguageEnum::ENGLISH],
+            'reading_interest_form[genres]' => [GenreEnum::MYSTERY, GenreEnum::ROMANCE],
+        ]);
+        $client->submit($form);
     }
 }
