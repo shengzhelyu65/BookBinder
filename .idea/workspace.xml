@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Made confirm button disabled if date is in the past + only allow positive inputs">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Library.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Library.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/UserPersonalInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/UserPersonalInfo.php" afterDir="false" />
-    </list>
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Added nearest_library to UserPersonalInfo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -748,7 +743,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Homescreen with books from Google API" />
     <MESSAGE value="Update dependency bootstrap css" />
     <MESSAGE value="Profile screen with user information and reviews" />
     <MESSAGE value="Search results screen template" />
@@ -773,7 +767,8 @@
     <MESSAGE value="change BookReviewFixtures to use references" />
     <MESSAGE value="Fix meetup display layout" />
     <MESSAGE value="Made confirm button disabled if date is in the past + only allow positive inputs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Made confirm button disabled if date is in the past + only allow positive inputs" />
+    <MESSAGE value="Added nearest_library to UserPersonalInfo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added nearest_library to UserPersonalInfo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -98,7 +98,6 @@ class MeetupRequestsController extends AbstractController
         // The third column
         // Retrieve the latest meetup requests
         // $meetupRequests = $entityManager->getRepository(MeetupRequests::class)->findBy([], ['datetime' => 'DESC'], 10);
-        $nearestLibrary = $user->getUserPersonalInfo()->getUserLibrary();
         $meetupAvailables = $entityManager->createQueryBuilder()
             ->select('mr')
             ->from('App\Entity\MeetupRequests', 'mr')
