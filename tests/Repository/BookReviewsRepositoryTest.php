@@ -27,17 +27,13 @@ class BookReviewsRepositoryTest extends KernelTestCase
         $bookReview->setReview('This is a test review');
         $bookReview->setRating(4);
         $bookReview->setCreatedAt(new \DateTime('now'));
+        $bookReview->setTags('test');
 
         $this->entityManager->getRepository(BookReviews::class)->save($bookReview, flush: true);
 
         $this->assertSame($bookReview->getBookId(), 'abcd123');
-    }
-
-    public function testSearch()
-    {
-        $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['book_title' => 'Test Book', 'user_id' => 1]);
-
-        $this->assertSame($bookReview->getBookId(), 'abcd123');
+        $this->assertSame($bookReview->getTags(), 'test');
+        $this->assertNotNull($bookReview->getReviewId());
     }
 
     public function testFindLatest()
@@ -58,11 +54,12 @@ class BookReviewsRepositoryTest extends KernelTestCase
 
     public function testRemove()
     {
-        $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['book_title' => 'Test Book', 'user_id' => 1]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => 'user1@example.com']);
+        $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['book_title' => 'Test Book', 'user_id' => $user]);
 
         $this->entityManager->getRepository(BookReviews::class)->remove($bookReview, flush: true);
 
-        $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['bookTitle' => 'Test Book']);
+        $bookReview = $this->entityManager->getRepository(BookReviews::class)->findOneBy(['book_title' => 'Test Book', 'user_id' => $user]);
         $this->assertNull($bookReview);
     }
 

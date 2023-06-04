@@ -24,12 +24,20 @@ class LibraryRepositoryTest extends KernelTestCase
         $library->setCity('Test City');
         $library->setHouseNumber(123);
         $library->setStreet('Test Street');
-        $library->setNumber('Test Number');
+        $library->setNumber('123456');
         $library->setWebsite('http://www.testlibrary.com');
         $library->setEmail('test@testlibrary.com');
 
         $this->entityManager->getRepository(Library::class)->save($library, flush: true);
 
+        $this->assertSame($library->getLibraryName(), 'Test Library');
+        $this->assertSame($library->getCity(), 'Test City');
+        $this->assertSame($library->getZipCode(), 12345);
+        $this->assertSame($library->getHouseNumber(), 123);
+        $this->assertSame($library->getStreet(), 'Test Street');
+        $this->assertSame($library->getNumber(), '123456');
+        $this->assertSame($library->getWebsite(), 'http://www.testlibrary.com');
+        $this->assertSame($library->getEmail(), 'test@testlibrary.com');
         $this->assertNotNull($library->getLibraryID());
     }
 

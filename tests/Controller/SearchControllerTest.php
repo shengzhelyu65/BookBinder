@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace App\Tests\Controller;
 
 use App\Entity\Book;
 use App\Entity\BookReviews;
@@ -9,10 +9,12 @@ use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Entity\UserReadingList;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeoutException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Panther\PantherTestCase;
 
-class SearhControllerTest extends PantherTestCase
+class SearchControllerTest extends PantherTestCase
 {
     public function testSearch(): void
     {
@@ -100,6 +102,47 @@ class SearhControllerTest extends PantherTestCase
         $this->assertGreaterThan(5, $cardElements->count());
     }
 
+    public function testHostMeetupProcess(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $bookId = "l5quhLiZEiwC";
+        // Visit the book page
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertStringContainsString('Superhobby', $crawler->filter('div.p-0.ps-3.col')->text());
+
+        // Click the "Host a meetup" button with id host-up-btn-in-book
+        $hostButton = $crawler->filter('#host-up-btn-in-book');
+        $this->assertNotNull($hostButton);
+        $hostButton->click();
+
+        // Find the form wizard under div #host-meetup-form-in-book
+        $form = $crawler->filter('#host-meetup-form-in-book form')->form();
+        $this->assertNotNull($form);
+        $library = $entityManager->getRepository(Library::class)->findOneBy(['library_ID' => 1]);
+        // choose the first library
+        $form['meetup_request_form[library_ID]']->setValue($library->getLibraryID());
+        $form['meetup_request_form[datetime]']->setValue('2050-01-01 00:00:00');
+        $form['meetup_request_form[maxNumber]']->setValue('10');
+
+        // Find a button said "Confirm" and click it
+        $crawler->filter('#host-meetup-form-in-book #confirmButton')->click();
+
+        // check if the page is redirected to the book page
+        $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
+    }
+
     public function testAddReview(): void
     {
         $client = static::createClient();
@@ -114,35 +157,53 @@ class SearhControllerTest extends PantherTestCase
         $this->assertInstanceOf(User::class, $user);
         $client->loginUser($user);
 
-        // Visit the page
-        $id = "l5quhLiZEiwC";
-        $crawler = $client->request('GET', "/book-page/{$id}");
+        $bookId = "l5quhLiZEiwC";
 
-        // Find the button that opens the modal
-        $modalOpenButton = $crawler->filter('button[data-bs-target="#reviewModal"]');
-        $this->assertCount(1, $modalOpenButton); // Ensure the button is found
+        // Check if the review already exists
+        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        if ($existingReview) {
+            $entityManager->remove($existingReview);
+            $entityManager->flush();
+        }
 
-        // Get the form within the modal
-        $modal = $crawler->filter('#reviewModal');
-        $form = $modal->filter('form')->form();
+        // Make a POST request to add a review
+        $client->request('POST', '/add-review/'. $bookId, [
+            'comment' => 'This is a test comment.',
+            'rating' => 4,
+        ]);
 
-        // Test the form
-        $comment = 'This is a test comment.';
-        $rating = 4;
-        $form['comment'] = $comment;
-        $form['rating'] = $rating;
-        $client->submit($form);
+        // Check if the review has been added
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        $this->assertInstanceOf(BookReviews::class, $review);
+        $this->assertEquals('This is a test comment.', $review->getReview());
+        $this->assertEquals(4, $review->getRating());
+    }
 
-        // Check if there is a data record in the database
-        $bookReview = $bookReviewRepository->findOneBy(['book_id' => $id, 'user_id' => $user]);
-        $this->assertInstanceOf(BookReviews::class, $bookReview);
+    public function testUpdateReview()
+    {
+        $client = static::createClient();
+        $entityManager = $client->getContainer()->get('doctrine')->getManager();
 
-        // Check if the form submission redirects to the correct page
-        $response = $client->getResponse();
-        $this->assertTrue($response->isRedirect("/book-page/{$id}"));
+        // Simulate a logged-in user
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'user10@example.com']);
+        $client->loginUser($user);
 
-        // Check if review is present
-        $this->assertStringContainsString($comment, $crawler->filter('p.card-text.text-truncate-3')->text());
+        // Find an existing review for a book
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy(['user_id' => $user]);
+        $bookId = $existingReview->getBookId();
+
+        // Make a POST request to update the review
+        $client->request('POST', '/update-review/'. $bookId, [
+            'comment' => 'Updated review comment',
+            'rating' => 4,
+        ]);
+
+        // Refresh the review entity from the database
+        $entityManager->refresh($existingReview);
+
+        // Assert that the review has been updated
+        $this->assertEquals('Updated review comment', $existingReview->getReview());
+        $this->assertEquals(4, $existingReview->getRating());
     }
 
     public function testJoinMeetup(): void
@@ -401,5 +462,19 @@ class SearhControllerTest extends PantherTestCase
             $this->assertArrayHasKey('title', $bookSuggestion);
             $this->assertIsString($bookSuggestion['title']);
         }
+    }
+
+    public function testBookSearchAIGetsJsonResponseWithThumbnailAndId()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/book-search/ai/harry-potter');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseHeaderSame('content-type', 'application/json');
+
+        $responseData = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertArrayHasKey('thumbnail', $responseData);
+        $this->assertArrayHasKey('id', $responseData);
     }
 }

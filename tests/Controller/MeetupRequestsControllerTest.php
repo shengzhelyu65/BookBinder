@@ -6,10 +6,61 @@ use App\Entity\MeetupList;
 use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
-class MeetupRequestsControllerTest extends WebTestCase
+class MeetupRequestsControllerTest extends PantherTestCase
 {
+    public function testJoinMeetupProcess(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        // Visit the meetup page
+        $crawler = $client->request('GET', '/meetup/overview');
+
+        // Check if the page is loaded successfully
+        $this->assertStringContainsString('Upcoming meetups', $crawler->filter('h4')->text());
+
+        // Get the first card in the third column and click the "Join" button
+        $card = $crawler->filter('#meetups-in-overview')->filter('.card-body')->eq(0);
+        $this->assertNotNull($card);
+        $bookTitle = $card->filter('h5')->text();
+        $joinButton = $card->filter('a.btn');
+        $this->assertNotNull($joinButton);
+        $meetupId = $joinButton->attr('href');
+        $meetupId = substr($meetupId, strrpos($meetupId, '/') + 1);
+        $client->click($joinButton->link());
+
+        // Check if redirected to the overview page
+        $this->assertStringContainsString('/meetup/overview', $client->getCurrentURL());
+
+        $crawler = $client->request('GET', '/meetup/overview');
+
+        // Check if the card disappeared from the page
+        $card = $crawler->filter('#meetups-in-overview')->filter('.card-body')->eq(0);
+        $this->assertNotNull($card);
+        $this->assertNotSame($bookTitle, $card->filter('h5')->text());
+
+        // Rollback the changes in the database
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        $userId = $user->getId();
+        $meetupRepository = $entityManager->getRepository(MeetupRequestList::class);
+        $meetup = $meetupRepository->findOneBy(['meetup_ID' => $meetupId, 'user_ID' => $userId]);
+        $entityManager->remove($meetup);
+        $entityManager->flush();
+    }
+
     public function testMeetupOverview(): void
     {
         $client = static::createClient();

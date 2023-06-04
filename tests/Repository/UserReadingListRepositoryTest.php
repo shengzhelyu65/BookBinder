@@ -37,7 +37,10 @@ class UserReadingListRepositoryTest extends KernelTestCase
 
         $this->userReadingListRepository->save($userReadingList, true);
 
-        $this->assertNotNull($user->getId());
+        $this->assertSame([1, 2, 3], $userReadingList->getCurrentlyReading());
+        $this->assertSame([4, 5, 6], $userReadingList->getWantToRead());
+        $this->assertSame([7, 8, 9], $userReadingList->getHaveRead());
+        $this->assertNotNull($userReadingList->getId());
     }
 
     public function testFindUserReadingListByUserId()

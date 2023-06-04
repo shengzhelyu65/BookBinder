@@ -37,6 +37,10 @@ class UserPersonalInfoRepositoryTest extends KernelTestCase
 
         $this->userPersonalInfoRepository->save($personalInfo, true);
 
+        $this->assertSame('John', $personalInfo->getName());
+        $this->assertSame('Doe', $personalInfo->getSurname());
+        $this->assertSame('Johny', $personalInfo->getNickname());
+
         $this->assertNotNull($personalInfo->getId());
     }
 
