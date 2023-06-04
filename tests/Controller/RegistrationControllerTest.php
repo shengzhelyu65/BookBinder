@@ -22,6 +22,7 @@ class RegistrationControllerTest extends PantherTestCase
         $readingListRepository = $entityManager->getRepository(UserReadingList::class);
 
         // Visit the registration page
+        $client->request('GET', '/logout');
         $crawler = $client->request('GET', '/register');
 
         // remove the test user if it exists
