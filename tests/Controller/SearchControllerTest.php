@@ -132,7 +132,7 @@ class SearchControllerTest extends PantherTestCase
         ]);
 
         // Check if the review has been added
-        $review = $bookReviewRepository->findOneBy(['user_id' => $user]);
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
         $this->assertInstanceOf(BookReviews::class, $review);
         $this->assertEquals('This is a test comment.', $review->getReview());
         $this->assertEquals(4, $review->getRating());

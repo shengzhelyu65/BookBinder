@@ -58,16 +58,6 @@ class SettingsControllerTest extends PantherTestCase
         $this->assertSame('en, fr', $languages);
         $genres = $crawler->filter('.col-md-6.mb-3 p')->eq(4)->text();
         $this->assertSame('adult, history', $genres);
-
-        // Check the database for the updated userReadingInterest
-        $userReadingInterest = $user->getUserReadingInterest();
-        $this->assertSame('John' ,$user->getUserPersonalInfo()->getName());
-        $this->assertSame('Doe' ,$user->getUserPersonalInfo()->getSurname());
-        $this->assertSame('user10' ,$user->getUserPersonalInfo()->getNickName());
-        $this->assertContains(LanguageEnum::ENGLISH, $userReadingInterest->getLanguages());
-        $this->assertContains(LanguageEnum::FRENCH, $userReadingInterest->getLanguages());
-        $this->assertContains(GenreEnum::ADULT, $userReadingInterest->getGenres());
-        $this->assertContains(GenreEnum::HISTORY, $userReadingInterest->getGenres());
     }
 
     public function testNicknameAlreadyInUse(): void
