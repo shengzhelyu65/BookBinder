@@ -148,7 +148,7 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertResponseRedirects('/');
     }
 
-    public function testRegisterWithInvalidData(): void
+    public function testRegisterWithExistingData(): void
     {
         $client = static::createClient();
         $container = static::getContainer();
@@ -197,5 +197,37 @@ class RegistrationControllerTest extends PantherTestCase
 
         // Check if the error flash message is displayed
         $this->assertSelectorTextContains('.alert-danger', 'Nickname already in use');
+    }
+
+    public function testRegisterWithInvalidData(): void
+    {
+        $client = static::createClient();
+        $container = static::getContainer();
+        $container->get('doctrine')->getManager();
+
+        // Access the registration page
+        $client->request('GET', '/register');
+
+        // Check if the response is successful
+        $this->assertResponseIsSuccessful();
+
+        // Fill in the registration form with valid data
+        $client->submitForm('Sign up', [
+            'registration_form[name]' => '',
+            'registration_form[surname]' => '',
+            'registration_form[nickname]' => 'invalid-user',
+            'registration_form[email]' => 'test',
+            'registration_form[agreeTerms]' => true,
+            'registration_form[plainPassword]' => 'password123',
+        ]);
+
+        // Check if the user is redirected back to the registration page due to an existing nickname
+        $this->assertResponseRedirects('/register');
+
+        // Follow the redirect to the registration page
+        $client->followRedirect();
+
+        // Check if the error flash message is displayed
+        $this->assertSelectorTextContains('.alert-danger', 'Email already registered');
     }
 }
