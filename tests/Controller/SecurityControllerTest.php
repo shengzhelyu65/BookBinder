@@ -150,8 +150,33 @@ class SecurityControllerTest extends PantherTestCase
     public function testGoogleCheckAction()
     {
         $client = static::createClient();
-        $crawler = $client->request('POST', '/login/google', [
-            'credential' => 'google-credential',
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Delete the user if it exists
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'shengzhe.lyu@gmail.com']);
+        if ($user) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        $client->request('POST', '/login/google', [
+            'credential' => 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkOWE1ZWY1YjEyNjIzYzkxNjcxYTcwOTN
+            jYjMyMzMzM2NkMDdkMDkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2ds
+            ZS5jb20iLCJuYmYiOjE2ODU0NzA4MTEsImF1ZCI6Ijc3MzMxNTE5OTE4OC10MmJ1YWxuM2s2aWQxZ3Nv
+            a3VzcXJ1ZXE1NWxrZzRlNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMDAwNzIw
+            NDI1MzQ4NjYyODc3NiIsImVtYWlsIjoic2hlbmd6aGUubHl1QGdtYWlsLmNvbSIsImVtYWlsX3Zlcmlm
+            aWVkIjp0cnVlLCJhenAiOiI3NzMzMTUxOTkxODgtdDJidWFsbjNrNmlkMWdzb2t1c3FydWVxNTVsa2c0
+            ZTQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJuYW1lIjoiU2hlbmd6aGUgTHl1IiwicGljdHVy
+            ZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGROdV9NVmJoMXdUdXZJ
+            QVUxMFA1UXRSdGdocGpISVhEYjJ0aFNYRmc9czk2LWMiLCJnaXZlbl9uYW1lIjoiU2hlbmd6aGUiLCJm
+            YW1pbHlfbmFtZSI6Ikx5dSIsImlhdCI6MTY4NTQ3MTExMSwiZXhwIjoxNjg1NDc0NzExLCJqdGkiOiI4
+            ZTk0ODM1N2Y1ZTk0YTM1M2I4MDM0ZTQxZDBlMDZiNmRmYzNhN2EzIn0.t0Yds-HU20pF8tPX2Zmg42kl
+            e4TxCxUXMIrP2f2TGsDIgo7-boXunaxpdKhQYANHNBjlHEjuJ9s8YtbwjPV1JnknlkeVxa1NxgmXR6Ne
+            3AGzaTQsdt1H5lWhMKIEvc0XVRkQyCz01ebDS-S7RCcr5X38n-jW9DWHiT5zed3da5TiQn7A5giKwJUG
+            xfHjOfai-gX0UYELsatg4OzD0_ZBa9957oG8hH8ie7pipKkfmGxRbekTZDm8TutCM9NRyIafzk6pF6IU
+            5MxSZcBZAb3InwDEeIR0-l0SfOpQAtyTyTI0sDEw_nGgBFKQTSVyqgVxo3VLS5kgL3NPeuWQsj4Wuw',
         ]);
 
         $this->assertNotSame(200, $client->getResponse()->getStatusCode());
