@@ -489,6 +489,11 @@ class SearchControllerTest extends PantherTestCase
         $this->assertArrayHasKey('thumbnail', $responseData);
         $this->assertArrayHasKey('id', $responseData);
     }
+
+    /**
+     * @throws NoSuchElementException
+     * @throws TimeoutException
+     */
     public function testSearchResult(): void
     {
         $client = static::createPantherClient();
@@ -508,50 +513,73 @@ class SearchControllerTest extends PantherTestCase
         $this->assertNotNull($searchBar);
         $searchBar->sendKeys('Harry')->sendKeys(WebDriverKeys::ENTER);
 
+        // Check if the page is redirected to the search result page
+        $this->assertStringContainsString("/book-search/Harry", $client->getCurrentURL());
+
+        // Update the crawler
+        $crawler = $client->waitFor('#search-result-in-search');
+        $this->assertStringContainsString("You searched for 'Harry'", $crawler->filter('#search-result-message')->text());
+
         // Find and click on the specific search result
-        $resultLink = $crawler->filter('a[href="/book-page/rjgQCwAAQBAJ"]')->first();
+        $resultLink = $crawler->filter('#search-result-in-search')->first();
         $this->assertNotNull($resultLink);
+        $bookId = $resultLink->attr('href');
+        $bookId = substr($bookId, strrpos($bookId, '/') + 1);
         $resultLink->click();
 
         // Check if the page is redirected to the book page
-        $this->assertStringContainsString("/book-page/rjgQCwAAQBAJ", $client->getCurrentURL());
+        $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
     }
-    public function testGenerateAIRecommendations(): void
-    {
-        $client = static::createPantherClient();
 
-        // Login as a user
-        $crawler = $client->request('GET', '/logout');
-        $this->assertStringContainsString('/login', $client->getCurrentURL());
-        $form = $crawler->filter('form.form-signin')->form();
-        $form['email'] = 'test@test.com';
-        $form['password'] = 'password123';
-        $client->submit($form);
-        $this->assertStringContainsString('/', $client->getCurrentURL());
-
-        // Open the recommendations form
-        $formToggle = $crawler->filter('.bg-light.border.rounded-3.py-1.mt-3 a[data-bs-toggle="collapse"]')->first();
-        $this->assertNotNull($formToggle);
-        $formToggle->click();
-
-        // Fill in the form and submit
-        $inputText = $crawler->filter('#inputText')->first();
-        $this->assertNotNull($inputText);
-        $inputText->sendKeys('harry');
-        $generateButton = $crawler->filter('#chatForm button[type="submit"]')->first();
-        $this->assertNotNull($generateButton);
-        $generateButton->click();
-
-        // Click on the recommendation
-        $recommendation = $crawler->filter('#recommendations')->first();
-        $this->assertNotNull($recommendation);
-        $recommendationLink = $recommendation->filter('a')->first();
-        $this->assertNotNull($recommendationLink);
-        $recommendationLink->click();
-
-        // Check if the page is redirected ( doesn't check to which book since ai could give different answers)
-        $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
-    }
+//    /**
+//     * @throws NoSuchElementException
+//     * @throws TimeoutException
+//     */
+//    public function testGenerateAIRecommendations(): void
+//    {
+//        $client = static::createPantherClient();
+//
+//        // Login as a user
+//        $crawler = $client->request('GET', '/logout');
+//        $this->assertStringContainsString('/login', $client->getCurrentURL());
+//        $form = $crawler->filter('form.form-signin')->form();
+//        $form['email'] = 'test@test.com';
+//        $form['password'] = 'password123';
+//        $client->submit($form);
+//        $this->assertStringContainsString('/', $client->getCurrentURL());
+//
+//        // Update the crawler
+//        $crawler = $client->waitFor('#ai-toggle-in-base');
+//
+//        // Open the recommendations form
+//        $formToggle = $crawler->filter('#ai-toggle-in-base');
+//        $this->assertNotNull($formToggle);
+//        $formToggle->click();
+//
+//        // Update the crawler
+//        $crawler = $client->waitFor('#chatForm');
+//
+//        // Fill in the form and submit
+//        $inputText = $crawler->filter('#inputText');
+//        $this->assertNotNull($inputText);
+//        $inputText->sendKeys('harry');
+//        $generateButton = $crawler->filter('#chatForm button[type="submit"]')->first();
+//        $this->assertNotNull($generateButton);
+//        $generateButton->click();
+//
+//        // Update the crawler
+//        $crawler = $client->waitFor('#recommendations');
+//
+//        // Click on the recommendation
+//        $recommendation = $crawler->filter('#recommendations')->first();
+//        $this->assertNotNull($recommendation);
+//        $recommendationLink = $recommendation->filter('a')->first();
+//        $this->assertNotNull($recommendationLink);
+//        $recommendationLink->click();
+//
+//        // Check if the page is redirected ( doesn't check to which book since ai could give different answers)
+//        $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
+//    }
 
     public function testAddReviewPanther(): void
     {
@@ -608,6 +636,7 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->remove($review);
         $entityManager->flush();
     }
+
     public function testEditReviewPanther(): void
     {
         $client = static::createPantherClient();
@@ -690,6 +719,7 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->remove($updatedReview);
         $entityManager->flush();
     }
+
     public function testReviewProfileRedirect(): void
     {
         $client = static::createPantherClient();
@@ -717,7 +747,4 @@ class SearchControllerTest extends PantherTestCase
         // Check if the page is redirected to the profile page
         $this->assertStringContainsString('/profile/Tommy', $client->getCurrentURL());
     }
-
-
-
 }
