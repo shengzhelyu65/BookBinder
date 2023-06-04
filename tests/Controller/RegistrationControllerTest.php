@@ -25,32 +25,21 @@ class RegistrationControllerTest extends PantherTestCase
         $crawler = $client->request('GET', '/register');
 
         // remove the test user if it exists
-        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        $user = $userRepository->findOneBy(['email' => 'register@test.com']);
         if ($user) {
-            // Find the user's reading interest and delete it
-            $userReadingInterest = $userReadingInterestRepository->findOneBy(['user' => $user]);
-            if ($userReadingInterest) {
-                $entityManager->remove($userReadingInterest);
-                $entityManager->flush();
-            }
-
-            // Find the user's reading list and delete it
-            $readingList = $readingListRepository->findOneBy(['user' => $user]);
-            if ($readingList) {
-                $entityManager->remove($readingList);
-                $entityManager->flush();
-            }
-
             $entityManager->remove($user);
             $entityManager->flush();
         }
+
+        // Assert that the registration page is loaded
+        $this->assertStringContainsString('/register', $client->getCurrentURL());
 
         // Fill in the registration form and submit it
         $form = $crawler->filter('form[name="registration_form"]')->form([
             'registration_form[name]' => '',
             'registration_form[surname]' => '',
-            'registration_form[nickname]' => 'test',
-            'registration_form[email]' => 'test@test.com',
+            'registration_form[nickname]' => 'register',
+            'registration_form[email]' => 'register@test.com',
             'registration_form[agreeTerms]' => true,
             'registration_form[plainPassword]' => 'password123',
         ]);
@@ -71,7 +60,7 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertSelectorTextContains('h4', 'mystery');
 
         // Assert that the user record was created in User table
-        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        $user = $userRepository->findOneBy(['email' => 'register@test.com']);
         $this->assertInstanceOf(User::class, $user);
 
         // Assert that the user record was created in UserReadingInterest table
@@ -100,7 +89,7 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertResponseIsSuccessful();
 
         // Check if the user already exists in the database
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test@test.com']);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'register@test.com']);
         if ($user) {
             $entityManager->remove($user);
             $entityManager->flush();
@@ -110,8 +99,8 @@ class RegistrationControllerTest extends PantherTestCase
         $client->submitForm('Sign up', [
             'registration_form[name]' => '',
             'registration_form[surname]' => '',
-            'registration_form[nickname]' => 'test',
-            'registration_form[email]' => 'test@test.com',
+            'registration_form[nickname]' => 'register',
+            'registration_form[email]' => 'register@test.com',
             'registration_form[agreeTerms]' => true,
             'registration_form[plainPassword]' => 'password123',
         ]);
@@ -138,7 +127,7 @@ class RegistrationControllerTest extends PantherTestCase
         $container = static::getContainer();
         $entityManager = $container->get('doctrine')->getManager();
 
-        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test@test.com']);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'register@test.com']);
         $client->loginUser($user);
 
         // Access the registration page
@@ -164,8 +153,8 @@ class RegistrationControllerTest extends PantherTestCase
         $client->submitForm('Sign up', [
             'registration_form[name]' => '',
             'registration_form[surname]' => '',
-            'registration_form[nickname]' => 'test',
-            'registration_form[email]' => 'test@test.com',
+            'registration_form[nickname]' => 'register',
+            'registration_form[email]' => 'register@test.com',
             'registration_form[agreeTerms]' => true,
             'registration_form[plainPassword]' => 'password123',
         ]);
@@ -183,8 +172,8 @@ class RegistrationControllerTest extends PantherTestCase
         $client->submitForm('Sign up', [
             'registration_form[name]' => '',
             'registration_form[surname]' => '',
-            'registration_form[nickname]' => 'test',
-            'registration_form[email]' => 'test@example.com',
+            'registration_form[nickname]' => 'register',
+            'registration_form[email]' => 'register@example.com',
             'registration_form[agreeTerms]' => true,
             'registration_form[plainPassword]' => 'password123',
         ]);
