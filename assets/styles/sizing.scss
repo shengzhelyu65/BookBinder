@@ -1,9 +1,77 @@
+// https://stackoverflow.com/questions/18548465/prevent-scroll-bar-from-adding-up-to-the-width-of-page-on-chrome
+html {
+  width: 100vw;
+}
+
 @media (min-width: 992px) {
   .mh-lg-100 {
     max-height: 100%;
   }
 }
 
+.width-6 {
+  width: 6rem !important;
+}
+
+.width-8 {
+  width: 8rem !important;
+}
+
+.width-10 {
+  width: 10rem !important;
+}
+
+.width-140-px {
+  width: 140px !important;
+}
+
+.width-300-px {
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+
+.width-400-px {
+  min-width: 400px !important;
+  max-width: 400px !important;
+}
+
+.height-10 {
+  height: 10rem !important;
+}
+
+.height-14 {
+  height: 14rem !important;
+}
+
+.height-16 {
+  height: 16rem !important;
+}
+
+.size-40 {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.size-80 {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.fit-cover {
+  object-fit: cover;
+}
+
+.z-2000 {
+  z-index: 2000;
+}
+
+.background-white {
+  background-color: white !important;
+}
+
 #recommendations a, #recommendations img {
   max-width: 100%;
 }
+
+
+
