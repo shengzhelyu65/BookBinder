@@ -1,23 +1,58 @@
 #define the base docker image file used for all jobs 
 image: composer:2.5
 
-# Before we start any job, prepare the container with some extra configuration 
-# e.g. setting the ssh credentials, so we can later copy to shell.studev.groept.be
-before_script:
-  # create a local .ssh folder in the container
-  - mkdir -p ~/.ssh
-  - eval $(ssh-agent -s)
-  # add the fingerprint for shell.studev.groept.be as a trusted host
-  - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
-  # install rsync to copy files to the web server
-  # this container runs Alpine Linux, where apk is the package manager (not apt-get)
-  - apk add rsync
+stages:
+  - test
+  - deploy
+
+test-job:
+  stage: test
+  only:
+  - Tests # change to dev later
+  services:
+    # a container with a temporary mysql db for running unit tests
+    - mysql:8
+  variables:
+    # environment variables for configuring the mysql test database container
+    MYSQL_DATABASE: a22web31_test
+    MYSQL_USER: user
+    MYSQL_ROOT_PASSWORD: root_pass
+    MYSQL_PASSWORD: pass
+    PANTHER_TEST_ENV: test
+    # set the correct DSN in Symfony to connect to the temporary database
+    DATABASE_URL: "mysql:/root:root_pass@mysql/a22web31"
+  # before starting the test scripts, add specific software to the container (only for this job)
+  before_script:
+    # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
+    - docker-php-ext-install pdo pdo_mysql
+  script:
+    - composer update vendor/package --with-dependencies
+    - composer install
+    # run the migration on the temporary database
+    - php bin/console doctrine:database:create --env=test
+    - php bin/console doctrine:schema:update --force --env=test
+    # load some test data in the temporary database
+    - php bin/console doctrine:fixtures:load --append -n --env=test
+    # run the tests (using the temporary database)
+    - php bin/phpunit
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
+  stage: deploy
   # run this job only when there is a push on the master branch
   only:
     - master
+  # Before we start any job, prepare the container with some extra configuration 
+  # e.g. setting the ssh credentials, so we can later copy to shell.studev.groept.be
+  before_script:
+    # create a local .ssh folder in the container
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    # add the fingerprint for shell.studev.groept.be as a trusted host
+    - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
+    # install rsync to copy files to the web server
+    # this container runs Alpine Linux, where apk is the package manager (not apt-get)
+    - apk add rsync
   script:
     - composer install
     # rsync is a copy/sync tool we use to copy the current folder ./ to studev    
