@@ -15,6 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 require('bootstrap');
 
+//require('bootstrap-validate');
+
 require('bootstrap-icons/font/bootstrap-icons.css');
 
 import $ from 'jquery';
