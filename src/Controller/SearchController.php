@@ -193,6 +193,17 @@ class SearchController extends AbstractController
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+        $filteredMeetupRequests = [];
+
+        foreach ($meetupRequests as $meetupRequest) {
+            // Check if the maximum number of participants has been reached
+            $participantsCount = $entityManager->getRepository(MeetupList::class)->count(['meetup_ID' => $meetupRequest]);
+            $maxParticipants = $meetupRequest->getMaxNumber();
+
+            if ($participantsCount < $maxParticipants - 1) {
+                $filteredMeetupRequests[] = $meetupRequest;
+            }
+        }
 
         // Add to reading list
         $userReadingList = $user->getUserReadingList();
@@ -248,7 +259,7 @@ class SearchController extends AbstractController
 
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
-            'meetupRequests' => $meetupRequests,
+            'meetupRequests' => $filteredMeetupRequests,
             'is_in_want_to_read' => $is_in_want_to_read,
             'is_in_currently_reading' => $is_in_currently_reading,
             'is_in_have_read' => $is_in_have_read,

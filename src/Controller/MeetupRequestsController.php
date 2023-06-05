@@ -116,10 +116,21 @@ class MeetupRequestsController extends AbstractController
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
+        $filteredMeetupRequests = [];
+
+        foreach ($meetupAvailables as $meetupAvailable) {
+            // Check if the maximum number of participants has been reached
+            $participantsCount = $entityManager->getRepository(MeetupList::class)->count(['meetup_ID' => $meetupAvailable]);
+            $maxParticipants = $meetupAvailable->getMaxNumber();
+
+            if ($participantsCount < $maxParticipants - 1) {
+                $filteredMeetupRequests[] = $meetupAvailable;
+            }
+        }
         // Fetch the books based on book IDs in meetupRequests
         $booksMeetupAvailables = [];
-        foreach ($meetupAvailables as $meetupAvailable) {
-            $bookId = $meetupAvailable->getBookID();
+        foreach ($filteredMeetupRequests as $filteredMeetupRequest) {
+            $bookId = $filteredMeetupRequest->getBookID();
             $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
             $booksMeetupAvailables[$bookId] = $book;
         }
@@ -155,6 +166,7 @@ class MeetupRequestsController extends AbstractController
             $booksUpcomingRequests[$bookId] = $book;
         }
 
+
         return $this->render('meetup_request/meetup_overview.html.twig', [
             'controller_name' => 'MeetupRequestController',
             'userEmail' => $email,
@@ -163,7 +175,7 @@ class MeetupRequestsController extends AbstractController
             'booksUpcomingRequests' => $booksUpcomingRequests,
             'meetupRequests' => $meetupRequests,
             'booksMeetupRequests' => $booksMeetupRequests,
-            'meetupAvailabes'=>$meetupAvailables,
+            'meetupAvailabes'=>$filteredMeetupRequests,
             'booksMeetupAvailables' => $booksMeetupAvailables
         ]);
     }
