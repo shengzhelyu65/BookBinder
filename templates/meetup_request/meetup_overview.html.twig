@@ -11,12 +11,13 @@
                 {% for upcomingRequest in upcomingRequests %}
                     <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            {% if booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() %}
-                                <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover"
-                                     alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getTitle() }}">
-                            {% else %}
-                                <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
-                            {% endif %}
+                            <a href="{{ path('book-page', {'id': booksUpcomingRequests[upcomingRequest.getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() %}
+                                    <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
                                 <h5 class="card-title text-truncate-2">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getTitle() }}</h5>
                                 <p class="card-text">Date: {{ upcomingRequest.getDatetime()|date('F j') }}</p>
@@ -38,15 +39,20 @@
                 {% for meetupRequest in meetupRequests %}
                     <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            {% if booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() %}
-                                <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover"
-                                     alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}">
-                            {% else %}
-                                <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
-                            {% endif %}
+                            <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() %}
+                                    <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h5 class="card-title text-truncate-2">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}</h5>
-                                <h5 class="card-title"><a href="{{ path('profile_other', {'username': meetupRequest.getUserID().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
+                                <h5 class="card-title text-truncate-2">
+                                    <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}</a>
+                                </h5>
+                                <h5 class="card-title">
+                                    <a href="{{ path('profile_other', {'username': meetupRequest.getUserID().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a>
+                                </h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
@@ -71,15 +77,20 @@
                 {% for meetupAvailable in meetupAvailabes %}
                     <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            {% if booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() %}
-                                <img src="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover"
-                                     alt="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}">
-                            {% else %}
-                                <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
-                            {% endif %}
+                            <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() %}
+                                    <img src="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h5 class="card-title text-truncate-2"><a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</a></h5>
-                                <p class="card-text">Host: <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a></p>
+                                <h5 class="card-title text-truncate-2">
+                                    <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</a>
+                                </h5>
+                                <p class="card-text">Host:
+                                    <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a>
+                                </p>
                                 <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
                                 <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
                             </div>
