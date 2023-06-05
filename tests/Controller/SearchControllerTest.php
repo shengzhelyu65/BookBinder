@@ -553,7 +553,7 @@ class SearchControllerTest extends PantherTestCase
         $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
     }
 
-    public function testAddReviewPanther(): void
+    public function testEditReviewPanther(): void
     {
         $client = static::createPantherClient();
         $container = self::getContainer();
@@ -624,14 +624,14 @@ class SearchControllerTest extends PantherTestCase
         // Check if the form was submitted
         $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
         $this->assertInstanceOf(BookReviews::class, $review);
-        $this->assertEquals('This is a test comment.', $review->getReview());
-        $this->assertEquals(4, $review->getRating());
+        $this->assertEquals('updated review.', $review->getReview());
+        $this->assertEquals(2, $review->getRating());
 
         // Rollback the database
         $entityManager->remove($review);
         $entityManager->flush();
     }
-    public function testEditReviewPanther(): void
+    public function testAddReviewPanther(): void
     {
         $client = static::createPantherClient();
         $container = self::getContainer();
@@ -681,8 +681,8 @@ class SearchControllerTest extends PantherTestCase
         // Check if the form was submitted
         $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
         $this->assertInstanceOf(BookReviews::class, $review);
-        $this->assertEquals('updated review.', $review->getReview());
-        $this->assertEquals(2, $review->getRating());
+        $this->assertEquals('This is a test comment.', $review->getReview());
+        $this->assertEquals(4, $review->getRating());
 
         // Rollback the database
         $entityManager->remove($review);
