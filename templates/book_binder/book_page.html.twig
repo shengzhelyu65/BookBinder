@@ -167,8 +167,7 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,9 +179,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 {% if hasReviewed == false %}
-                <form method="POST" action="{{ path('add_review', {'bookId': book.getGoogleBooksId()}) }}" class="needs-validation" novalidate>
+                <form method="POST" action="{{ path('add_review', {'bookId': book.getGoogleBooksId()}) }}" class="review-validation" novalidate>
                 {% else %}
-                <form method="POST" action="{{ path('update_review', {'bookId': book.getGoogleBooksId()}) }}" class="needs-validation" novalidate>
+                <form method="POST" action="{{ path('update_review', {'bookId': book.getGoogleBooksId()}) }}" class="review-validation" novalidate>
                 {% endif %}
                     <div class="modal-body">
                         <div class="form-group">
@@ -230,7 +229,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{ form_start(form, { 'attr': { 'class': 'row g-3 needs-validation', 'novalidate': 'novalidate' } }) }}
+                    {{ form_start(form, { 'attr': { 'class': 'row g-3 meetup-validation', 'novalidate': 'novalidate' } }) }}
                     <div class="flex-row">
                         {{ form_label(form.library_ID, 'Library', { 'class': 'form-label' }) }}
                         {{ form_widget(form.library_ID, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}

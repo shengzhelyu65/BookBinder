@@ -109,11 +109,26 @@ document.querySelector('#chatForm').addEventListener('submit', async (event) => 
     generateButton.textContent = 'Generate';
 });
 
-$(function () {
+$(function handleReviewsForm() {
+    'use strict';
+
+    var form = document.querySelector('.review-validation');
+
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+    }, false);
+});
+
+$(function handleMeetupForm() {
     'use strict'
 
     // Fetch the form to apply custom Bootstrap validation styles to
-    var form = document.querySelector('.needs-validation');
+    var form = document.querySelector('.meetup-validation');
 
     // Prevent submission if the form is not valid
     form.addEventListener('submit', function (event) {
