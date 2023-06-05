@@ -29,6 +29,8 @@ test-job:
     - composer update vendor/package --with-dependencies
     - composer install
     # run the migration on the temporary database
+    - php bin/console doctrine:database:create --env=test
+    - php bin/console doctrine:schema:update --force --env=test
     - php bin/console doctrine:migrations:migrate --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
