@@ -19,6 +19,15 @@ import $ from 'jquery';
 
 import 'select2';
 
+// Select2 initialization
+$('.multiple-select-field').select2({
+    theme: "bootstrap-5",
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    closeOnSelect: false,
+    maximumSelectionLength: 5,
+});
+
 // Replaced $(document).ready(function () { ... }) with $(function () { ... })
 $(function () {
     // Form validation
@@ -30,13 +39,4 @@ $(function () {
         }
         form.classList.add('was-validated');
     }, false);
-
-    // Select2 initialization
-    $('.multiple-select-field').select2({
-        theme: "bootstrap-5",
-        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        placeholder: $(this).data('placeholder'),
-        closeOnSelect: false,
-        maximumSelectionLength: 5,
-    });
 });
