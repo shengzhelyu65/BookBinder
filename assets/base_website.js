@@ -159,3 +159,24 @@ $(function handleMeetupForm() {
         }
     }, false);
 })();
+
+// Toggle between content and details
+function showContent(contentId, button) {
+    var contentElements = document.querySelectorAll('.card.card-body div');
+    var buttonElements = document.querySelectorAll('button');
+
+    // Hide all content elements and remove active class from buttons
+    contentElements.forEach(function (content) {
+        content.style.display = 'none';
+    });
+    buttonElements.forEach(function (btn) {
+        btn.classList.remove('active');
+    });
+
+    // Show the clicked content and add active class to the corresponding button
+    var contentElement = document.getElementById(contentId);
+    if (contentElement) {
+        contentElement.style.display = 'block';
+        button.classList.add('active');
+    }
+}
