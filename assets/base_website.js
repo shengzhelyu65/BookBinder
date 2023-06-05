@@ -1,3 +1,27 @@
+// any CSS you import will output into a single css file (app.scss in this case)
+import './styles/app.scss';
+
+// start the Stimulus application
+import './bootstrap';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+require('bootstrap');
+
+require('bootstrap-icons/font/bootstrap-icons.css');
+
+import $ from 'jquery';
+
+import 'select2';
+
+// Select2 initialization
+$('.multiple-select-field').select2({
+    theme: "bootstrap-5",
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    closeOnSelect: false,
+    maximumSelectionLength: 5,
+});
 
 // Searchbar
 const form = document.getElementById('searchbar_form');
@@ -84,3 +108,39 @@ document.querySelector('#chatForm').addEventListener('submit', async (event) => 
     generateButton.disabled = false;
     generateButton.textContent = 'Generate';
 });
+
+$(function () {
+    'use strict'
+
+    // Fetch the form to apply custom Bootstrap validation styles to
+    var form = document.querySelector('.needs-validation');
+
+    // Prevent submission if the form is not valid
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+    }, false);
+
+    // Validate datetime before submission
+    form.addEventListener('submit', function (event) {
+        var datetimeInput = document.getElementById("meetup_request_form_datetime");
+        var datetimeValue = new Date(datetimeInput.value);
+
+        if (datetimeValue < new Date()) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            datetimeInput.setCustomValidity("Invalid datetime.");
+            datetimeInput.classList.add('is-invalid');
+            datetimeInput.classList.remove('is-valid');
+        } else {
+            datetimeInput.setCustomValidity("");
+            datetimeInput.classList.remove('is-invalid');
+            datetimeInput.classList.add('is-valid');
+        }
+    }, false);
+})();

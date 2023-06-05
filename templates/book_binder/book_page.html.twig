@@ -216,80 +216,42 @@
         </div>
     </div>
 
-    <div class="modal fade" id="host" tabindex="-1" aria-labelledby="hostLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="host-meetup-form-in-book">
-                <div class="modal-header">
-                    <h5 class="modal-title h4" id="hostLabel">Host a meetup</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="host" tabindex="-1" aria-labelledby="hostLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="host-meetup-form-in-book">
+            <div class="modal-header">
+                <h5 class="modal-title h4" id="hostLabel">Host a meetup</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(form, { 'attr': { 'class': 'row g-3 needs-validation', 'novalidate': 'novalidate' } }) }}
+                <div class="flex-row">
+                    {{ form_label(form.library_ID, 'Library', { 'class': 'form-label' }) }}
+                    {{ form_widget(form.library_ID, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
                 </div>
-                <div class="modal-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                <div class="flex-row">
+                    {{ form_label(form.datetime, 'Meetup Date', { 'class': 'form-label' }) }}
+                    {{ form_widget(form.datetime, { 'attr': {'required': 'required' } }) }}
+                    <div class="invalid-feedback">
+                        Invalid datetime
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="confirmButton">Confirm</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    {{ form_end(form) }}
+                <div class="flex-row">
+                    {{ form_label(form.maxNumber, 'Maximum Number of Participants', { 'class': 'form-label' }) }}
+                    {{ form_widget(form.maxNumber, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
+                    <div class="invalid-feedback">
+                        Please select the maximum number of participants
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+                {{ form_end(form) }}
+            
         </div>
     </div>
-
-    <script>
-        function showContent(contentId, button) {
-            var contentElements = document.querySelectorAll('.card.card-body div');
-            var buttonElements = document.querySelectorAll('button');
-
-            // Hide all content elements and remove active class from buttons
-            contentElements.forEach(function (content) {
-                content.style.display = 'none';
-            });
-            buttonElements.forEach(function (btn) {
-                btn.classList.remove('active');
-            });
-
-            // Show the clicked content and add active class to the corresponding button
-            var contentElement = document.getElementById(contentId);
-            if (contentElement) {
-                contentElement.style.display = 'block';
-                button.classList.add('active');
-            }
-        }
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var confirmButton = document.getElementById("confirmButton");
-            var datetimeInput = document.getElementById("meetup_request_form_datetime");
-            var maxNumberInput = document.getElementById("meetup_request_form_maxNumber");
-
-            function updateConfirmButtonState() {
-                var datetimeValue = new Date(datetimeInput.value);
-                var maxNumberValue = parseInt(maxNumberInput.value);
-
-                confirmButton.disabled = datetimeValue < new Date() || maxNumberValue <= 0;
-            }
-
-            // Disable the Confirm button if the date is in the past or number is negative
-            updateConfirmButtonState();
-
-            // Listen for input changes in the datetime field
-            datetimeInput.addEventListener("input", function() {
-                updateConfirmButtonState();
-            });
-
-            // Listen for input changes in the maxNumber field
-            maxNumberInput.addEventListener("input", function() {
-                updateConfirmButtonState();
-
-                var value = parseInt(maxNumberInput.value);
-                if (isNaN(value) || value < 0) {
-                    maxNumberInput.setCustomValidity("Please enter a non-negative number.");
-                } else {
-                    maxNumberInput.setCustomValidity("");
-                }
-            });
-        });
-    </script>
+</div>
 
 {% endblock %}

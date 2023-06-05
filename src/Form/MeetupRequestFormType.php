@@ -11,8 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Range;
 
 class MeetupRequestFormType extends AbstractType
@@ -33,6 +33,9 @@ class MeetupRequestFormType extends AbstractType
                         ->orderBy('l.library_name', 'ASC');
                 },
                 'choice_value' => 'library_ID',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('datetime', DateTimeType::class, [
                 'required' => true,
@@ -55,7 +58,14 @@ class MeetupRequestFormType extends AbstractType
                 'label' => 'Maximum Number',
                 'constraints' => [
                     new NotBlank(),
-                    new Range(['min' => 1, 'max' => 20])
+                    new Range([
+                        'min' => 2,
+                        'minMessage' => 'The maximum number should be at least {{ limit }}.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 2,
                 ],
             ]);
     }
@@ -67,3 +77,4 @@ class MeetupRequestFormType extends AbstractType
         ]);
     }
 }
+
