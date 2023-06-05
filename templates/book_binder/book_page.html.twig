@@ -143,7 +143,7 @@
                     {% for reviewRecord in reviewData %}
                         <div class="card mb-3">
                             <div class="card-header">
-                                <a href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
+                                <a id="profile-link-in-review" href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
                             </div>
                             <div class="card-body">
                                 <div class="rating">
