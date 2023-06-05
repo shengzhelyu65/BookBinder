@@ -23,8 +23,8 @@
                 <img src="{{ asset('images/logo_light.jpg') }}" alt="" class="size-40">
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
-                <form id="searchbar_form" class="w-100 me-3" onsubmit="searchBooks(event)">
-                    <input id="search_bar_input" type="search" class="form-control" placeholder="Search..." list="book-list" onkeyup="getSuggestion(event)">
+                <form id="searchbar_form" class="w-100 me-3">
+                    <input id="search_bar_input" type="search" class="form-control" placeholder="Search..." list="book-list">
                     <datalist id="book-list"></datalist>
                 </form>
 
