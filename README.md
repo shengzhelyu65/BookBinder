@@ -93,7 +93,12 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate --env=test
 php bin/console doctrine:fixtures:load --env=test
 ```
-This will create the database tables and populate them with test data.  
+This will create the database tables and populate them with test data. 
+
+If you get migration errors, try running the following command in your terminal:
+```
+php bin/console doctrine:schema:update --force --env=test
+```
 
 If you  get a "ER_NOT_SUPPORTED_AUTH_MODE" error, follow the instructions on this [StackOverflow post](https://stackoverflow.com/questions/44946270/er-not-supported-auth-mode-mysql-server/52726522#52726522r).
 
