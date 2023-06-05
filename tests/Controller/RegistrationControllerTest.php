@@ -193,7 +193,7 @@ class RegistrationControllerTest extends PantherTestCase
     {
         $client = static::createClient();
         $container = static::getContainer();
-        $container->get('doctrine')->getManager();
+        $entityManager = $container->get('doctrine')->getManager();
 
         // Access the registration page
         $client->request('GET', '/register');
@@ -201,23 +201,28 @@ class RegistrationControllerTest extends PantherTestCase
         // Check if the response is successful
         $this->assertResponseIsSuccessful();
 
+        // Delete the user if it exists
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test']);
+        if ($user) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
         // Fill in the registration form with valid data
         $client->submitForm('Sign up', [
             'registration_form[name]' => '',
             'registration_form[surname]' => '',
-            'registration_form[nickname]' => 'invalid-user',
+            'registration_form[nickname]' => 'invalidUser',
             'registration_form[email]' => 'test',
             'registration_form[agreeTerms]' => true,
             'registration_form[plainPassword]' => 'password123',
         ]);
 
-        // Check if the user is redirected back to the registration page due to an existing nickname
-        $this->assertResponseRedirects('/register');
+        // Assert that the current URL is still /register
+        $this->assertEquals('/register', $client->getRequest()->getPathInfo());
 
-        // Follow the redirect to the registration page
-        $client->followRedirect();
-
-        // Check if the error flash message is displayed
-        $this->assertSelectorTextContains('.alert-danger', 'Email already registered');
+        // Check if there is no user record in the database
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test']);
+        $this->assertNull($user);
     }
 }
