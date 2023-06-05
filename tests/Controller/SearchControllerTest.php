@@ -581,62 +581,6 @@ class SearchControllerTest extends PantherTestCase
 //        $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
 //    }
 
-    public function testAddReviewPanther(): void
-    {
-        $client = static::createPantherClient();
-        $container = self::getContainer();
-        $entityManager = $container->get('doctrine')->getManager();
-
-        // Login as a user
-        $crawler = $client->request('GET', '/logout');
-        $this->assertStringContainsString('/login', $client->getCurrentURL());
-        $form = $crawler->filter('form.form-signin')->form();
-        $form['email'] = 'test@test.com';
-        $form['password'] = 'password123';
-        $client->submit($form);
-        $this->assertStringContainsString('/', $client->getCurrentURL());
-
-        $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
-        $bookId = "WDFWSwAACAAJ";
-        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
-        // Check if the review already exists and remove if it does
-        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
-        if ($existingReview) {
-            $entityManager->remove($existingReview);
-            $entityManager->flush();
-        }
-
-        // Go to the book page
-        $crawler = $client->request('GET', "/book-page/{$bookId}");
-        $this->assertStringContainsString('Add Review', $crawler->filter('button[data-bs-toggle="modal"]')->text());
-
-        // Click the "Add Review" button
-        $addReviewButton = $crawler->filter('button[data-bs-toggle="modal"][data-bs-target="#reviewModal"]')->first();
-        $this->assertNotNull($addReviewButton);
-        $addReviewButton->click();
-
-        // Check if the modal shows up
-        $reviewModal = $crawler->filter('.modal.fade.show')->first();
-        $this->assertNotNull($reviewModal);
-
-        // Fill in the form and submit
-        $client->executeScript("document.querySelector('#comment').value = 'This is a test comment.';");
-        $client->executeScript("document.querySelector('#rating').value = 4;");
-        $client->executeScript("document.querySelector('form').submit();");
-
-
-        // Check if the form was submitted
-        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
-        $this->assertInstanceOf(BookReviews::class, $review);
-        $this->assertEquals('This is a test comment.', $review->getReview());
-        $this->assertEquals(4, $review->getRating());
-
-        // Rollback the database
-        $entityManager->remove($review);
-        $entityManager->flush();
-    }
-
     public function testEditReviewPanther(): void
     {
         $client = static::createPantherClient();
@@ -653,7 +597,7 @@ class SearchControllerTest extends PantherTestCase
         $this->assertStringContainsString('/', $client->getCurrentURL());
 
         $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => 'user10@example.com']);
+        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
         $bookId = "WDFWSwAACAAJ";
         $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
         // Check if the review already exists and remove if it does
@@ -665,10 +609,10 @@ class SearchControllerTest extends PantherTestCase
 
         // Go to the book page
         $crawler = $client->request('GET', "/book-page/{$bookId}");
-        $this->assertStringContainsString('Add Review', $crawler->filter('button[data-bs-toggle="modal"]')->text());
+        $this->assertGreaterThan(0, $crawler->filter('button#addReviewButton')->count());
 
         // Click the "Add Review" button
-        $addReviewButton = $crawler->filter('button[data-bs-toggle="modal"][data-bs-target="#reviewModal"]')->first();
+        $addReviewButton = $crawler->filter('button#addReviewButton')->first();
         $this->assertNotNull($addReviewButton);
         $addReviewButton->click();
 
@@ -677,10 +621,90 @@ class SearchControllerTest extends PantherTestCase
         $this->assertNotNull($reviewModal);
 
         // Fill in the form and submit
-        $client->executeScript("document.querySelector('#comment').value = 'This is a test comment.';");
-        $client->executeScript("document.querySelector('#rating').value = 4;");
-        $client->executeScript("document.querySelector('form').submit();");
+        $client->executeScript("document.querySelector('#review textarea[name=\"comment\"]').value = 'This is a test comment.';");
+        $client->executeScript("document.querySelector('#review select[name=\"rating\"]').value = 4;");
+        $client->executeScript("document.querySelector('#review form').submit();");
 
+
+        // Go to the same book page again
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertGreaterThan(0, $crawler->filter('button#addReviewButton')->count());
+
+
+        // Click the "Edit Review" button
+        $addReviewButton = $crawler->filter('button#addReviewButton')->first();
+        $this->assertNotNull($addReviewButton);
+        $addReviewButton->click();
+
+        // Check if the modal shows up
+        $reviewModal = $crawler->filter('.modal.fade.show')->first();
+        $this->assertNotNull($reviewModal);
+
+        // Check if the form is already filled with the previous values
+        $this->assertEquals('This is a test comment.', $client->executeScript("return document.querySelector('#review textarea[name=\"comment\"]').value;"));
+        $this->assertEquals('4', $client->executeScript("return document.querySelector('#review select[name=\"rating\"]').value;"));
+
+        // Fill in the form and submit again
+        $client->executeScript("document.querySelector('#review textarea[name=\"comment\"]').value = 'updated review.';");
+        $client->executeScript("document.querySelector('#review select[name=\"rating\"]').value = 2;");
+        $client->executeScript("document.querySelector('#review form').submit();");
+
+        // Check if the form was submitted
+        $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        $this->assertInstanceOf(BookReviews::class, $review);
+        $this->assertEquals('updated review.', $review->getReview());
+        $this->assertEquals(2, $review->getRating());
+
+        // Rollback the database
+        $entityManager->remove($review);
+        $entityManager->flush();
+    }
+    public function testEditReviewPanther(): void
+    {
+        $client = static::createPantherClient();
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+
+        // Login as a user
+        $crawler = $client->request('GET', '/logout');
+        $this->assertStringContainsString('/login', $client->getCurrentURL());
+        $form = $crawler->filter('form.form-signin')->form();
+        $form['email'] = 'test@test.com';
+        $form['password'] = 'password123';
+        $client->submit($form);
+        $this->assertStringContainsString('/', $client->getCurrentURL());
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'test@test.com']);
+        $bookId = "WDFWSwAACAAJ";
+        $bookReviewRepository = $entityManager->getRepository(BookReviews::class);
+        // Check if the review already exists and remove if it does
+        $existingReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
+        if ($existingReview) {
+            $entityManager->remove($existingReview);
+            $entityManager->flush();
+        }
+
+        /// Go to the book page
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+        $this->assertGreaterThan(0, $crawler->filter('button#addReviewButton')->count());
+
+        // Click the "Add Review" button
+        $addReviewButton = $crawler->filter('button#addReviewButton')->first();
+        $this->assertNotNull($addReviewButton);
+        $addReviewButton->click();
+
+        // Check if the modal shows up
+        $reviewModal = $crawler->filter('.modal.fade.show')->first();
+        $this->assertNotNull($reviewModal);
+
+        // Fill in the form and submit
+        $client->executeScript("document.querySelector('#review textarea[name=\"comment\"]').value = 'This is a test comment.';");
+        $client->executeScript("document.querySelector('#review select[name=\"rating\"]').value = 4;");
+        $client->executeScript("document.querySelector('#review form').submit();");
+
+        // check if the page is redirected to the book page
+        $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
 
         // Check if the form was submitted
         $review = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
@@ -688,38 +712,10 @@ class SearchControllerTest extends PantherTestCase
         $this->assertEquals('This is a test comment.', $review->getReview());
         $this->assertEquals(4, $review->getRating());
 
-        // Update the review
-        $updatedComment = 'This is an updated comment.';
-        $updatedRating = 5;
-
-        // Switch the button to "Edit My Review"
-        $editButton = $client->getCrawler()->filter('button[data-bs-target="#reviewModal"]');
-        $editButton->text('Edit My Review');
-
-        // Click the "Edit My Review" button
-        $editButton->click();
-
-        // Check if the modal shows up
-        $reviewModal = $client->getCrawler()->filter('.modal#reviewModal');
-        $this->assertTrue($reviewModal->count() > 0);
-
-        // Fill in the form with updated values and submit
-        $form = $reviewModal->filter('form')->form();
-        $form['comment'] = $updatedComment;
-        $form['rating'] = $updatedRating;
-        $client->submit($form);
-
-        // Check if the form was submitted
-        $updatedReview = $bookReviewRepository->findOneBy(['user_id' => $user, 'book_id' => $bookId]);
-        $this->assertInstanceOf(BookReviews::class, $updatedReview);
-        $this->assertEquals($updatedComment, $updatedReview->getReview());
-        $this->assertEquals($updatedRating, $updatedReview->getRating());
-
         // Rollback the database
-        $entityManager->remove($updatedReview);
+        $entityManager->remove($review);
         $entityManager->flush();
     }
-
     public function testReviewProfileRedirect(): void
     {
         $client = static::createPantherClient();
@@ -747,4 +743,7 @@ class SearchControllerTest extends PantherTestCase
         // Check if the page is redirected to the profile page
         $this->assertStringContainsString('/profile/Tommy', $client->getCurrentURL());
     }
+
+
+
 }
