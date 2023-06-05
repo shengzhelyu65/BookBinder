@@ -735,15 +735,34 @@ class SearchControllerTest extends PantherTestCase
         $client->request('GET', "/book-page/{$bookId}");
         $this->assertStringContainsString('Harry Potter', $client->getPageSource());
 
-        // Click on the "Tommy" link
-        $tommyLink = $client->getCrawler()->filter('a[href="/profile/Tommy"]');
-        $this->assertNotNull($tommyLink);
-        $tommyLink->click();
+        // Add a review in database
+        $container = self::getContainer();
+        $entityManager = $container->get('doctrine')->getManager();
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'user5@example.com']);
+        $review = new BookReviews();
+        $review->setUserId($user);
+        $review->setBookId($bookId);
+        $review->setBookTitle('Harry Potter');
+        $review->setReview('This is a test comment.');
+        $review->setRating(4);
+        $review->setCreatedAt(new \DateTime());
+        $entityManager->persist($review);
+        $entityManager->flush();
 
-        // Check if the page is redirected to the profile page
-        $this->assertStringContainsString('/profile/Tommy', $client->getCurrentURL());
+        // update the crawler
+        $crawler = $client->request('GET', "/book-page/{$bookId}");
+
+        // Click on the link containing one of the reviewers' name
+        $userProfileLink = $crawler->filter('#profile-link-in-review')->first();
+        $this->assertNotNull($userProfileLink);
+        $userProfileLink->click();
+
+        // Check if the page is redirected to the user profile page
+        $this->assertStringContainsString("/profile", $client->getCurrentURL());
+
+        // Rollback the database
+        $entityManager->remove($review);
+        $entityManager->flush();
     }
-
-
-
 }
