@@ -659,7 +659,7 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->remove($review);
         $entityManager->flush();
     }
-    public function testEditReviewPanther(): void
+    public function testAddReviewPanther(): void
     {
         $client = static::createPantherClient();
         $container = self::getContainer();

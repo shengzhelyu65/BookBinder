@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Fixed tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +37,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="Tests" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -397,7 +397,34 @@
       <recent name="C:\Users\louis\IdeaProjects\a22web31\book_binder\assets\styles" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Built-in Web Server.localserver">
+  <component name="RunManager" selected="PHPUnit.SearchControllerTest.testReviewProfileRedirect">
+    <configuration name="SearchControllerTest.testAddReviewPanther" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner class="App\Tests\Controller\SearchControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" method="testAddReviewPanther" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SearchControllerTest.testEditReviewPanther" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner class="App\Tests\Controller\SearchControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml.dist" file="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" method="testEditReviewPanther" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SearchControllerTest.testReviewProfileRedirect" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 8.1" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner class="App\Tests\Controller\SearchControllerTest" file="$PROJECT_DIR$/tests/Controller/SearchControllerTest.php" method="testReviewProfileRedirect" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="SearchControllerTest.testSearchRedirect" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <CommandLine>
         <PhpTestInterpreterSettings>
@@ -430,12 +457,18 @@
     </configuration>
     <list>
       <item itemvalue="PHP Built-in Web Server.localserver" />
+      <item itemvalue="PHPUnit.SearchControllerTest.testEditReviewPanther" />
+      <item itemvalue="PHPUnit.SearchControllerTest.testReviewProfileRedirect" />
       <item itemvalue="PHPUnit.test" />
+      <item itemvalue="PHPUnit.SearchControllerTest.testAddReviewPanther" />
       <item itemvalue="PHPUnit.SearchControllerTest.testSearchResult" />
       <item itemvalue="PHPUnit.SearchControllerTest.testSearchRedirect" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.SearchControllerTest.testAddReviewPanther" />
+        <item itemvalue="PHPUnit.SearchControllerTest.testSearchRedirect" />
+        <item itemvalue="PHPUnit.SearchControllerTest.testSearchResult" />
         <item itemvalue="PHPUnit.SearchControllerTest.testSearchResult" />
         <item itemvalue="PHPUnit.SearchControllerTest.testSearchRedirect" />
       </list>
@@ -753,21 +786,7 @@
       <option name="project" value="LOCAL" />
       <updated>1685885751519</updated>
     </task>
-    <task id="LOCAL-00041" summary="Fixed tests">
-      <created>1685919217334</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1685919217334</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Fixed tests">
-      <created>1685961094180</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1685961094180</updated>
-    </task>
-    <option name="localTasksCounter" value="43" />
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -801,6 +820,7 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+    <MESSAGE value="Profile screen with user information and reviews" />
     <MESSAGE value="Search results screen template" />
     <MESSAGE value="Remove link from logo in navbar" />
     <MESSAGE value="Homescreen with dummy reviews" />
@@ -825,8 +845,22 @@
     <MESSAGE value="Made confirm button disabled if date is in the past + only allow positive inputs" />
     <MESSAGE value="Added nearest_library to UserPersonalInfo" />
     <MESSAGE value="Revert previous commit" />
-    <MESSAGE value="Fixed tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert previous commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/tests/Controller/SearchControllerTest.php</url>
+          <line>718</line>
+          <properties>
+            <option name="className" value="\App\Tests\Controller\SearchControllerTest" />
+            <option name="methodName" value="testReviewProfileRedirect" />
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
