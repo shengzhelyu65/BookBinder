@@ -7,7 +7,7 @@
         {% for flash_message in app.session.flashbag.get('error') %}
             <div class="alert alert-danger">{{ flash_message }}</div>
         {% endfor %}
-        {{ form_start(registrationForm, {'attr': {'class': 'form-signin', 'needs-validation':false}}) }}
+        {{ form_start(registrationForm, {'attr': {'class': 'form-signin needs-validation', 'novalidate': ''}}) }}
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row mb-0">
                 <div class="col-md-5 mb-3">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-7 mb-3">
                     <div class="form-outline">
-                        {{ form_label(registrationForm.name, 'Surname') }}
+                        {{ form_label(registrationForm.surname, 'Surname') }}
                         {{ form_widget(registrationForm.surname, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputSurname'} }) }}
                         {{ form_errors(registrationForm.surname) }}
                     </div>
@@ -33,6 +33,9 @@
                         {{ form_label(registrationForm.nickname, 'Nickname') }}
                         {{ form_widget(registrationForm.nickname, { 'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputNickname'} }) }}
                         {{ form_errors(registrationForm.nickname) }}
+                        <div class="invalid-feedback">
+                            Please choose a nickname.
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-8 mb-3">
@@ -40,6 +43,9 @@
                         {{ form_label(registrationForm.email, 'Email') }}
                         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputEmail'}}) }}
                         {{ form_errors(registrationForm.email) }}
+                        <div class="invalid-feedback">
+                            Please provide a valid email address.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,10 +55,16 @@
                 {{ form_label(registrationForm.plainPassword, 'Password') }}
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputPassword'}}) }}
                 {{ form_errors(registrationForm.plainPassword) }}
+                <div class="invalid-feedback">
+                    Please provide a password.
+                </div>
             </div>
 
             <!-- Checkbox to agree with terms -->
-            {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.agreeTerms, {'label_attr': {'class': 'form-check-label'}}) }}
+            <div class="invalid-feedback">
+                You must agree to the terms and conditions.
+            </div>
 
             <div class="">
                 <!-- Submit button -->
@@ -62,6 +74,7 @@
 
                 <!-- Sign Up with Google -->
                 <div class="">
+                    <!-- Include the necessary script tags for Google Sign-In -->
                     <div id="g_id_onload"
                         data-client_id="773315199188-t2bualn3k6id1gsokusqrueq55lkg4e4"
                         data-context="signin"
@@ -91,5 +104,3 @@
         {{ form_end(registrationForm) }}
     </div>
 </div>
-
-
