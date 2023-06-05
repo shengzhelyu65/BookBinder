@@ -43,9 +43,6 @@
                         {{ form_label(registrationForm.email, 'Email') }}
                         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputEmail'}}) }}
                         {{ form_errors(registrationForm.email) }}
-                        <div class="invalid-feedback">
-                            Please provide a valid email address.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -55,9 +52,6 @@
                 {{ form_label(registrationForm.plainPassword, 'Password') }}
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputPassword'}}) }}
                 {{ form_errors(registrationForm.plainPassword) }}
-                <div class="invalid-feedback">
-                    Please provide a password.
-                </div>
             </div>
 
             <!-- Checkbox to agree with terms -->
