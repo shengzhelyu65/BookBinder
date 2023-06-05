@@ -10,6 +10,9 @@ function searchBooks(event) {
     window.location.href = url;
 }
 
+const searchInput = document.getElementById('search_bar_input');
+searchInput.addEventListener('keyup', getSuggestion);
+
 async function getSuggestion(event) {
     const input = event.target.value;
     const url = `/book-suggestion/${encodeURIComponent(input)}`;
