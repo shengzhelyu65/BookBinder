@@ -1,13 +1,13 @@
 {% extends 'base_website.html.twig' %}
 
 {% block body %}
-    <h1>You searched for '{{ query }}'</h1>
+    <h4 id="search-result-message">You searched for '{{ query }}'</h4>
     <p>{{ results|length }} result(s) found</p>
     {% for book in results %}
-        <a href="{{ path('book-page', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">
+        <a id="search-result-in-search" href="{{ path('book-page', {'id': book.getId() }) }}" class="text-decoration-none text-black" style="height: 10rem">
             <div class="card mb-3">
                 <div class="d-flex flex-row h-100">
-                    <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="rounded-start" alt="{{ book.getVolumeInfo().getTitle() }}" style="width: 6rem; height: 100%; object-fit: cover">
+                    <img src="{{ book.getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-6 fit-cover" alt="{{ book.getVolumeInfo().getTitle() }}">
                     <div class="card-body">
                         <p><b>{{ book.getVolumeInfo().getTitle() }}</b></p>
                         <p class="card-text">{{ book.getVolumeInfo().getAuthors()|join(', ') }}</p>

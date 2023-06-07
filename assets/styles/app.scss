@@ -1,13 +1,5 @@
-@import "~select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css";
-@import '~bootstrap';
+@import "truncate";
+@import "sizing";
+@import "~bootstrap/scss/bootstrap";
 @import "~select2/dist/css/select2.min.css";
-
-.text-truncate-2 {
-  -webkit-line-clamp: 2;
-  overflow : hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-
-
+@import "~select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css";

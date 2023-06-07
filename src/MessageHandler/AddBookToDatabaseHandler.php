@@ -1,7 +1,6 @@
 <?php
 namespace App\MessageHandler;
 
-use App\Entity\Book;
 use App\Message\AddBookToDatabase;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;

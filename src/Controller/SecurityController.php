@@ -77,6 +77,8 @@ class SecurityController extends AbstractController
 
         // set the nickname
         $nickname = explode('@', $email)[0];
+        $nickname = str_replace('.', '', $nickname);
+        $nickname = str_replace('+', '', $nickname);
         if (!$user->getUserPersonalInfo()) {
             $userPersonalInfo = new UserPersonalInfo();
             $userPersonalInfo->setUser($user);

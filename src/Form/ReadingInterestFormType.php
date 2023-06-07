@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\UserReadingInterest;
 use App\Enum\LanguageEnum;
 use App\Enum\GenreEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReadingInterestFormType extends AbstractType
@@ -45,7 +45,7 @@ class ReadingInterestFormType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            'readingInterest_data' => ReadingInterest::class,
+            'readingInterest_data' => UserReadingInterest::class,
         ]);
     }
 }
