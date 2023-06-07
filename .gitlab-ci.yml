@@ -28,12 +28,18 @@ test-job:
   script:
     - composer update vendor/package --with-dependencies
     - composer install
-    # run the migration on the temporary database
-    - php bin/console doctrine:schema:update --force --env=test
+    # drop the test database if it exists
+    - php bin/console doctrine:database:drop --force --if-exists --env=test
+    # create the test database
+    - php bin/console doctrine:database:create --env=test
+    # run the migrations on the temporary database
+    - php bin/console doctrine:migrations:migrate --no-interaction --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
     # run the tests (using the temporary database)
     - php bin/phpunit
+    # Build assets with Encore
+    - yarn encore dev
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
