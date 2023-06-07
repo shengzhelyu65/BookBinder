@@ -74,29 +74,34 @@
                 <h4>Meetups at your library</h4>
             </div>
             <div class="d-flex flex-row overflow-auto">
-                {% for meetupAvailable in meetupAvailabes %}
-                    <div class="card ms-3 width-400-px">
-                        <div class="d-flex flex-row h-100">
-                            <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}">
-                                {% if booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() %}
-                                    <img src="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}">
-                                {% else %}
-                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
-                                {% endif %}
-                            </a>
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate-2">
-                                    <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</a>
-                                </h5>
-                                <p class="card-text">Host:
-                                    <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a>
-                                </p>
-                                <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
-                                <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
-                            </div>
+            {% for meetupAvailable in meetupAvailabes %}
+                {% set bookId = meetupAvailable.getBookID() %}
+                {% set book = booksMeetupAvailables[bookId] %}
+                {% if book is not null %}
+                <div class="card ms-3 width-400-px">
+                    <div class="d-flex flex-row h-100">
+                        <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}">
+                            {% if book.getThumbnail() %}
+                                <img src="{{ book.getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ book.getTitle() }}">
+                            {% else %}
+                                <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate-2">
+                                <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ book.getTitle() }}</a>
+                            </h5>
+                            <p class="card-text">Host:
+                                <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a>
+                            </p>
+                            <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
+                            <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+                 {% endif %}
+            {% endfor %}
+
             </div>
         </div>
     </div>
