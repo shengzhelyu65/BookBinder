@@ -37,8 +37,17 @@ class ResetAutoincrementFixture extends Fixture
             'user_reading_list',
         ];
 
-        foreach ($tableNames as $tableName) {
-            $this->resetAutoincrement($tableName);
+        $this->connection->beginTransaction();
+
+        try {
+            foreach ($tableNames as $tableName) {
+                $this->resetAutoincrement($tableName);
+            }
+
+            $this->connection->commit();
+        } catch (\Throwable $e) {
+            $this->connection->rollBack();
+            throw $e;
         }
     }
 
