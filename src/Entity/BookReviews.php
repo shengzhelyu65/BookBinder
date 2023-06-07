@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use App\Api\GoogleBooksApiClient;
 use App\Repository\BookReviewsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Google\Service\Books\VolumeVolumeInfo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookReviewsRepository::class)]
@@ -20,7 +18,7 @@ class BookReviews
     #[ORM\Column]
     private ?string $book_id = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookReviews')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private ?User $user_id = null;
 

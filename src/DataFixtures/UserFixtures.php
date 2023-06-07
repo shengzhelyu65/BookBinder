@@ -2,33 +2,60 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\UserPersonalInfo;
+use App\Entity\UserReadingInterest;
+use App\Enum\GenreEnum;
+use App\Enum\LanguageEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use Faker\Factory;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public const USER_REFERENCE = 'user_ref';
 
     public function load(ObjectManager $manager): void
     {
-        $existingUser = $manager->getRepository(User::class)->findOneBy(['email' => 'ref@ref.com']);
+        $faker = Factory::create();
 
-        if ($existingUser) {
-            // User already exists, remove it first
-            $manager->remove($existingUser);
-            $manager->flush();
+        // Get all genre and language choices
+        $genreChoices = GenreEnum::getChoices();
+        $languageChoices = LanguageEnum::getChoices();
+
+        for ($i = 1; $i <= 10; $i++) {
+            $user = new User();
+            $user->setEmail("user{$i}@example.com");
+            $user->setPassword(''); // Password is not used in this application
+            $manager->persist($user);
+
+            // Create unique reference for each user
+            $this->addReference(self::USER_REFERENCE . $i, $user);
+
+            // Create UserReadingInterest object for each user
+            $readingInterest = new UserReadingInterest();
+            $readingInterest->setLanguages($faker->randomElements($languageChoices, $faker->numberBetween(1, 3)));
+            $readingInterest->setGenres($faker->randomElements($genreChoices, $faker->numberBetween(1, 3)));
+            $readingInterest->setUser($user);
+            $manager->persist($readingInterest);
+
+            // Create UserPersonalInfo object for each user
+            $personalInfo = new UserPersonalInfo();
+            $personalInfo->setName($faker->name());
+            $personalInfo->setSurname($faker->lastName());
+            $personalInfo->setNickname("User{$i}");
+            $personalInfo->setUser($user);
+            $manager->persist($personalInfo);
         }
 
-        // Create and persist user objects
-        $user = new User();
-        $user->setEmail('ref@ref.com');
-        $user->setPassword(''); // Password is not used in this application
-        // $manager->persist($user);
+        $manager->flush();
+    }
 
-        // other fixtures can get this object using the UserFixtures::USER_REFERENCE constant
-        $this->addReference(self::USER_REFERENCE, $user);
-
-        // $manager->flush();
+    public function getDependencies(): array
+    {
+        return [
+            ResetAutoincrementFixture::class,
+        ];
     }
 }

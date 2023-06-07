@@ -2,22 +2,27 @@
 
 {% block body %}
 <div class="container-fluid">
-    <div class="d-flex flex-row overflow-auto gx-3">
+    <div class="d-flex flex-row overflow-auto gx-3" id="upcoming-in-overview">
         <div class="col-12 p-3 border my-3 rounded-3">
             <div class="border-bottom mb-3 d-flex justify-content-left">
-                <h5>Upcoming meetups</h5>
+                <h4>Upcoming meetups</h4>
             </div>
-            <div class="d-flex flex-row overflow-auto gx-3">
+            <div class="d-flex flex-row overflow-auto">
                 {% for upcomingRequest in upcomingRequests %}
-                    <div class="card ms-3" style="min-width: 400px">
+                    <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover_empty.png') }}"
-                                 class="rounded-start" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <a href="{{ path('book-page', {'id': booksUpcomingRequests[upcomingRequest.getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() %}
+                                    <img src="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksUpcomingRequests[upcomingRequest.getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h5 class="card-title">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getVolumeInfo().getTitle() }}</h5>
+                                <h5 class="card-title text-truncate-2">{{ booksUpcomingRequests[upcomingRequest.getBookID()].getTitle() }}</h5>
                                 <p class="card-text">Date: {{ upcomingRequest.getDatetime()|date('F j') }}</p>
                                 <p class="card-text">Number of people: {{ upcomingRequest.getMaxNumber() }}</p>
-                                <p class="card-text">library: {{ upcomingRequest.getLibraryID().getLibraryName() }}</p>
+                                <p class="card-text">Library: {{ upcomingRequest.getLibraryID().getLibraryName() }}</p>
                             </div>
                         </div>
                     </div>
@@ -25,20 +30,29 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row overflow-auto gx-3">
+    <div class="d-flex flex-row overflow-auto gx-3" id="requests-in-overview">
         <div class="col-12 p-3 border my-3 rounded-3">
             <div class="border-bottom mb-3 d-flex justify-content-left">
-                <h5>Meetup requests</h5>
+                <h4>Meetup requests</h4>
             </div>
             <div class="d-flex flex-row overflow-auto">
                 {% for meetupRequest in meetupRequests %}
-                    <div class="card ms-3" style="min-width: 400px">
+                    <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}"
-                                 class="rounded-start" alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() %}
+                                    <img src="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h5 class="card-title">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                <h5 class="card-title"><a href="#" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a></h5>
+                                <h5 class="card-title text-truncate-2">
+                                    <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}</a>
+                                </h5>
+                                <h5 class="card-title">
+                                    <a href="{{ path('profile_other', {'username': meetupRequest.getUserID().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a>
+                                </h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <form method="post" action="{{ path('meetup_request_host_accept', {'meetupRequestId': meetupRequest.getMeetupRequestListID()}) }}">
@@ -54,22 +68,31 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row overflow-auto gx-3">
+    <div class="d-flex flex-row overflow-auto gx-3" id="meetups-in-overview">
         <div class="col-12 p-3 border my-3 rounded-3">
             <div class="border-bottom mb-3 d-flex justify-content-left">
-                <h5>Meetups at your library</h5>
+                <h4>Meetups at your library</h4>
             </div>
             <div class="d-flex flex-row overflow-auto">
-                {% for meetupAvailabe in meetupAvailabes %}
-                    <div class="card ms-3" style="min-width: 400px">
+                {% for meetupAvailable in meetupAvailabes %}
+                    <div class="card ms-3 width-400-px">
                         <div class="d-flex flex-row h-100">
-                            <img src="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getImageLinks().getThumbnail() ?? asset('images/book_cover.png') }}"
-                                     class="rounded-start" alt="{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}" style="width: 140px; height: 100%; object-fit: cover">
+                            <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}">
+                                {% if booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() %}
+                                    <img src="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getThumbnail() }}" class="rounded-start h-100 width-140-px fit-cover" alt="{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}">
+                                {% else %}
+                                    <img src="{{ asset('images/book_cover_empty.png') }}" class="rounded-start h-100 width-140-px fit-cover" alt="Empty Book Cover">
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h5 class="card-title">{{ booksMeetupAvailables[meetupAvailabe.getBookID()].getVolumeInfo().getTitle() }}</h5>
-                                <p class="card-text">host: {{ meetupAvailabe.getHostUser().getUserPersonalInfo().getName() }}</p>
-                                <p class="card-text">Max participants: {{ meetupAvailabe.getMaxNumber() }}</p>
-                                <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailabe.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
+                                <h5 class="card-title text-truncate-2">
+                                    <a href="{{ path('book-page', {'id': booksMeetupAvailables[meetupAvailable.getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupAvailables[meetupAvailable.getBookID()].getTitle() }}</a>
+                                </h5>
+                                <p class="card-text">Host:
+                                    <a href="{{ path('profile_other', {'username': meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupAvailable.getHostUser().getUserPersonalInfo().getNickname() }}</a>
+                                </p>
+                                <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
+                                <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
                             </div>
                         </div>
                     </div>

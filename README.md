@@ -57,4 +57,52 @@ Clear the cache by running the following command in your terminal:
 ```
 php bin/console cache:clear
 ```  
-    
+
+## Running tests Locally from cmd prompt (Windows)
+First, make sure you hava a test database set up. Use MySQL Installer to install MySQL Server and MySQL Workbench.  
+Then, create a new database called "bookbinder_test". Alternatively, you can repurpose the coubooks local server database that
+we used in one of the Labs.
+
+Second, create a .env.test.local file in the root of the project. Add the following code:  
+```
+# define your env variables for the test env here
+KERNEL_CLASS='App\Kernel'
+APP_SECRET='$ecretf0rt3st'
+SYMFONY_DEPRECATIONS_HELPER=999999
+PANTHER_APP_ENV=panther
+PANTHER_ERROR_SCREENSHOT_DIR=./var/error-screenshots
+
+###> doctrine/doctrine-bundle ###
+# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
+DATABASE_URL="mysql://<db_user_here>:<user_password_here>@127.0.0.1:3306/<db_name_here>?serverVersion=8&charset=utf8mb4"
+###< doctrine/doctrine-bundle ###
+
+OPEN_AI_KEY='sk-<your key here>'
+```
+Replace the values in <> with your own values.
+
+Then, make sure that all composer dependencies are installed by running the following command in your terminal:
+```
+composer update vendor/package --with-dependencies
+composer install
+```  
+If you have no dependency issues, you can run the tests by running the following command in your terminal:
+```
+php bin/console make:migration 
+php bin/console doctrine:migrations:migrate --env=test
+php bin/console doctrine:fixtures:load --env=test
+```
+This will create the database tables and populate them with test data. 
+
+If you get migration errors, try running the following command in your terminal:
+```
+php bin/console doctrine:schema:update --force --env=test
+```
+
+If you  get a "ER_NOT_SUPPORTED_AUTH_MODE" error, follow the instructions on this [StackOverflow post](https://stackoverflow.com/questions/44946270/er-not-supported-auth-mode-mysql-server/52726522#52726522r).
+
+Finally, run the tests by running the following command in your terminal:
+```
+php bin/phpunit
+```

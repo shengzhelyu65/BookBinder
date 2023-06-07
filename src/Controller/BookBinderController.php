@@ -2,35 +2,35 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\BookReviews;
 use App\Entity\Book;
-use App\Entity\UserReadingInterest;
-
 use App\Message\AddBookToDatabase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-
 use App\Api\GoogleBooksApiClient;
 
 class BookBinderController extends AbstractController
 {
-    #[Route("/home", name: 'app_home')]
     #[Route("/", name: 'app_home')]
     public function home(EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
+        $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // ============= API stuff =============
         $ApiClient = new GoogleBooksApiClient();
 
-        $user = $this->getUser();
-
-        // Define an array of genres to search for.
-        /** @var \App\Entity\User $user **/
+        // if the user has no genres, add some default ones.
         $genres = $user->getUserReadingInterest()->getGenres();
-
+        if (count($genres) === 0) {
+            array_push($genres, 'Fantasy', 'popular', 'classic');
+        }
 
         // Create an empty array to hold the results.
         $results = [];
@@ -39,7 +39,7 @@ class BookBinderController extends AbstractController
         // ==================== If no books were found in the database, query the API to retrieve them.
         // Loop through each genre and retrieve the popular books.
         foreach ($genres as $genre) {
-            $books = $entityManager->getRepository(Book::class)->findBy(['category' => $genre], limit: 40);
+            $books = $entityManager->getRepository(Book::class)->findBy(['category' => $genre], ['id' => 'DESC'], limit: 40);
             $results[$genre] = $books;
             $cachedCount = count($books);
 

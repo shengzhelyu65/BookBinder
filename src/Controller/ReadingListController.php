@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\UserPersonalInfo;
-use App\Entity\UserReadingInterest;
-use App\Entity\UserReadingList;
 use App\Entity\Book;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,23 +18,25 @@ class ReadingListController extends AbstractController
         // fetch the user's reading list
         // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
         // Intelj as well
-        /** @var App\Entity\User $user **/
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $user_reading_list = $user->getUserReadingList();
 
-        // if the user has a reading list, fetch the books
-        if ($user_reading_list) {
-            $currently_reading = $user_reading_list->getCurrentlyReading();
-            $want_to_read = $user_reading_list->getWantToRead();
-            $have_read = $user_reading_list->getHaveRead();
-        }
+        // fetch the books
+        $currently_reading = $user_reading_list->getCurrentlyReading();
+        $want_to_read = $user_reading_list->getWantToRead();
+        $have_read = $user_reading_list->getHaveRead();
 
         $currently_reading_books = [];
 
         // For the ids in currently_reading, add the book objects to $books
         foreach ($currently_reading as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($currently_reading_books, $book);
+            $currently_reading_books[] = $book;
         }
 
         // For the ids in want_to_read, add the book objects to $books
@@ -47,7 +44,7 @@ class ReadingListController extends AbstractController
 
         foreach ($want_to_read as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($want_to_read_books, $book);
+            $want_to_read_books[] = $book;
         }
 
         // For the ids in have_read, add the book objects to $books
@@ -55,7 +52,7 @@ class ReadingListController extends AbstractController
 
         foreach ($have_read as $book_id) {
             $book = $entityManager->getRepository(Book::class)->findOneBy(['id' => $book_id]);
-            array_push($have_read_books, $book);
+            $have_read_books[] = $book;
         }
 
         // render the reading list page
