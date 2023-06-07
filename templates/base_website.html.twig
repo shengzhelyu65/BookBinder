@@ -11,62 +11,43 @@
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
+    {% block base_website_javascripts %}
+        {{ encore_entry_script_tags('base_website') }}
+    {% endblock %}
+    {% block extra_javascript %} {% endblock %}
 </head>
 <body class="d-flex flex-column vh-100">
     <header class="py-3 mb-4 shadow">
         <div class="container-fluid align-items-center d-flex">
             <div class="flex-shrink-1">
-                <img src="{{ asset('images/logo_light.jpg') }}" alt="" style="width: 40px; height: 40px">
+                <img src="{{ asset('images/logo_light.jpg') }}" alt="" class="size-40">
             </div>
             <div class="flex-grow-1 d-flex align-items-center">
-                <form class="w-100 me-3" onsubmit="searchBooks(event)">
-                    <input type="search" class="form-control" placeholder="Search..." list="book-list" onkeyup="getSuggestion(event)">
+                <form id="searchbar_form" class="w-100 me-3">
+                    <input id="search_bar_input" type="search" class="form-control" placeholder="Search..." list="book-list">
                     <datalist id="book-list"></datalist>
                 </form>
-                <script>
-                    function searchBooks(event) {
-                        event.preventDefault(); // prevent form submission
-                        const query = event.target.querySelector('input').value;
-                        const url = `/book-search/${encodeURIComponent(query)}`;
-                        console.log("Searching for: " + query);
-                        window.location.href = url;
-                    }
-
-                    async function getSuggestion(event) {
-                        const input = event.target.value;
-                        const url = `/book-suggestion/${encodeURIComponent(input)}`;
-                        const response = await fetch(url);
-                        const suggestions = await response.json();
-                        const datalist = document.getElementById('book-list');
-                        datalist.innerHTML = ''; // clear previous suggestions
-                        suggestions.forEach(suggestion => {
-                            const option = document.createElement('option');
-                            option.value = suggestion.title;
-                            datalist.appendChild(option);
-                        });
-                    }
-                </script>
 
                 <div class="flex-shrink-0 dropdown">
                     <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('images/default_avatar.png') }}" alt="user" width="32" height="32" class="rounded-circle">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownUser2" style="z-index: 2000">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow z-2000" aria-labelledby="dropdownUser2">
+                        <li><a class="dropdown-item" href="{{ path('settings') }}">Settings</a></li>
                         <li><a class="dropdown-item" href="{{ path('profile') }}">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Sign out</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </header>
     <div class="container-fluid pb-3 flex-grow-1 d-flex flex-column flex-lg-row overflow-auto m-0 row">
-        <div class="row" style="margin: 0">
-            <aside class="col-lg-2 sticky-top pb-lg-0 pb-3" style="background-color: white">
-                <div class="bg-light border rounded-3 p-1 sticky-top">
+        <div class="m-0 row mh-lg-100 ">
+            <aside class="col-lg-3 pb-lg-0 pb-3 overflow-auto mh-lg-100 background-white">
+                <div class="bg-light border rounded-3 p-1">
                     <ul class="navbar-nav flex-lg-column flex-row mb-auto justify-content-between text-truncate">
                         <li class="nav-item">
                             <a href="{{ path('app_home') }}" class="nav-link active px-2 text-truncate">
@@ -75,7 +56,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/reading-list" class="nav-link active px-2 text-truncate">
+                            <a href="{{ path('reading_list') }}" class="nav-link active px-2 text-truncate">
                                 <i class="bi bi-list-ul fs-5"></i>
                                 <span class="d-none d-sm-inline">My list</span>
                             </a>
@@ -87,9 +68,30 @@
                         </li>
                     </ul>
                 </div>
+                <div class="bg-light border rounded-3 py-1 mt-3">
+                    <a id="ai-toggle-in-base" href="#collapsePanel" class="btn btn-link px-2 text-decoration-none text-black" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsePanel">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('images/logo_openAI.png') }}" alt="Logo" width="32" height="32" class="me-2">
+                            <p class="text-center mb-0">Not sure what to read?</p>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapsePanel">
+                        <form id="chatForm" class="mb-3">
+                            <div class="mb-3 p-3">
+                                <label for="inputText" class="form-label">What are you looking for?</label>
+                                <input type="text" class="fs-6 form-control form-control-l mb-3" id="inputText" placeholder="E.g. A book about spaceships...">
+                                <button type="submit" class="btn btn-primary">Generate</button>
+                            </div>
+                        </form>
+
+                        <div id="recommendations">
+                            <!-- Your content here -->
+                        </div>
+                    </div>
+                </div>
             </aside>
-            <main class="col-lg-10">
-                <div class="bg-light border rounded-3 p-3 overflow-auto">
+            <main class="col-lg-9 mh-lg-100">
+                <div class="bg-light border rounded-3 p-3 mb-3 overflow-auto mh-lg-100 ">
                     {% block body %} {% endblock %}
                 </div>
             </main>

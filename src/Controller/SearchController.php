@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\BookReviews;
 use App\Entity\MeetupList;
 use App\Entity\MeetupRequests;
 use App\Entity\Book;
-use App\Entity\User;
-use App\Entity\UserReadingList;
-
+use App\Entity\UserPersonalInfo;
 use App\Message\AddBookToDatabase;
+use OpenAI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Api\GoogleBooksApiClient;
 use App\Entity\MeetupRequestList;
 use App\Form\MeetupRequestFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-
+use OpenAI\Client as OpenAIClient;
 
 /*
  * This controller meant for the development of the
@@ -46,11 +44,58 @@ class SearchController extends AbstractController
         ]);
     }
 
+    #[Route('/book-search/ai/{query}', name: 'book-search/ai')]
+    public function bookSearchAI($query): JsonResponse
+    {
+        $ApiClient = new GoogleBooksApiClient();
+
+        // Result is a size 1 array of Google\Service\Books\Volume
+        $result = $ApiClient->searchBooksByTitle($query, 1);
+
+        $thumbnail = $result[0]->getVolumeInfo()->getImageLinks()->getThumbnail();
+        $id = $result[0]->getId();
+
+        $data = [
+            'thumbnail' => $thumbnail,
+            'id' => $id,
+        ];
+
+        return new JsonResponse($data);
+    }
+
+    #[Route('/book-search/openAI/{prompt}', name: 'book-search/openAI')]
+    public function bookSearchOpenAI($prompt): JsonResponse
+    {
+        // Get API key from env
+        $apiKey = getenv('OPENAI_API_KEY');
+        $model = 'gpt-3.5-turbo';
+
+        $messages = [
+            ['role' => 'system', 'content' => 'You are a book assistant, recommend a single book to the user based on their input.'],
+            ['role' => 'user', 'content' => "Only respond with the title of the book, no author, no punctuation, recommend me a book about: " . $prompt],
+        ];
+
+        $requestBody = [
+            'model' => $model,
+            'messages' => $messages,
+        ];
+
+        $client = OpenAI::client($apiKey);
+        $responseData = $client->chat()->create($requestBody);
+
+        $generatedText = $responseData['choices'][0]['message']['content'];
+        $data = [
+            'text' => $generatedText,
+        ];
+
+        return new JsonResponse($data);
+    }
+
     /**
      * @throws \Google_Exception
      */
     #[Route('/book-page/{id}', name: 'book-page')]
-    public function clickBook($id, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
+    public function clickBook($id, Request $request, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
         // ============= API stuff =============
         // Check if book in cache
@@ -123,11 +168,7 @@ class SearchController extends AbstractController
             $book = $newBook;
         }
 
-        // ============= Meetup stuff =============
-
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var App\Entity\User $user **/
+        // Derive the book's meetup requests
         $user = $this->getUser();
         $userId = $user->getId();
 
@@ -138,13 +179,13 @@ class SearchController extends AbstractController
             ->leftJoin('App\Entity\MeetupList', 'ml', 'WITH', 'mr.meetup_ID = ml.meetup_ID')
             ->leftJoin('App\Entity\MeetupRequestList', 'mrl', 'WITH', 'mr.meetup_ID = mrl.meetup_ID')
             ->where('mr.host_user != :userId AND NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupList subml
-        WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupList subml
+                WHERE subml.meetup_ID = mr.meetup_ID AND subml.user_ID = :userId
+            )')
             ->andWhere('NOT EXISTS (
-        SELECT 1 FROM App\Entity\MeetupRequestList submrl
-        WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
-    )')
+                SELECT 1 FROM App\Entity\MeetupRequestList submrl
+                WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
+            )')
             ->andWhere('mr.book_ID = :bookId')
             ->setParameter('userId', $userId)
             ->setParameter('bookId', $id)
@@ -152,10 +193,19 @@ class SearchController extends AbstractController
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-        // Fetch the books based on book IDs in meetupRequests
+        $filteredMeetupRequests = [];
 
-        // ============= Reading List =============
-        /** @var App\Entity\User $user **/
+        foreach ($meetupRequests as $meetupRequest) {
+            // Check if the maximum number of participants has been reached
+            $participantsCount = $entityManager->getRepository(MeetupList::class)->count(['meetup_ID' => $meetupRequest]);
+            $maxParticipants = $meetupRequest->getMaxNumber();
+
+            if ($participantsCount < $maxParticipants - 1) {
+                $filteredMeetupRequests[] = $meetupRequest;
+            }
+        }
+
+        // Add to reading list
         $userReadingList = $user->getUserReadingList();
 
         // check if book is in one of the user's reading lists
@@ -169,29 +219,117 @@ class SearchController extends AbstractController
         $is_in_currently_reading = in_array($bookId, $currentlyReading);
         $is_in_have_read = in_array($bookId, $haveRead);
 
+        // Host meetup request form
+        $meetupRequest = new MeetupRequests();
+        // Create the form
+        $form = $this->createForm(MeetupRequestFormType::class, $meetupRequest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $meetupRequest->setHostUser($user);
+            $meetupRequest->setBookID($book->getGoogleBooksId());
+
+            $entityManager->persist($meetupRequest);
+            $entityManager->flush();
+
+            // Redirect to a success page or do other actions
+            return $this->redirectToRoute('book-page', ['id' => $id]);
+        }
+        // ======== BOOK REVIEWS ========= //
+
+        // Check if the book has any reviews by the current user
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy([
+            'user_id' => $user->getId(),
+            'book_id' => $book->getGoogleBooksId(),
+        ]);
+
+        // if $existingReview is not null then the user has already reviewed the book
+        $hasReviewed = $existingReview !== null;
+
+        $reviews = array_slice($entityManager->getRepository(BookReviews::class)->findBy(['book_id' => $id], ['created_at' => 'DESC']), 0, 7);
+        $reviewData = [];
+        foreach ($reviews as $review) {
+            $UserPersonalInfo = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['user' => $review->getUserId()]);
+            // Put review and username in a 2D array reviewData
+            $reviewData[] = [
+                'review' => $review,
+                'username' => $UserPersonalInfo->getNickname()
+            ];
+        }
 
         return $this->render('book_binder/book_page.html.twig', [
             'book' => $book,
-            'meetupRequests' => $meetupRequests,
+            'meetupRequests' => $filteredMeetupRequests,
             'is_in_want_to_read' => $is_in_want_to_read,
             'is_in_currently_reading' => $is_in_currently_reading,
             'is_in_have_read' => $is_in_have_read,
+            'form' => $form->createView(),
+            'reviewData' => $reviewData,
+            'hasReviewed' => $hasReviewed,
+            'review' => $existingReview,
         ]);
+    }
+
+    //"/book/{bookId}/add-review/{userId}", name="add_review", methods={"POST"})
+    #[Route('/add-review/{bookId}', name: 'add_review')]
+    public function addReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $comment = $request->request->get('comment');
+        $rating = $request->request->get('rating');
+
+        // Remove later maybe when bookTitle gets removed from book_reviews?
+        $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $bookId]);
+
+        $review = new BookReviews();
+        $review->setBookID($bookId);
+        $user = $this->getUser();
+        $review->setUserId($user);
+        $review->setReview($comment);
+        $review->setCreatedAt(new \DateTime());
+        $review->setBookTitle($book->getTitle());
+        $review->setRating($rating);
+        $review->setTags("Hi");
+
+        $entityManager->persist($review);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
+    }
+
+    #[Route('/update-review/{bookId}', name: 'update_review')]
+    public function updateReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        $user = $this->getUser();
+        $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy([
+            'user_id' => $user->getId(),
+            'book_id' => $bookId,
+        ]);
+
+        $comment = $request->request->get('comment');
+        $rating = $request->request->get('rating');
+
+        $existingReview->setReview($comment);
+        $existingReview->setRating($rating);
+
+        $entityManager->persist($existingReview);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book-page', ['id' => $bookId]);
     }
 
     #[Route('/book-page/requests/list/join/{bookId}/{meetupRequestId}', name: 'meetup_requests_list_join_book')]
     public function joinMeetupRequest(String $bookId, int $meetupRequestId, EntityManagerInterface $entityManager): Response
     {
-
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var \App\Entity\User $user **/
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            return $this->redirectToRoute('app_login');
+        }
 
         // Get the User and MeetupRequest entities based on the provided IDs
         $meetupRequest = $entityManager->getRepository(MeetupRequests::class)->find($meetupRequestId);
 
-        if ($user && $meetupRequest) {
+        if ($meetupRequest) {
             // Check if the user is already the host
             if ($user != $meetupRequest->getHostUser()) {
                 // Check if the maximum number of participants has been reached
@@ -249,11 +387,8 @@ class SearchController extends AbstractController
     public function handleDropdownSelection(Request $request, EntityManagerInterface $entityManager): Response
     {
         $selection = $request->request->get('selection');
-        $bookId = $request->request->get('book_id');
+        $bookId = (int) $request->request->get('book_id');
 
-        // In turns out that adding this comment fixed the VS Code intelephense error, not sure if that's the case for
-        // Intelj as well
-        /** @var \App\Entity\User $user **/
         $user = $this->getUser();
         $userReadingList = $user->getUserReadingList();
 
@@ -277,7 +412,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($wantToRead, $bookId);
+                $wantToRead[] = $bookId;
                 break;
             case 'Currently Reading':
                 if ($is_in_want_to_read) {
@@ -289,7 +424,7 @@ class SearchController extends AbstractController
                     // remove from have read
                     $haveRead = array_diff($haveRead, [$bookId]);
                 }
-                array_push($currentlyReading, $bookId);
+                $currentlyReading[] = $bookId;
                 break;
             case 'Have Read':
                 if ($is_in_want_to_read) {
@@ -301,7 +436,7 @@ class SearchController extends AbstractController
                 } else if ($is_in_have_read) {
                     // do nothing
                 }
-                array_push($haveRead, $bookId);
+                $haveRead[] = $bookId;
                 break;
             default:
                 // Handle the case where no or an invalid selection is made

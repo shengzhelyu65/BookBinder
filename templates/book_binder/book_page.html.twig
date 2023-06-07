@@ -1,15 +1,22 @@
 {% extends 'base_website.html.twig' %}
 
-{% block body %}
-    <div class="container-fluid d-flex flex-column flex-lg-row">
-        <div class="w-100">
-            <div class="row">
-                <div class="col-auto">
-                    <img src="{{ book.getThumbnail() ?? asset('images/book_cover_empty.png') }}" class="card-img-top" alt="{{ book.getTitle() }}">
+{% block extra_javascript %}
+    {{ encore_entry_script_tags('book_page') }}
+{% endblock %}
 
+{% block body %}
+    <div class="container-fluid d-flex flex-column flex-lg-row m-0 row">
+        <div class="col-lg-6">
+            <div class="container-fluid p-0 m-0 row mb-3">
+                <div class="p-0 col-auto">
+                    {% if book.getThumbnail() %}
+                        <img src="{{ book.getThumbnail() }}" class="card-img-top width-10" alt="{{ book.getTitle() }}">
+                    {% else %}
+                        <img src="{{ asset('images/book_cover_empty.png') }}" class="card-img-top width-10" alt="Empty Book Cover">
+                    {% endif %}
                 </div>
-                <div class="col">
-                    <h1>{{ book.getTitle() }}</h1>
+                <div class="p-0 ps-3 col">
+                    <h4>{{ book.getTitle() }}</h4>
                     <p>
                         {% set authors = book.getAuthor() %}
                         {% if authors|length == 1 %}
@@ -19,13 +26,22 @@
                         {% endif %}
                         {{ authors|join(', ') }}
                     </p>
-                    <p>Rating: {{ book.getRating() }}</p>
-                    {% if book.getReviewCount() is defined %}
-                        <p>Reviews: {{ book.getReviewCount() }}</p>
+                    {% set sumRating = 0 %}
+                    {% set reviewCount = 0 %}
+
+                    {% for reviewRecord in reviewData %}
+                        {% set sumRating = sumRating + reviewRecord['review'].getRating() %}
+                        {% set reviewCount = reviewCount + 1 %}
+                    {% endfor %}
+
+                    {% if reviewCount > 0 %}
+                        {% set bookRating = sumRating / reviewCount %}
+                        <p>Rating: {{ bookRating|round(1) }}</p>
+                        <p>Reviews: {{ reviewCount }}</p>
                     {% endif %}
 
                     <div class="dropdown pb-2">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-book-id="{{ book.getId() }}" data-url="{{ path('handle-dropdown-selection') }}" aria-expanded="false">
                             {% if is_in_want_to_read %}
                                 To Read
                             {% elseif is_in_currently_reading %}
@@ -36,50 +52,29 @@
                                 Add to
                             {% endif %}
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><button type="button" class="dropdown-item" onclick="handleSelection('To Read', {{ book.getId() }})" {% if is_in_want_to_read %}disabled{% endif %}>To Read</button></li>
-                            <li><button type="button" class="dropdown-item" onclick="handleSelection('Currently Reading', {{ book.getId() }})" {% if is_in_currently_reading %}disabled{% endif %}>Currently Reading</button></li>
-                            <li><button type="button" class="dropdown-item" onclick="handleSelection('Have Read', {{ book.getId() }})" {% if is_in_have_read %}disabled{% endif %}>Have Read</button></li>
+                        <ul id="dropdown-lists" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><button id="button-to-read" type="button" class="dropdown-item" data-selection="To Read" {% if is_in_want_to_read %}disabled{% endif %}>To Read</button></li>
+                            <li><button id="button-currently-reading" type="button" class="dropdown-item" data-selection="Currently Reading" {% if is_in_currently_reading %}disabled{% endif %}>Currently Reading</button></li>
+                            <li><button id="button-have-read" type="button" class="dropdown-item" data-selection="Have Read" {% if is_in_have_read %}disabled{% endif %}>Have Read</button></li>
                         </ul>
                     </div>
 
-                    <!-- Todo: Move this script to a separate file  -->
-                    <script>
-                        function handleSelection(selection, bookId) {
-                            var dropdownButton = document.getElementById('dropdownMenuButton1');
-                            dropdownButton.innerHTML = selection;
-
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', '{{ path('handle-dropdown-selection') }}', true);
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    // Handle the response here if needed
-                                    console.log(xhr.responseText);
-                                }
-                            };
-                            xhr.send('selection=' + encodeURIComponent(selection) + '&book_id=' + encodeURIComponent(bookId));
-                        }
-                    </script>
-
-                    <form method="POST" action="{{ path('app_meetup_requests', {'bookId': book.getId()}) }}">
-                        <button type="submit" class="btn btn-primary btn-lg">Host Meetup</button>
-                    </form>
-
+                    <button id="host-up-btn-in-book" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#host">Host Meetup</button>
                 </div>
             </div>
-            <div class="container pt-3">
-                <p>
-                    <button class="btn btn-primary" type="button" onclick="showContent('content1')">
+            <div class="container-fluid p-0 mb-3">
+                <div class="mb-3">
+                    <button id="button-content" class="btn btn-primary active" type="button" data-content="content1">
                         Content
                     </button>
-                    <button class="btn btn-primary" type="button" onclick="showContent('content2')">
+                    <button id="button-details" class="btn btn-primary" type="button" data-content="content2">
                         Details
                     </button>
-                </p>
+                </div>
                 <div class="card card-body">
-                    <p id="content1" style="display: block;">{{ book.getDescription() | raw }}</p>
-                    <p id="content2" style="display: none;">{% set authors = book.getAuthor() %}
+                    <div id="content1" class="d-block">{{ book.getDescription() | raw }}</div>
+                    <div id="content2" class="d-none">
+                        {% set authors = book.getAuthor() %}
                         {% if authors|length == 1 %}
                             Author:
                         {% else %}
@@ -87,76 +82,163 @@
                         {% endif %}
                         {{ authors|join(', ') }}
                         <br>
-                        Date of publish: {{  book.getPublishedDate()|date('Y-m-d') }}
+                        Date of publish: {{ book.getPublishedDate()|date('Y-m-d') }}
                         <br>
                         Pages: {{ book.getPages() }}
-                    </p>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid p-0 mb-3">
+                {% if meetupRequests is not empty %}
+                    <h4>Join Meetups:</h4>
+                    <div class="d-flex flex-row overflow-auto">
+                        {% for meetupRequest in meetupRequests %}
+                            <div class="card mb-3 me-2 width-300-px">
+                                <div class="d-flex flex-row h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
+                                        <p class="card-text">Participants: {{ meetupRequest.getMaxNumber() }}</p>
+                                        <p class="card-text">Library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
+                                        <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
+                                        <a href="{{ path('meetup_requests_list_join_book', {'bookId': book.getGoogleBooksId(),'meetupRequestId': meetupRequest.getMeetupId()}) }}" class="btn btn-primary">Join</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-6 overflow-auto">
+            <h4>Reviews</h4>
+            <!-- if  hasReviewed is false display button edit review -->
+            {% if hasReviewed == false %}
+                <button id="addReviewButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                    Add Review
+                </button>
+            {% else %}
+                <button id="addReviewButton" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                    Edit My Review
+                </button>
+            {% endif %}
+
+            <div class="card mt-3 w-100">
+                <div class="card-body">
+                    {% for reviewRecord in reviewData %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <a id="profile-link-in-review" href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
+                            </div>
+                            <div class="card-body">
+                                <div class="rating">
+                                    {% for i in range(1, 5) %}
+                                        {% if i <= reviewRecord['review'].getRating() %}
+                                            ★
+                                        {% else %}
+                                            ☆
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <p class="card-text text-truncate-3">{{ reviewRecord['review'].getReview() }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if reviewData is empty %}
+                        <p>No reviews yet.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        <div style="width: fit-content">
-            <h3>Join Meetups:</h3>
-            {% for meetupRequest in meetupRequests %}
-                <div class="card mb-3" style="min-width: 300px; max-width: 300px">
-                    <div class="d-flex flex-row h-100">
-                        <img src="{{ book.getThumbnail() ?? asset('images/book_cover_empty.png') }}"
-                             class="rounded-start" alt="{{ book.getTitle() }}" style="width: 140px; object-fit: cover">
-                        <div class="card-body">
-                            <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
-                            <p class="card-text">participants: {{ meetupRequest.getMaxNumber() }}</p>
-                            <p class="card-text">library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
-                            <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
-                            <a href="{{ path('meetup_requests_list_join_book', {'bookId': book.getID(),'meetupRequestId': meetupRequest.getMeetupId()}) }}" class="btn btn-primary">Join</a>
+    </div>
+
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div id="review" class="modal-content">
+                <div class="modal-header">
+                    {% if hasReviewed == false %}
+                        <h5 class="modal-title h4" id="reviewModalLabel">Add Review</h5>
+                    {% else %}
+                        <h5 class="modal-title h4" id="reviewModalLabel">Edit Review</h5>
+                    {% endif %}
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {% if hasReviewed == false %}
+                <form method="POST" action="{{ path('add_review', {'bookId': book.getGoogleBooksId()}) }}" class="review-validation" novalidate>
+                {% else %}
+                <form method="POST" action="{{ path('update_review', {'bookId': book.getGoogleBooksId()}) }}" class="review-validation" novalidate>
+                {% endif %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="comment" class="form-label">Comment:</label>
+                            {% if hasReviewed == false %}
+                            <textarea class="form-control" id="comment" name="comment" rows="5" required></textarea>
+                            {% else %}
+                            <textarea class="form-control" id="comment" name="comment" rows="5" required>{{ review.getReview() }}</textarea>
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                Please enter a comment.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <select class="form-control" id="rating" name="rating" required>
+                                {% if hasReviewed == false %}
+                                <option value="">Select a rating</option>
+                                {% endif %}
+                                {% for i in range(1, 5) %}
+                                    <option value="{{ i }}" {% if hasReviewed and review.getRating() == i %}selected{% endif %}>{{ i }} star{% if i > 1 %}s{% endif %}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a rating.
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div class="modal fade" id="host" tabindex="-1" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
+    <div class="modal fade" id="host" tabindex="-1" aria-labelledby="hostLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="host-meetup-form-in-book">
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="exampleModalLgLabel">Host a meetup</h5>
+                    <h5 class="modal-title h4" id="hostLabel">Host a meetup</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="library-name" class="form-label">Library</label>
-                            <input type="text" class="form-control" id="library-name" name="library-name" required>
+                    {{ form_start(form, { 'attr': { 'class': 'row g-3 meetup-validation', 'novalidate': 'novalidate' } }) }}
+                    <div class="flex-row">
+                        {{ form_label(form.library_ID, 'Library', { 'class': 'form-label' }) }}
+                        {{ form_widget(form.library_ID, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
+                    </div>
+                    <div class="flex-row">
+                        {{ form_label(form.datetime, 'Meetup Date', { 'class': 'form-label' }) }}
+                        {{ form_widget(form.datetime, { 'attr': {'required': 'required' } }) }}
+                        <div class="invalid-feedback">
+                            Invalid datetime
                         </div>
-                        <div class="mb-3">
-                            <label for="meetup-date" class="form-label">Meetup Date</label>
-                            <input type="date" class="form-control" id="meetup-date" name="meetup-date" required>
+                    </div>
+                    <div class="flex-row">
+                        {{ form_label(form.maxNumber, 'Maximum Number of Participants', { 'class': 'form-label' }) }}
+                        {{ form_widget(form.maxNumber, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
+                        <div class="invalid-feedback">
+                            Please select the maximum number of participants
                         </div>
-                        <div class="mb-3">
-                            <label for="max-participants" class="form-label">Maximum Participants</label>
-                            <input type="number" class="form-control" id="max-participants" name="max-participants" required>
-                        </div>
-                    </form>
-
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Confirm</button>
+                    <button id="confirmButton" class="btn btn-primary" type="submit">Submit form</button>
                 </div>
+                    {{ form_end(form) }}
+                
             </div>
         </div>
     </div>
-
-    <script>
-        function showContent(contentId) {
-            var contentElements = document.querySelectorAll('.card.card-body p');
-            contentElements.forEach(function(content) {
-                if (content.id === contentId) {
-                    content.style.display = 'block';
-                } else {
-                    content.style.display = 'none';
-                }
-            });
-        }
-    </script>
-
 {% endblock %}

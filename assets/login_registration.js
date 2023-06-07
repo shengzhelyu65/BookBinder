@@ -19,13 +19,24 @@ import $ from 'jquery';
 
 import 'select2';
 
+// Select2 initialization
+$('.multiple-select-field').select2({
+    theme: "bootstrap-5",
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    closeOnSelect: false,
+    maximumSelectionLength: 5,
+});
 
-$(document).ready(function () {
-    $('.multiple-select-field').select2({
-        theme: "bootstrap-5",
-        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        placeholder: $(this).data('placeholder'),
-        closeOnSelect: false,
-        maximumSelectionLength: 5,
-    });
+// Replaced $(document).ready(function () { ... }) with $(function () { ... })
+$(function () {
+    // Form validation
+    var form = document.querySelector('.form-signin');
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    }, false);
 });

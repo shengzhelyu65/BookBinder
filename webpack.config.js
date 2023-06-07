@@ -22,6 +22,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    .addEntry('base_website', './assets/base_website.js')
+
+    .addEntry('book_page', './assets/book_page.js')
+
     .addEntry('login_registration', './assets/login_registration.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
