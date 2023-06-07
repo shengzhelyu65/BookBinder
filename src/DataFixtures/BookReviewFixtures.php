@@ -36,7 +36,6 @@ class BookReviewFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            ResetAutoincrementFixture::class,
             UserFixtures::class,
             BookFixtures::class,
         ];

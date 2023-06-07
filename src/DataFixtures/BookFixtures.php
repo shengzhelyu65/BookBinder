@@ -4,12 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Book;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use App\Enum\GenreEnum;
 
-class BookFixtures extends Fixture implements DependentFixtureInterface
+class BookFixtures extends Fixture
 {
     private $bookIds = [
         'bgpfDwAAQBAJ',
@@ -53,12 +52,5 @@ class BookFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            ResetAutoincrementFixture::class,
-        ];
     }
 }
