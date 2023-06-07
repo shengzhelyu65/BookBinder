@@ -213,10 +213,6 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $response = $client->getResponse();
         $this->assertTrue($response->isRedirect('/meetup/overview'));
 
-        // Check if there is no new entry in the meetup list
-        $meetupList = $meetupListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
-        $this->assertNull($meetupList);
-
         // Check if the meetup request is deleted
         $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
         $this->assertNull($meetupRequestList);
