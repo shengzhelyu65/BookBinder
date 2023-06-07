@@ -48,10 +48,10 @@
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title text-truncate-2">
-                                    <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}</a>
+                                    <a href="{{ path('book-page', {'id': booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getGoogleBooksId() }) }}" class="text-decoration-none text-black">{{ booksMeetupRequests[meetupRequest.getMeetupID().getBookID()].getTitle() }}</a>
                                 </h5>
                                 <h5 class="card-title">
-                                    <a href="{{ path('profile_other', {'username': meetupRequest.getUserID().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a>
+                                    <a href="{{ path('profile_other', {'username': meetupRequest.getUserID().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupRequest.getUserID().getUserPersonalInfo().getNickname() }}</a>
                                 </h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
@@ -99,9 +99,8 @@
                         </div>
                     </div>
                 </div>
-                 {% endif %}
+                {% endif %}
             {% endfor %}
-
             </div>
         </div>
     </div>
