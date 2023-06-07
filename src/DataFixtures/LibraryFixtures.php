@@ -4,10 +4,9 @@ namespace App\DataFixtures;
 
 use App\Entity\Library;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class LibraryFixtures extends Fixture implements DependentFixtureInterface
+class LibraryFixtures extends Fixture
 {
     public const LIBRARY_REFERENCE = 'library_ref';
 
@@ -90,13 +89,6 @@ class LibraryFixtures extends Fixture implements DependentFixtureInterface
         $library->setEmail($data['email']);
 
         return $library;
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            ResetAutoincrementFixture::class,
-        ];
     }
 }
 

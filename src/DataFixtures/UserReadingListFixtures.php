@@ -64,7 +64,6 @@ class UserReadingListFixtures extends Fixture implements DependentFixtureInterfa
     public function getDependencies(): array
     {
         return [
-            ResetAutoincrementFixture::class,
             UserFixtures::class,
         ];
     }

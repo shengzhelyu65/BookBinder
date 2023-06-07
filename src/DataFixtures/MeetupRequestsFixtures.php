@@ -72,7 +72,6 @@ class MeetupRequestsFixtures extends Fixture implements DependentFixtureInterfac
     public function getDependencies(): array
     {
         return [
-            ResetAutoincrementFixture::class,
             LibraryFixtures::class,
             UserFixtures::class,
             BookFixtures::class,

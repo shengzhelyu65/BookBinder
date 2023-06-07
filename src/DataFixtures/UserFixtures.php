@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
+class UserFixtures extends Fixture
 {
     public const USER_REFERENCE = 'user_ref';
 
@@ -50,12 +50,5 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            ResetAutoincrementFixture::class,
-        ];
     }
 }
