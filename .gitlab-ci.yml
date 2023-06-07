@@ -20,7 +20,7 @@ test-job:
     MYSQL_PASSWORD: pass
     PANTHER_TEST_ENV: test
     # set the correct DSN in Symfony to connect to the temporary database
-    DATABASE_URL: "mysql://root:root_pass@mysql/a22web31"
+    DATABASE_URL: "mysql://root:root_pass@mysql/a22web31_test"
   # before starting the test scripts, add specific software to the container (only for this job)
   before_script:
     # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
