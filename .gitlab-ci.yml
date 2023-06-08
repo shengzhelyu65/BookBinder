@@ -28,8 +28,6 @@ test-job:
   script:
     - composer update vendor/package --with-dependencies
     - composer install
-    - yarn install
-    - yarn encore dev
     # drop the test database if it exists
     - php bin/console doctrine:database:drop --force --if-exists --env=test
     # create the test database
