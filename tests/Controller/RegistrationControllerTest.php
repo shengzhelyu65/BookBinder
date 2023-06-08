@@ -11,6 +11,9 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class RegistrationControllerTest extends PantherTestCase
 {
+    /**
+     * @group PantherTestCase
+     */
     public function testRegistrationProcess()
     {
         $client = static::createPantherClient();
@@ -77,6 +80,9 @@ class RegistrationControllerTest extends PantherTestCase
         $entityManager->remove($userReadingInterest);
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRegister(): void
     {
         $client = static::createClient();
@@ -122,6 +128,9 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertResponseRedirects('/');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRegisterLoggedIn(): void
     {
         $client = static::createClient();
@@ -138,6 +147,9 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertResponseRedirects('/');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRegisterWithExistingData(): void
     {
         $client = static::createClient();
@@ -189,6 +201,9 @@ class RegistrationControllerTest extends PantherTestCase
         $this->assertSelectorTextContains('.alert-danger', 'Nickname already in use');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRegisterWithInvalidData(): void
     {
         $client = static::createClient();

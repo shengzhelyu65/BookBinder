@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
         $genreChoices = GenreEnum::getChoices();
         $languageChoices = LanguageEnum::getChoices();
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 11; $i++) {
             $user = new User();
             $user->setEmail("user{$i}@example.com");
             $user->setPassword(''); // Password is not used in this application

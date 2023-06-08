@@ -5,6 +5,9 @@ namespace App\Tests\Repository;
 use App\Entity\Book;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class BookRepositoryTest extends KernelTestCase
 {
     private $entityManager;

@@ -10,6 +10,9 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class MeetupRequestsControllerTest extends PantherTestCase
 {
+    /**
+     * @group PantherTestCase
+     */
     public function testJoinMeetupProcess(): void
     {
         $client = static::createPantherClient();
@@ -61,6 +64,9 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testMeetupOverview(): void
     {
         $client = static::createClient();
@@ -80,6 +86,9 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $this->assertStringContainsString('Upcoming meetups', $crawler->filter('h4')->text());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testJoinMeetup(): void
     {
         $client = static::createClient();
@@ -130,6 +139,9 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $this->assertInstanceOf(MeetupRequestList::class, $meetupRequestList);
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testAcceptMeetupRequest(): void
     {
         $client = static::createClient();
@@ -181,6 +193,9 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRejectMeetupRequest(): void
     {
         $client = static::createClient();

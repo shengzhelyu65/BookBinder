@@ -8,6 +8,9 @@ use App\Entity\UserReadingInterest;
 use App\Entity\UserReadingList;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class UserRepositoryTest extends KernelTestCase
 {
     private $entityManager;
