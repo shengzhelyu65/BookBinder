@@ -6,18 +6,18 @@
             <div class="d-flex flex-row justify-content-start align-items-center gap-3">
                 <img src="{{ asset('images/default_avatar.png') }}" alt="user" class="rounded-circle size-80">
                 <div class="d-flex flex-column">
-                    <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
-                    {% if  user.getUserPersonalInfo().getName() is not null or user.getUserPersonalInfo().getSurname() is not null %}
-                        <p><b>{{ user.getUserPersonalInfo().getName() }} {{ user.getUserPersonalInfo().getSurname() }}</b></p>
+                    <h1>{{ user.getUserPersonalInfo().getNickname()|default('') }}</h1>
+                    {% if user.getUserPersonalInfo().getName() is not null or user.getUserPersonalInfo().getSurname() is not null %}
+                        <p><b>{{ user.getUserPersonalInfo().getName()|default('') }} {{ user.getUserPersonalInfo().getSurname()|default('') }}</b></p>
                     {% endif %}
                 </div>
             </div>
             <hr>
             <h4>Preferences</h4>
             <p><b>Languages</b></p>
-            <p>{{ user.getUserReadingInterest().getLanguages()|join(', ') }}</p>
+            <p>{{ user.getUserReadingInterest().getLanguages()|join(', ')|default('') }}</p>
             <p><b>Genres</b></p>
-            <p>{{ user.getUserReadingInterest().getGenres()|join(', ') }}</p>
+            <p>{{ user.getUserReadingInterest().getGenres()|join(', ')|default('') }}</p>
             <hr>
             <h4>My reading lists</h4>
             <div class="d-flex flex-row justify-content-between">
@@ -33,7 +33,7 @@
                 {% for bookReview in reviews %}
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle()|default('') }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
@@ -46,11 +46,11 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
-                                <p class="text-truncate-3">{{ bookReview.getReview() }}</p>
+                                <p class="text-truncate-3">{{ bookReview.getReview()|default('') }}</p>
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
-                            On {{ bookReview.getCreatedAt()|date('Y-m-d') }}
+                            On {{ bookReview.getCreatedAt()|date('Y-m-d')|default('') }}
                         </div>
                     </div>
                 {% endfor %}

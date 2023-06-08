@@ -8,26 +8,26 @@
         {% endfor %}
         {{ form_start(settingsForm, {'attr': {'class': 'form-group', 'needs-validation': false}}) }}
         <div class="row mb-0">
-            <div class="col-md-5 mb-3">
+            <div class="col-md-4 mb-3">
+                <div class="form-outline">
+                    {{ form_label(settingsForm.nickname, 'Nickname') }}
+                    {{ form_widget(settingsForm.nickname, {'value': personalInfo.nickname}) }}
+                    {{ form_errors(settingsForm.nickname) }}
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
                 <div class="form-outline">
                     {{ form_label(settingsForm.name, 'Name') }}
                     {{ form_widget(settingsForm.name, {'value': personalInfo.name}) }}
                     {{ form_errors(settingsForm.name) }}
                 </div>
             </div>
-            <div class="col-md-7 mb-3">
+            <div class="col-md-4 mb-3">
                 <div class="form-outline">
                     {{ form_label(settingsForm.surname, 'Surname') }}
                     {{ form_widget(settingsForm.surname, {'value': personalInfo.surname}) }}
                     {{ form_errors(settingsForm.surname) }}
                 </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="form-outline">
-                {{ form_label(settingsForm.nickname, 'Nickname') }}
-                {{ form_widget(settingsForm.nickname, {'value': personalInfo.nickname}) }}
-                {{ form_errors(settingsForm.nickname) }}
             </div>
         </div>
         <h5>Change preferences</h5>

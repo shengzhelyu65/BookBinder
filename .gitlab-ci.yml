@@ -5,10 +5,7 @@ stages:
   - test
   - deploy
 
-test-job:
-  stage: test
-  only:
-  - Tests # change to dev later
+.common-test-config: &common-test-config
   services:
     # a container with a temporary mysql db for running unit tests
     - mysql:8
@@ -29,7 +26,7 @@ test-job:
     - apk add rsync
     # install Node.js and Yarn
     - apk add --no-cache nodejs yarn
-  script:
+    # composer scripts to install dependencies and build assets
     - composer update vendor/package --with-dependencies
     - composer install
     - yarn install
@@ -42,11 +39,29 @@ test-job:
     - php bin/console doctrine:migrations:migrate --no-interaction --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
-    # run the tests in the EnumTypesTests group
+
+test-job-EnumTypes:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
     - php bin/phpunit --group=EnumTypesTests
-    # run the tests in the RepositoryTests group
+
+test-job-Repository:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
     - php bin/phpunit --group=RepositoryTests
-    # run the tests in the WebTestCases group
+
+test-job-Web:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
     - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo

@@ -6,22 +6,22 @@
             <div class="d-flex flex-row justify-content-start align-items-center gap-3">
                 <img src="{{ asset('images/default_avatar.png') }}" alt="user" class="rounded-circle size-80">
                 <div class="d-flex flex-column">
-                    <h1>{{ user.getUserPersonalInfo().getNickname() }}</h1>
+                    <h1>{{ user.getUserPersonalInfo().getNickname()|default('') }}</h1>
                 </div>
             </div>
             <hr>
             <h4>Preferences</h4>
             <p><b>Languages</b></p>
-            <p>{{ user.getUserReadingInterest().getLanguages()|join(', ') }}</p>
+            <p>{{ user.getUserReadingInterest().getLanguages()|join(', ')|default('') }}</p>
             <p><b>Genres</b></p>
-            <p>{{ user.getUserReadingInterest().getGenres()|join(', ') }}</p>
+            <p>{{ user.getUserReadingInterest().getGenres()|join(', ')|default('') }}</p>
             <hr>
             <h4>My reading lists</h4>
             <div class="mb-3">
                 <div class="mb-3 d-flex justify-content-left">
                     <h5>Want to Read ({{ want_to_read|length }})</h5>
                 </div>
-                {% if want_to_read|length > 0 %}
+                {% if want_to_read is defined and want_to_read|length > 0 %}
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in want_to_read %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
@@ -41,7 +41,7 @@
                 <div class="mb-3 d-flex justify-content-left">
                     <h5>Currently Reading ({{ currently_reading|length }})</h5>
                 </div>
-                {% if currently_reading|length > 0 %}
+                {% if currently_reading is defined and currently_reading|length > 0 %}
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in currently_reading %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
@@ -61,7 +61,7 @@
                 <div class="mb-3 d-flex justify-content-left">
                     <h5>Have Read ({{ have_read|length }})</h5>
                 </div>
-                {% if have_read|length > 0 %}
+                {% if have_read is defined and have_read|length > 0 %}
                     <div class="d-flex flex-row overflow-auto">
                         {% for book in have_read %}
                             <a href="{{ path('book-page', {'id': book.getGoogleBooksId() }) }}" class="text-decoration-none text-black p-2">
@@ -85,7 +85,7 @@
                 {% for bookReview in reviews %}
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle() }}</a>
+                            <a href="{{ path('book-page', {'id': bookReview.getBookID() }) }}" class="text-decoration-none text-black text-truncate-1">{{ bookReview.getBookTitle()|default('') }}</a>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
@@ -98,11 +98,11 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
-                                <p class="text-truncate-3">{{ bookReview.getReview() }}</p>
+                                <p class="text-truncate-3">{{ bookReview.getReview()|default('') }}</p>
                             </blockquote>
                         </div>
                         <div class="card-footer text-muted">
-                            On {{ bookReview.getCreatedAt()|date('Y-m-d') }}
+                            On {{ bookReview.getCreatedAt()|date('Y-m-d')|default('') }}
                         </div>
                     </div>
                 {% endfor %}
