@@ -40,6 +40,14 @@ stages:
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
 
+test-job-DataCoverage:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
+    - php bin/phpunit --coverage-html coverage
+
 test-job-EnumTypes:
   stage: test
   only:
@@ -47,6 +55,9 @@ test-job-EnumTypes:
   <<: *common-test-config
   script:
     - php bin/phpunit --group=EnumTypesTests
+  needs:
+    - job: test-job-DataCoverage
+      artifacts: true
 
 test-job-Repository:
   stage: test
@@ -55,6 +66,9 @@ test-job-Repository:
   <<: *common-test-config
   script:
     - php bin/phpunit --group=RepositoryTests
+  needs:
+    - job: test-job-DataCoverage
+      artifacts: true
 
 test-job-Web:
   stage: test
@@ -63,6 +77,9 @@ test-job-Web:
   <<: *common-test-config
   script:
     - php bin/phpunit --group=WebTestCase
+  needs:
+    - job: test-job-DataCoverage
+      artifacts: true
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
