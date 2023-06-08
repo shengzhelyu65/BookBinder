@@ -46,9 +46,6 @@ test-job-EnumTypes:
     - Tests
   <<: *common-test-config
   script:
-    - php bin/console doctrine:database:create --env=test # create the test database
-    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
-    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=EnumTypesTests
 
 test-job-Repository:
@@ -57,9 +54,6 @@ test-job-Repository:
     - Tests
   <<: *common-test-config
   script:
-    - php bin/console doctrine:database:create --env=test # create the test database
-    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
-    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=RepositoryTests
 
 test-job-Web:
@@ -68,9 +62,6 @@ test-job-Web:
     - Tests
   <<: *common-test-config
   script:
-    - php bin/console doctrine:database:create --env=test # create the test database
-    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
-    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo
