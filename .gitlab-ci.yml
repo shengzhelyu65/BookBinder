@@ -41,7 +41,7 @@ test-job:
     # run the tests in the RepositoryTests group
     - php bin/phpunit --group=RepositoryTests
     # run the tests in the WebTestCases group
-    - php bin/phpunit --group=WebTestCases
+    - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
