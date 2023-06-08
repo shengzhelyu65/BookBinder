@@ -26,13 +26,7 @@ stages:
     - apk add rsync
     # install Node.js and Yarn
     - apk add --no-cache nodejs yarn
-
-test-job:
-  stage: test
-  only:
-    - Tests # change to dev later
-  <<: *common-test-config
-  script:
+    # composer scripts to install dependencies and build assets
     - composer update vendor/package --with-dependencies
     - composer install
     - yarn install
