@@ -36,9 +36,12 @@ test-job:
     - php bin/console doctrine:migrations:migrate --no-interaction --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
-    # run the tests (using the temporary database)
-    - php bin/phpunit
-
+    # run the tests in the EnumTypesTests group
+    - php bin/phpunit --group=EnumTypesTests
+    # run the tests in the RepositoryTests group
+    - php bin/phpunit --group=RepositoryTests
+    # run the tests in the WebTestCases group
+    - php bin/phpunit --group=WebTestCases
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
