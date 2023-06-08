@@ -8,7 +8,7 @@ stages:
 test-job:
   stage: test
   only:
-  - Tests # change to dev later
+    - Tests # change to dev later
   services:
     # a container with a temporary mysql db for running unit tests
     - mysql:8
