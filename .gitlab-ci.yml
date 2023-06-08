@@ -1,17 +1,11 @@
 #define the base docker image file used for all jobs 
 image: composer:2.5
-default:
-  artifacts:
-    expire_in: 15min
 
 stages:
   - test
   - deploy
 
-test-job:
-  stage: test
-  only:
-    - Tests # change to dev later
+.common-test-config: &common-test-config
   services:
     # a container with a temporary mysql db for running unit tests
     - mysql:8
@@ -32,6 +26,12 @@ test-job:
     - apk add rsync
     # install Node.js and Yarn
     - apk add --no-cache nodejs yarn
+
+test-job:
+  stage: test
+  only:
+    - Tests # change to dev later
+  <<: *common-test-config
   script:
     - composer update vendor/package --with-dependencies
     - composer install
@@ -50,21 +50,33 @@ test-job-EnumTypes:
   stage: test
   only:
     - Tests
+  <<: *common-test-config
   script:
+    - php bin/console doctrine:database:create --env=test # create the test database
+    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
+    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=EnumTypesTests
 
 test-job-Repository:
   stage: test
   only:
     - Tests
+  <<: *common-test-config
   script:
+    - php bin/console doctrine:database:create --env=test # create the test database
+    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
+    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=RepositoryTests
 
 test-job-Web:
   stage: test
   only:
     - Tests
+  <<: *common-test-config
   script:
+    - php bin/console doctrine:database:create --env=test # create the test database
+    - php bin/console doctrine:migrations:migrate --no-interaction --env=test # run the migrations
+    - php bin/console doctrine:fixtures:load --append -n --env=test # load test data
     - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo
