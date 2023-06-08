@@ -66,8 +66,9 @@ class SearchController extends AbstractController
     #[Route('/book-search/openAI/{prompt}', name: 'book-search/openAI')]
     public function bookSearchOpenAI($prompt): JsonResponse
     {
-        // Get API key from env
-        $apiKey = getenv('OPENAI_API_KEY');
+        // Get API key from env (Not working anymore in master???)
+        // $apiKey = getenv('GOOGLE_BOOKS_API_KEY');
+        $apiKey = "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";
         $model = 'gpt-3.5-turbo';
 
         $messages = [
