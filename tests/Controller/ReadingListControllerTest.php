@@ -8,6 +8,9 @@ use App\Entity\User;
 
 class ReadingListControllerTest extends PantherTestCase
 {
+    /**
+     * @group PantherTestCase
+     */
     public function testShowReadingList(): void
     {
         $client = static::createClient();

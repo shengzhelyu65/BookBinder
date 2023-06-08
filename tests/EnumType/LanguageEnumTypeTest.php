@@ -9,6 +9,9 @@ use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group EnumTypesTests
+ */
 class LanguageEnumTypeTest extends TestCase
 {
     /**

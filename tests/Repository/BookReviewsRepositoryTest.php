@@ -6,6 +6,9 @@ use App\Entity\BookReviews;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class BookReviewsRepositoryTest extends KernelTestCase
 {
     private $entityManager;

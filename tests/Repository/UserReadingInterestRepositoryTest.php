@@ -8,6 +8,9 @@ use App\Enum\GenreEnum;
 use App\Enum\LanguageEnum;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class UserReadingInterestRepositoryTest extends KernelTestCase
 {
     private $entityManager;

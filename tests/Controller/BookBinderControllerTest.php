@@ -9,13 +9,15 @@ use App\Entity\MeetupRequestList;
 use App\Entity\MeetupRequests;
 use App\Entity\User;
 use App\Entity\UserReadingInterest;
-use App\Entity\UserReadingList;
 use App\Enum\GenreEnum;
 use App\Enum\LanguageEnum;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookBinderControllerTest extends WebTestCase
 {
+    /**
+     * @group WebTestCase
+     */
     public function testHomeRedirectsToLoginWhenUserIsNull()
     {
         $client = static::createClient();
@@ -24,6 +26,9 @@ class BookBinderControllerTest extends WebTestCase
         $this->assertNotNull($client->getResponse()->isRedirect('/login'));
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testHomeRedirectsToReadingInterestWhenGenresNotFound()
     {
         $client = static::createClient();
@@ -51,6 +56,9 @@ class BookBinderControllerTest extends WebTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testIndex(): void
     {
         $client = static::createClient();
@@ -81,6 +89,9 @@ class BookBinderControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testGenresReviews(): void
     {
         $client = static::createClient();
@@ -110,6 +121,9 @@ class BookBinderControllerTest extends WebTestCase
         $this->assertStringContainsString($review[0]->getReview(), $crawler->filter('div.col-md-4.d-none.d-md-block div.card-body p')->text());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testRegisterATestUser()
     {
         $client = static::createClient();

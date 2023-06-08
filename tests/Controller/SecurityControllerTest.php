@@ -16,6 +16,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityControllerTest extends PantherTestCase
 {
+    /**
+     * @group PantherTestCase
+     */
     public function testLogin(): void
     {
         $client = static::createPantherClient();
@@ -44,6 +47,7 @@ class SecurityControllerTest extends PantherTestCase
     }
 
     /**
+     * @group WebTestCase
      * @throws \Exception
      */
     public function testAuthenticate()
@@ -79,6 +83,9 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertEquals(RedirectResponse::class, get_class($response));
     }
 
+    /**
+     * @group PantherTestCase
+     */
     public function testOnAuthenticationSuccess()
     {
         // Create a Panther client to make the request
@@ -109,6 +116,9 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertEquals($targetPath, $response->getTargetUrl());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testLoginPage()
     {
         $client = static::createClient();
@@ -118,6 +128,9 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertSelectorTextContains('h1', 'Welcome to BookBinder');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testLoginAction()
     {
         $client = static::createClient();
@@ -130,6 +143,9 @@ class SecurityControllerTest extends PantherTestCase
         $this->assertResponseRedirects();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testLogoutAction()
     {
         $client = static::createClient();
@@ -147,6 +163,9 @@ class SecurityControllerTest extends PantherTestCase
         // Add assertions for any other expected behavior after logout
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testGoogleCheckAction()
     {
         $client = static::createClient();

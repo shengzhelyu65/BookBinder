@@ -10,6 +10,9 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class SettingsControllerTest extends PantherTestCase
 {
+    /**
+     * @group WebTestCase
+     */
     public function testSettingsPageWhenNotLoggedIn()
     {
         $client = static::createClient();
@@ -18,6 +21,9 @@ class SettingsControllerTest extends PantherTestCase
         $this->assertResponseRedirects('/login');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testSettingsFormSubmission()
     {
         $client = static::createClient();
@@ -60,6 +66,9 @@ class SettingsControllerTest extends PantherTestCase
         $this->assertSame('adult, history', $genres);
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testNicknameAlreadyInUse(): void
     {
         $client = static::createClient();
