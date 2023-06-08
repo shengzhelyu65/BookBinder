@@ -25,9 +25,15 @@ test-job:
   before_script:
     # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
     - docker-php-ext-install pdo pdo_mysql
+    # this container runs Alpine Linux, where apk is the package manager (not apt-get)
+    - apk add rsync
+    # install Node.js and Yarn
+    - apk add --no-cache nodejs yarn
   script:
     - composer update vendor/package --with-dependencies
     - composer install
+    - yarn install
+    - yarn encore dev
     # drop the test database if it exists
     - php bin/console doctrine:database:drop --force --if-exists --env=test
     # create the test database
