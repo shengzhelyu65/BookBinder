@@ -1,5 +1,8 @@
 #define the base docker image file used for all jobs 
 image: composer:2.5
+default:
+  artifacts:
+    expire_in: 15min
 
 stages:
   - test
@@ -42,11 +45,26 @@ test-job:
     - php bin/console doctrine:migrations:migrate --no-interaction --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
-    # run the tests in the EnumTypesTests group
+
+test-job-EnumTypes:
+  stage: test
+  only:
+    - Tests
+  script:
     - php bin/phpunit --group=EnumTypesTests
-    # run the tests in the RepositoryTests group
+
+test-job-Repository:
+  stage: test
+  only:
+    - Tests
+  script:
     - php bin/phpunit --group=RepositoryTests
-    # run the tests in the WebTestCases group
+
+test-job-Web:
+  stage: test
+  only:
+    - Tests
+  script:
     - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo
