@@ -72,15 +72,25 @@ deploy-job:
     - master
   # Before we start any job, prepare the container with some extra configuration 
   # e.g. setting the ssh credentials, so we can later copy to shell.studev.groept.be
-  before_script:
-    # create a local .ssh folder in the container
-    - mkdir -p ~/.ssh
-    - eval $(ssh-agent -s)
-    # add the fingerprint for shell.studev.groept.be as a trusted host
-    - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
-    # install rsync to copy files to the web server
-    # this container runs Alpine Linux, where apk is the package manager (not apt-get)
-    - apk add rsync
+before_script:
+  # create a local .ssh folder in the container
+  - mkdir -p ~/.ssh
+  # start the ssh-agent and add the private key to the system  
+  - eval $(ssh-agent -s)  
+  - ssh-add - <<< "$SSH_PRIVATE_KEY"
+  # add the fingerprint for shell.studev.groept.be as a trusted host
+  - ssh-keyscan shell.studev.groept.be > ~/.ssh/known_hosts
+  # install rsync to copy files to the web server
+  # this container runs Alpine Linux, where apk is the package manager (not apt-get)
+  - apk add rsync
+  # install Node.js and Yarn
+  - apk add --no-cache nodejs yarn
+
+# Every job will start a container with a clone from the current repo
+deploy-job:
+  # run this job only when there is a push on the master branch
+  only:
+    - master
   script:
     - composer install
     # Build assets with Encore
