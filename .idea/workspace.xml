@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="w3c validation for search page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GoogleBooksApi/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
