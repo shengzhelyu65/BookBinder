@@ -143,14 +143,13 @@ class SearchControllerTest extends PantherTestCase
         // Find the form wizard under div #host-meetup-form-in-book
         $form = $crawler->filter('#host-meetup-form-in-book form')->form();
         $this->assertNotNull($form);
-        $library = $entityManager->getRepository(Library::class)->findOneBy(['library_ID' => 1]);
         // choose the first library
-        $client->executeScript("document.querySelector('#host-meetup-form-in-book select[name=\"meetup_request_form[library_ID]\"]').value = '{$library->getLibraryID()}';");
-        $client->executeScript("document.querySelector('#host-meetup-form-in-book input[name=\"meetup_request_form[datetime]\"]').value = '2050-01-01 00:00:00';");
-        $client->executeScript("document.querySelector('#host-meetup-form-in-book input[name=\"meetup_request_form[maxNumber]\"]').value = '10';");
+        $client->executeScript("document.querySelector('#meetup_request_form_library_ID').value = '1';");
+        $client->executeScript("document.querySelector('#meetup_request_form_datetime').value = '2026-01-01 00:00:00';");
+        $client->executeScript("document.querySelector('#meetup_request_form_maxNumber').value = '10';");
 
         // Find a button said "Confirm" and click it
-        $client->executeScript("document.querySelector('#host-meetup-form-in-book #confirmButton').click();");
+        $client->executeScript("document.querySelector('#confirmButton').click();");
 
         // check if the page is redirected to the book page
         $this->assertStringContainsString("/book-page/{$bookId}", $client->getCurrentURL());
@@ -554,11 +553,11 @@ class SearchControllerTest extends PantherTestCase
         $this->assertStringContainsString("/book-search/Harry", $client->getCurrentURL());
 
         // Update the crawler
-        $crawler = $client->waitFor('#search-result-in-search');
+        $crawler = $client->waitFor('.search-result-in-search');
         $this->assertStringContainsString("You searched for 'Harry'", $crawler->filter('#search-result-message')->text());
 
         // Find and click on the specific search result
-        $resultLink = $crawler->filter('#search-result-in-search')->first();
+        $resultLink = $crawler->filter('.search-result-in-search')->first();
         $this->assertNotNull($resultLink);
         $bookId = $resultLink->attr('href');
         $bookId = substr($bookId, strrpos($bookId, '/') + 1);
@@ -802,7 +801,7 @@ class SearchControllerTest extends PantherTestCase
         $crawler = $client->request('GET', "/book-page/{$bookId}");
 
         // Click on the link containing one of the reviewers' name
-        $userProfileLink = $crawler->filter('#profile-link-in-review')->first();
+        $userProfileLink = $crawler->filter('.profile-link-in-review')->first();
         $this->assertNotNull($userProfileLink);
         $userProfileLink->click();
 
