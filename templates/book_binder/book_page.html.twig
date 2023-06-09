@@ -128,7 +128,7 @@
                     {% for reviewRecord in reviewData %}
                         <div class="card mb-3">
                             <div class="card-header">
-                                <a id="profile-link-in-review" href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
+                                <a href="{{ path('profile_other', {'username': reviewRecord['username'] }) }}" class="text-decoration-none text-black profile-link-in-review"><strong>{{ reviewRecord['username'] }}</strong></a> - {{ reviewRecord['review'].getCreatedAt()|date('F j, Y') }}
                             </div>
                             <div class="card-body">
                                 <div class="rating">
@@ -215,29 +215,28 @@
                     {{ form_start(form, { 'attr': { 'class': 'row g-3 meetup-validation', 'novalidate': 'novalidate' } }) }}
                     <div class="flex-row">
                         {{ form_label(form.library_ID, 'Library', { 'class': 'form-label' }) }}
-                        {{ form_widget(form.library_ID, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
+                        {{ form_widget(form.library_ID) }}
                     </div>
                     <div class="flex-row">
                         {{ form_label(form.datetime, 'Meetup Date', { 'class': 'form-label' }) }}
-                        {{ form_widget(form.datetime, { 'attr': {'required': 'required' } }) }}
+                        {{ form_widget(form.datetime) }}
                         <div class="invalid-feedback">
                             Invalid datetime
                         </div>
                     </div>
                     <div class="flex-row">
                         {{ form_label(form.maxNumber, 'Maximum Number of Participants', { 'class': 'form-label' }) }}
-                        {{ form_widget(form.maxNumber, { 'attr': { 'class': 'form-control', 'required': 'required' } }) }}
+                        {{ form_widget(form.maxNumber) }}
                         <div class="invalid-feedback">
                             Please select the maximum number of participants
                         </div>
                     </div>
+                    {{ form_end(form) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button id="confirmButton" class="btn btn-primary" type="submit">Submit form</button>
                 </div>
-                    {{ form_end(form) }}
-                
             </div>
         </div>
     </div>
