@@ -43,7 +43,7 @@ stages:
 test-job-EnumTypes:
   stage: test
   only:
-    - Tests
+    - dev
   <<: *common-test-config
   script:
     - php bin/phpunit --group=EnumTypesTests
@@ -51,7 +51,7 @@ test-job-EnumTypes:
 test-job-Repository:
   stage: test
   only:
-    - Tests
+    - dev
   <<: *common-test-config
   script:
     - php bin/phpunit --group=RepositoryTests
@@ -59,7 +59,7 @@ test-job-Repository:
 test-job-Web:
   stage: test
   only:
-    - Tests
+    - dev
   <<: *common-test-config
   script:
     - php bin/phpunit --group=WebTestCase
