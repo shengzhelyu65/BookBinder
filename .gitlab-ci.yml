@@ -89,6 +89,11 @@ deploy-job:
     # rsync is a copy/sync tool we use to copy the current folder ./ to studev    
     # we ignore the .git folder and the .env file    
     # we delete the files on the remote server that are not present in the local copy
-    - rsync -rv --exclude=".git/" --exclude=".idea/" --exclude=".vscode/" --delete ./ a22web31@shell.studev.groept.be:/var/www/html
+    - rsync -rv --exclude=".git/" 
+                --exclude=".idea/" 
+                --exclude=".vscode/"
+                --exclude="config/packages/framework.yaml"
+                --delete 
+                ./ a22web31@shell.studev.groept.be:/var/www/html
     # clear the cache on the remote server and move the build folder out of the public folder
     - ssh -t a22web31@shell.studev.groept.be "cd /var/www/html; cp public/build/ . -r; php bin/console cache:clear;"
