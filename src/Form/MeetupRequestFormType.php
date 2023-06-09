@@ -21,9 +21,9 @@ class MeetupRequestFormType extends AbstractType
     {
         $builder
             ->add('library_ID', EntityType::class, [
+                'required' => true,
                 'class' => Library::class,
                 'choice_label' => 'library_name',
-                'required' => true,
                 'label' => 'Library',
                 'constraints' => [
                     new NotBlank(),

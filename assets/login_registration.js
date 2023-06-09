@@ -15,6 +15,10 @@ require('bootstrap');
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+require('select2/dist/css/select2.min.css')
+
+require('select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css')
+
 import $ from 'jquery';
 
 import 'select2';
