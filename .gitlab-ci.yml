@@ -5,10 +5,7 @@ stages:
   - test
   - deploy
 
-test-job:
-  stage: test
-  only:
-  - Tests # change to dev later
+.common-test-config: &common-test-config
   services:
     # a container with a temporary mysql db for running unit tests
     - mysql:8
@@ -20,20 +17,52 @@ test-job:
     MYSQL_PASSWORD: pass
     PANTHER_TEST_ENV: test
     # set the correct DSN in Symfony to connect to the temporary database
-    DATABASE_URL: "mysql://root:root_pass@mysql/a22web31"
+    DATABASE_URL: "mysql://root:root_pass@mysql/a22web31_test"
   # before starting the test scripts, add specific software to the container (only for this job)
   before_script:
     # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
     - docker-php-ext-install pdo pdo_mysql
-  script:
+    # this container runs Alpine Linux, where apk is the package manager (not apt-get)
+    - apk add rsync
+    # install Node.js and Yarn
+    - apk add --no-cache nodejs yarn
+    # composer scripts to install dependencies and build assets
     - composer update vendor/package --with-dependencies
     - composer install
-    # run the migration on the temporary database
-    - php bin/console doctrine:schema:update --force --env=test
+    - yarn install
+    - yarn encore dev
+    # drop the test database if it exists
+    - php bin/console doctrine:database:drop --force --if-exists --env=test
+    # create the test database
+    - php bin/console doctrine:database:create --env=test
+    # run the migrations on the temporary database
+    - php bin/console doctrine:migrations:migrate --no-interaction --env=test
     # load some test data in the temporary database
     - php bin/console doctrine:fixtures:load --append -n --env=test
-    # run the tests (using the temporary database)
-    - php bin/phpunit
+
+test-job-EnumTypes:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
+    - php bin/phpunit --group=EnumTypesTests
+
+test-job-Repository:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
+    - php bin/phpunit --group=RepositoryTests
+
+test-job-Web:
+  stage: test
+  only:
+    - Tests
+  <<: *common-test-config
+  script:
+    - php bin/phpunit --group=WebTestCase
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
@@ -54,8 +83,12 @@ deploy-job:
     - apk add rsync
   script:
     - composer install
+    # Build assets with Encore
+    - yarn install
+    - yarn encore production
     # rsync is a copy/sync tool we use to copy the current folder ./ to studev    
     # we ignore the .git folder and the .env file    
     # we delete the files on the remote server that are not present in the local copy
-    - rsync -rv --exclude=".git/" --exclude=".env" --delete ./ a22web31@shell.studev.groept.be:/var/www/html
-
+    - rsync -rv --exclude=".git/" --exclude=".idea/" --exclude=".vscode/" --delete ./ a22web31@shell.studev.groept.be:/var/www/html
+    # clear the cache on the remote server and move the build folder out of the public folder
+    - ssh -t a22web31@shell.studev.groept.be "cd /var/www/html; cp public/build/ . -r; php bin/console cache:clear;"

@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker\Factory;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
+class UserFixtures extends Fixture
 {
     public const USER_REFERENCE = 'user_ref';
 
@@ -24,7 +24,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $genreChoices = GenreEnum::getChoices();
         $languageChoices = LanguageEnum::getChoices();
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 11; $i++) {
             $user = new User();
             $user->setEmail("user{$i}@example.com");
             $user->setPassword(''); // Password is not used in this application
@@ -50,12 +50,5 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    }
-
-    public function getDependencies(): array
-    {
-        return [
-            ResetAutoincrementFixture::class,
-        ];
     }
 }

@@ -17,6 +17,9 @@ use Facebook\WebDriver\WebDriverKeys;
 
 class SearchControllerTest extends PantherTestCase
 {
+    /**
+     * @group WebTestCase
+     */
     public function testSearch(): void
     {
         //test book-search
@@ -49,6 +52,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertStringContainsString('Hamlet', $crawler->filter('b')->text());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testClickBook(): void
     {
         // tests book-page
@@ -80,6 +86,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertStringContainsString('Superhobby', $crawler->filter('div.p-0.ps-3.col')->text());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testMultipleSearch(): void
     {
         //test if book-search returns multiple results
@@ -103,6 +112,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertGreaterThan(5, $cardElements->count());
     }
 
+    /**
+     * @group PantherTestCase
+     */
     public function testHostMeetupProcess(): void
     {
         $client = static::createPantherClient();
@@ -155,6 +167,9 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testAddReview(): void
     {
         $client = static::createClient();
@@ -191,6 +206,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertEquals(4, $review->getRating());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testUpdateReview()
     {
         $client = static::createClient();
@@ -218,6 +236,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertEquals(4, $existingReview->getRating());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testJoinMeetup(): void
     {
         $client = static::createClient();
@@ -279,6 +300,9 @@ class SearchControllerTest extends PantherTestCase
         $this->assertInstanceOf(MeetupRequestList::class, $meetupRequestList);
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testToRead(): void
     {
         $client = static::createClient();
@@ -357,6 +381,9 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testCurrentReading(): void
     {
         $client = static::createClient();
@@ -402,6 +429,9 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testHaveRead(): void
     {
         $client = static::createClient();
@@ -447,6 +477,9 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->flush();
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testBookSuggestion()
     {
         $client = static::createClient();
@@ -476,6 +509,9 @@ class SearchControllerTest extends PantherTestCase
         }
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testBookSearchAIGetsJsonResponseWithThumbnailAndId()
     {
         $client = static::createClient();
@@ -491,6 +527,7 @@ class SearchControllerTest extends PantherTestCase
     }
 
     /**
+     * @group PantherTestCase
      * @throws NoSuchElementException
      * @throws TimeoutException
      */
@@ -581,6 +618,9 @@ class SearchControllerTest extends PantherTestCase
 //        $this->assertStringContainsString('/book-page/', $client->getCurrentURL());
 //    }
 
+    /**
+     * @group PantherTestCase
+     */
     public function testEditReviewPanther(): void
     {
         $client = static::createPantherClient();
@@ -659,6 +699,10 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->remove($review);
         $entityManager->flush();
     }
+
+    /**
+     * @group PantherTestCase
+     */
     public function testAddReviewPanther(): void
     {
         $client = static::createPantherClient();
@@ -716,6 +760,10 @@ class SearchControllerTest extends PantherTestCase
         $entityManager->remove($review);
         $entityManager->flush();
     }
+
+    /**
+     * @group PantherTestCase
+     */
     public function testReviewProfileRedirect(): void
     {
         $client = static::createPantherClient();

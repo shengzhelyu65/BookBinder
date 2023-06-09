@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProfileControllerTest extends WebTestCase
 {
+    /**
+     * @group WebTestCase
+     */
     public function testSettingsPageWhenNotLoggedIn()
     {
         $client = static::createClient();
@@ -15,6 +18,9 @@ class ProfileControllerTest extends WebTestCase
         $this->assertResponseRedirects('/login');
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testMyProfile(): void
     {
         $client = static::createClient();
@@ -35,6 +41,9 @@ class ProfileControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', $user->getUserPersonalInfo()->getNickname());
     }
 
+    /**
+     * @group WebTestCase
+     */
     public function testUserProfile()
     {
         $client = static::createClient();

@@ -32,6 +32,11 @@ class SearchController extends AbstractController
     #[Route('/book-search/{query}', name: 'book-search')]
     public function index($query): Response
     {
+        // Access control
+        if ($this->getUser() === null) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $ApiClient = new GoogleBooksApiClient();
 
         $results = $ApiClient->searchBooksByTitle($query, 40);
@@ -66,8 +71,9 @@ class SearchController extends AbstractController
     #[Route('/book-search/openAI/{prompt}', name: 'book-search/openAI')]
     public function bookSearchOpenAI($prompt): JsonResponse
     {
-        // Get API key from env
-        $apiKey = getenv('OPENAI_API_KEY');
+        // Get API key from env (Not working anymore in master???)
+        // $apiKey = getenv('GOOGLE_BOOKS_API_KEY');
+        $apiKey = "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";
         $model = 'gpt-3.5-turbo';
 
         $messages = [
@@ -97,6 +103,12 @@ class SearchController extends AbstractController
     #[Route('/book-page/{id}', name: 'book-page')]
     public function clickBook($id, Request $request, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
     {
+        // Access control
+        if ($this->getUser() === null) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
         // ============= API stuff =============
         // Check if book in cache
         $book = $entityManager->getRepository(Book::class)->findOneBy(['google_books_id' => $id]);

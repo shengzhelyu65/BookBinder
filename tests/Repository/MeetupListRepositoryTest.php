@@ -7,6 +7,9 @@ use App\Entity\MeetupRequests;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class MeetupListRepositoryTest extends KernelTestCase
 {
     private $entityManager;

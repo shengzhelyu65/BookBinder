@@ -6,6 +6,9 @@ use App\Entity\User;
 use App\Entity\UserPersonalInfo;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group RepositoryTests
+ */
 class UserPersonalInfoRepositoryTest extends KernelTestCase
 {
     private $entityManager;
