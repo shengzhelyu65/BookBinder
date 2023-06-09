@@ -86,10 +86,12 @@ deploy-job:
     # Build assets with Encore
     - yarn install
     - yarn encore production
+    - composer dump-env prod
     # rsync is a copy/sync tool we use to copy the current folder ./ to studev    
     # we ignore the .git folder and the .env file    
     # we delete the files on the remote server that are not present in the local copy
-    - rsync -rv --exclude=".git/" 
+    - rsync -rv --exclude=".git/"
+                --exclude=".env" 
                 --exclude=".idea/" 
                 --exclude=".vscode/"
                 --exclude="config/packages/framework.yaml"
