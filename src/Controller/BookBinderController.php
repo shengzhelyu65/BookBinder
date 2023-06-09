@@ -29,7 +29,10 @@ class BookBinderController extends AbstractController
         // if the user has no genres, add some default ones.
         $genres = $user->getUserReadingInterest()->getGenres();
         if (count($genres) === 0) {
-            array_push($genres, 'Fantasy', 'popular', 'classic');
+            array_push($genres, 'fantasy', 'popular', 'classic');
+        }
+        else if (count($genres) < 3) {
+            array_push($genres, 'popular', 'classic');
         }
 
         // Create an empty array to hold the results.

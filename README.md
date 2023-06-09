@@ -1,32 +1,72 @@
 # BookBinder
 
-This is a web application designed and implemented using modern web technologies, including HTML5, CSS3, PHP (Symfony Framework), and JavaScript ES6 and beyond. The goal of the project is to create a healthy and thought-through code base that includes a wide set of features. The team will work collaboratively and follow an agile process, using a GitLab Issue Board and Git log as process documentation.
+This is a web application designed and implemented using modern web technologies, including HTML5, CSS3, PHP (Symfony Framework), and JavaScript ES6. The goal of the project was to create a healthy and thought-through code base that includes a wide set of features. The team worked collaboratively and followed an agile process, using a GitLab Issue Board and Git log as process documentation.
 
-*The subject of the project is BookBinder, which is described in detail in the HCI course introduction. The team will put their own focus on the project and select a set of features they want to implement.*
+## Project URL's & Website credentials
+Here's the [Main login page](https://a22web31.studev.groept.be/). From there you can register a new account or login with an existing one. For a full experience we recommend using the following the registration process, but you can also use the following credentials to login with one of the existing accounts:
+### Regular user A
+- login : vini@gmail.com
+- password : secret
+### Regular user B
+- login : tim@gmail.com
+- password : secret
 
-## Minimal Requirements
+This way you can navigate through the website with two different accounts and see how the user-interaction related features work.
 
+---
+
+## Minimal Requirements & Implemented Features
 - [x] - MySQL database with 5 or more tables
+    (add pictures of the database schema here)    
 - [x] - Fully mapped ORM
+    + Created custom Enum types for the database to hold genres and languages
 - [x] - User login/authentication
-- [ ] - Test code coverage >65%
-- [ ] - Test data with >1000 database records
+    + Symfony Security bundle used for authentication
+    + Google Auth0 used for login and registration
+- [x] - Test code coverage >95%
+    + Test code automatically integrated in GitLab CI/CD pipeline (see .gitlab-ci.yml)
+- [x] - Test data with >1000 database records
+    + 1000+ books automatically added to the database during testing
 - [x] - Use of local/remote JSON API
-- [ ] - (Automatically) deployed on studev.groept.be server
+    + Google Books API used to fetch book information and populate the database
+    + OpenAI API used to generate book descriptions
+- [x] - Automatically deployed on studev.groept.be server
+    + Multiple test jobs and a deploy job (see .gitlab-ci.yml) 
+
+### User Authentication
+The user authentication is handled by the Symfony Security bundle. The user can login with an existing account or register a new one. The registration process is also avaliable for Google Auth0. The user can login with their Google account or create a new account using their email address and a password.
+
+When users register for the first time, they are redirected to a reading interests page. There, they can select their favorite genres and languages. The genres are used to recommend books to the user in the home page.
+
+The login and regiistration forms have browser and server side validation. The user is notified if they enter invalid data.
+
+### Home Page
+
+### Search Bar
+
+### OPenAI API
+
+### Book Page
+
+### Add review
+
+### Meetup Page
+
+### MyList Page
+
+### Profile Page
+
+### Settings Page
 
 
 ## Team
 
-- Scrum Master - *tbd*
-- Database Maintainer - *tbd*
-- Deployment, CI/CD Manager - *tbd*
-- Test Engineer - *tbd*
-
-## Evaluation
-
-The project will be evaluated based on several factors, including the development process, issue board, Git log (commit messages, feature branches), testing (coverage, mocking), code base, and web app. The team's coding style should be consistent, and the code should be refactored and compliant with standards (W3C). 
-
-During the exam period, there will be a live demo of the web app, followed by a Q&A session with all team members. Peer assessment will also be conducted.
+- Scrum Master - Arthur Tavares
+- Database Maintainers - Shengzhe Lyu, Arthur Tavares
+- Deployment, CI/CD Manager - Arthur Tavares
+- Test Developers - Shengzhe Lyu, Thomas
+- Frontend Developer - Louise Cuypers
+- Backend Developers - Maarten Medaer, Louise Cuypers, Shengzhe Lyu, Arthur Tavares
 
 ## Running the Website Locally from cmd prompt (Windows)
 
@@ -46,17 +86,6 @@ During the exam period, there will be a live demo of the web app, followed by a 
     ```
 
 5. If you are using Docker, make sure to expose the port the web server runs the application on to access it.
-
-### Possible issues when accessing the website admin panel locally
-```
-The name of the route associated to "App\Controller\Admin\DashboardController::index" cannot be determined. Clear
-the application cache to run the EasyAdmin cache warmer, which generates the needed data to find this route
-```
-#### Solution
-Clear the cache by running the following command in your terminal:  
-```
-php bin/console cache:clear
-```  
 
 ## Running tests Locally from cmd prompt (Windows)
 First, make sure you hava a test database set up. Use MySQL Installer to install MySQL Server and MySQL Workbench.  

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 // Searchbar
 const form = document.getElementById('searchbar_form');
 form.addEventListener('submit', searchBooks);
