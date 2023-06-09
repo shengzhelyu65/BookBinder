@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Fixed tests">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="separation HTML and Javascript from search bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/base_website.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/base_website.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/login_registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/login_registration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/login_registration.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/login_registration.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_login_registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_login_registration.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_website.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +45,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="seperation_javascript" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -476,6 +483,8 @@
       <workItem from="1685650337871" duration="1392000" />
       <workItem from="1685651758242" duration="2345000" />
       <workItem from="1685881479207" duration="1735000" />
+      <workItem from="1685982428136" duration="34000" />
+      <workItem from="1686293246884" duration="4194000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>

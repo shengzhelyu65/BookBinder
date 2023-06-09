@@ -13,14 +13,14 @@
                 <div class="col-md-5 mb-3">
                     <div class="form-outline">
                         {{ form_label(registrationForm.name, 'Name') }}
-                        {{ form_widget(registrationForm.name, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputName'}}) }}
+                        {{ form_widget(registrationForm.name, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional'}}) }}
                         {{ form_errors(registrationForm.name) }}
                     </div>
                 </div>
                 <div class="col-md-7 mb-3">
                     <div class="form-outline">
                         {{ form_label(registrationForm.surname, 'Surname') }}
-                        {{ form_widget(registrationForm.surname, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional', 'id': 'inputSurname'} }) }}
+                        {{ form_widget(registrationForm.surname, {'required': false, 'attr': {'class': 'form-control', 'placeholder': 'Optional'} }) }}
                         {{ form_errors(registrationForm.surname) }}
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="form-outline">
                         {{ form_label(registrationForm.nickname, 'Nickname') }}
-                        {{ form_widget(registrationForm.nickname, { 'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputNickname'} }) }}
+                        {{ form_widget(registrationForm.nickname, { 'attr': {'class': 'form-control', 'placeholder': 'Required'} }) }}
                         {{ form_errors(registrationForm.nickname) }}
                         <div class="invalid-feedback">
                             Please choose a nickname.
@@ -41,7 +41,7 @@
                 <div class="col-md-8 mb-3">
                     <div class="form-outline">
                         {{ form_label(registrationForm.email, 'Email') }}
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputEmail'}}) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Required'}}) }}
                         {{ form_errors(registrationForm.email) }}
                     </div>
                 </div>
@@ -50,7 +50,7 @@
             <!-- Password input -->
             <div class="form-outline mb-4">
                 {{ form_label(registrationForm.plainPassword, 'Password') }}
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required', 'id': 'inputPassword'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Required'}}) }}
                 {{ form_errors(registrationForm.plainPassword) }}
             </div>
 
