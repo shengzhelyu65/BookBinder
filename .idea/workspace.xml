@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="w3c validation for search page">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change name of folder due to error in production environment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GoogleBooksApi/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/styles/sizing.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/sizing.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -477,6 +478,7 @@
       <workItem from="1685881479207" duration="1735000" />
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
+      <workItem from="1686304378102" duration="2299000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>
@@ -793,7 +795,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686299817905</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="change name of folder due to error in production environment">
+      <created>1686303459650</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1686303459650</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -842,7 +851,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Resizing of the books" />
     <MESSAGE value="Alternative for no book cover" />
     <MESSAGE value="Alternative for no book cover and added search term" />
     <MESSAGE value="Fixed routing to homepage" />
@@ -867,7 +875,8 @@
     <MESSAGE value="w3c validation for login and register" />
     <MESSAGE value="add default genres if number of genres is less than 3" />
     <MESSAGE value="w3c validation for search page" />
-    <option name="LAST_COMMIT_MESSAGE" value="w3c validation for search page" />
+    <MESSAGE value="change name of folder due to error in production environment" />
+    <option name="LAST_COMMIT_MESSAGE" value="change name of folder due to error in production environment" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
