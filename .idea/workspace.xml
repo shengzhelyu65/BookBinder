@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="separation HTML and Javascript from search bar">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="w3c validation for login and register">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/base_website.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/base_website.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/login_registration.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/login_registration.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/login_registration.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/login_registration.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_login_registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_login_registration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_website.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_website.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookBinderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_search.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -484,7 +477,7 @@
       <workItem from="1685651758242" duration="2345000" />
       <workItem from="1685881479207" duration="1735000" />
       <workItem from="1685982428136" duration="34000" />
-      <workItem from="1686293246884" duration="4194000" />
+      <workItem from="1686293246884" duration="5641000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>
@@ -780,7 +773,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685961094180</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="w3c validation for login and register">
+      <created>1686298645983</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1686298645983</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,7 +829,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Search results screen template" />
     <MESSAGE value="Remove link from logo in navbar" />
     <MESSAGE value="Homescreen with dummy reviews" />
     <MESSAGE value="Resizing of the books" />
@@ -854,7 +853,8 @@
     <MESSAGE value="Added nearest_library to UserPersonalInfo" />
     <MESSAGE value="Revert previous commit" />
     <MESSAGE value="Fixed tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed tests" />
+    <MESSAGE value="w3c validation for login and register" />
+    <option name="LAST_COMMIT_MESSAGE" value="w3c validation for login and register" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
