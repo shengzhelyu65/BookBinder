@@ -108,6 +108,11 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $this->assertInstanceOf(MeetupRequests::class, $meetup);
         $meetupId = $meetup->getMeetupID();
         $client->request('GET', "/meetup/requests/list/join/{$userId}/{$meetupId}");
+        $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $user]);
+        if ($meetupRequestList) {
+            $entityManager->remove($meetupRequestList);
+            $entityManager->flush();
+        }
 
         // Check if the user is redirected to the overview page
         $response = $client->getResponse();
