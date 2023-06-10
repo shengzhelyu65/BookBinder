@@ -78,8 +78,12 @@ to retrieve the information and is added to the cache table in the database.
 
 ### Add review
 
-### Meetup Page
+### Meetup Page 
+Meetups can be created by going to a book page and clikcing the "host meetup" button after filling in the form you become the host of the meetup. Other user can now request to join that meetup. As host of a meetup you can accept or deny other user that requested to join your meetup.
 
+The meetup Page displays 3 rows for meetup information and actions. The first row displays the meetups you host or have joined.
+In the second row you can accept or reject requests to join your meetups.
+Then the third row shows meetups you haven't joined yet.
 ### MyList Page
 
 ### Profile Page
@@ -92,8 +96,8 @@ to retrieve the information and is added to the cache table in the database.
 - Scrum Master - Arthur Tavares
 - Database Maintainers - Shengzhe Lyu, Arthur Tavares
 - Deployment, CI/CD Manager - Arthur Tavares
-- Test Developers - Shengzhe Lyu, Thomas
-- Frontend Developer - Louise Cuypers
+- Test Developers - Shengzhe Lyu, Thomas Goris
+- Frontend Developer - Louise Cuypers, Thomas Goris
 - Backend Developers - Maarten Medaer, Louise Cuypers, Shengzhe Lyu, Arthur Tavares
 
 ## Running the Website Locally from cmd prompt (Windows)
