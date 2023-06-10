@@ -81,6 +81,15 @@ $(function handleMeetupForm() {
     // Fetch the form to apply custom Bootstrap validation styles to
     var form = document.querySelector('.meetup-validation');
 
+    // Prevent submission if the form is not valid
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+    }, false);
 
     // Validate datetime before submission
     form.addEventListener('submit', function (event) {
@@ -99,15 +108,5 @@ $(function handleMeetupForm() {
             datetimeInput.classList.remove('is-invalid');
             datetimeInput.classList.add('is-valid');
         }
-    }, false);
-
-    // Prevent submission if the form is not valid
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        form.classList.add('was-validated');
     }, false);
 })();
