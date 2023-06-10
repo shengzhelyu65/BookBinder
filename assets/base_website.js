@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function searchBooks(event) {
     event.preventDefault(); // prevent form submission
-    const query = event.target.querySelector('#search_bar_input').value;
+    let query = event.target.querySelector('#search_bar_input').value;
+    // Change . with space
+    query = query.replace(/\./g, ' ');
     const url = `/book-search/${encodeURIComponent(query)}`;
     console.log("Searching for: " + query);
     window.location.href = url;
