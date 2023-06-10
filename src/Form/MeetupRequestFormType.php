@@ -47,9 +47,6 @@ class MeetupRequestFormType extends AbstractType
                         'message' => 'The date and time must be later than the current time.',
                     ]),
                 ],
-                'attr' => [
-                    'min' => (new \DateTime())->format('Y-m-d'),
-                ],
                 'widget' => 'single_text',
                 'html5' => true,
             ])

@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change name of folder due to error in production environment">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change form_end for w3c validation for book page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/sizing.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/sizing.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +38,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="seperation_javascript" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -478,7 +478,8 @@
       <workItem from="1685881479207" duration="1735000" />
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
-      <workItem from="1686304378102" duration="2299000" />
+      <workItem from="1686304378102" duration="2373000" />
+      <workItem from="1686395985027" duration="2225000" />
     </task>
     <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
       <created>1682875063971</created>
@@ -802,7 +803,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686303459650</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="consistency in cards for meetups">
+      <created>1686306720182</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1686306720182</updated>
+    </task>
+    <task id="LOCAL-00048" summary="change form_end for w3c validation for book page">
+      <created>1686400537309</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1686400537309</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,8 +866,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Alternative for no book cover" />
-    <MESSAGE value="Alternative for no book cover and added search term" />
     <MESSAGE value="Fixed routing to homepage" />
     <MESSAGE value="Rollback to older version" />
     <MESSAGE value="Add default avatar" />
@@ -876,7 +889,9 @@
     <MESSAGE value="add default genres if number of genres is less than 3" />
     <MESSAGE value="w3c validation for search page" />
     <MESSAGE value="change name of folder due to error in production environment" />
-    <option name="LAST_COMMIT_MESSAGE" value="change name of folder due to error in production environment" />
+    <MESSAGE value="consistency in cards for meetups" />
+    <MESSAGE value="change form_end for w3c validation for book page" />
+    <option name="LAST_COMMIT_MESSAGE" value="change form_end for w3c validation for book page" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
