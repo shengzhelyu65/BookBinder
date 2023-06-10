@@ -38,11 +38,11 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $card = $crawler->filter('#meetups-in-overview')->filter('.card-body')->eq(0);
         $this->assertNotNull($card);
         $bookTitle = $card->filter('h5')->text();
-        $joinButton = $card->filter('a.btn');
+        $joinButton = $card->filter('a.btn.join-button');
         $this->assertNotNull($joinButton);
         $meetupId = $joinButton->attr('href');
         $meetupId = substr($meetupId, strrpos($meetupId, '/') + 1);
-        $client->click($joinButton->link());
+        $joinButton->click();
 
         // Check if redirected to the overview page
         $this->assertStringContainsString('/meetup/overview', $client->getCurrentURL());

@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change name of folder due to error in production environment">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="add link to host of meetings in book page and order meetup request by date">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/sizing.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/sizing.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/meetup_request/meetup_overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookBinderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/BookReviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BookReviews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/MeetupRequests.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/MeetupRequests.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +47,7 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$/.." value="dev" />
-        <entry key="$PROJECT_DIR$" value="seperation_javascript" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -478,49 +487,8 @@
       <workItem from="1685881479207" duration="1735000" />
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
-      <workItem from="1686304378102" duration="2299000" />
-    </task>
-    <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
-      <created>1682875063971</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1682875063971</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Base with side navbar">
-      <created>1683286663649</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1683286663649</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Login">
-      <created>1683296200889</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1683296200889</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Base with side bar">
-      <created>1683300042219</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1683300042219</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Logo image">
-      <created>1683300065255</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1683300065255</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Base with sidebar">
-      <created>1683893091138</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1683893091138</updated>
+      <workItem from="1686304378102" duration="2373000" />
+      <workItem from="1686395985027" duration="10614000" />
     </task>
     <task id="LOCAL-00007" summary="Login and registration base">
       <created>1683895021928</created>
@@ -802,7 +770,70 @@
       <option name="project" value="LOCAL" />
       <updated>1686303459650</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="consistency in cards for meetups">
+      <created>1686306720182</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1686306720182</updated>
+    </task>
+    <task id="LOCAL-00048" summary="change form_end for w3c validation for book page">
+      <created>1686400537309</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1686400537309</updated>
+    </task>
+    <task id="LOCAL-00049" summary="remove double validation">
+      <created>1686401034067</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1686401034067</updated>
+    </task>
+    <task id="LOCAL-00050" summary="add decode URI for search bar">
+      <created>1686401225952</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1686401225952</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add filter for meetups that already passed">
+      <created>1686402276972</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1686402276972</updated>
+    </task>
+    <task id="LOCAL-00052" summary="change order of validation">
+      <created>1686402294028</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1686402294028</updated>
+    </task>
+    <task id="LOCAL-00053" summary="add filter for meetups that already passed for meetup page">
+      <created>1686403366966</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1686403366966</updated>
+    </task>
+    <task id="LOCAL-00054" summary="revert changed to validation that caused errors">
+      <created>1686403428901</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1686403428901</updated>
+    </task>
+    <task id="LOCAL-00055" summary="add link to host of meetings in book page and order meetup request by date">
+      <created>1686408130469</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1686408130469</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,15 +882,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Alternative for no book cover" />
-    <MESSAGE value="Alternative for no book cover and added search term" />
-    <MESSAGE value="Fixed routing to homepage" />
-    <MESSAGE value="Rollback to older version" />
-    <MESSAGE value="Add default avatar" />
-    <MESSAGE value="Profile screen with user information" />
-    <MESSAGE value="Homescreen with text truncate and user genres" />
-    <MESSAGE value="Add navigation to meetup overview" />
-    <MESSAGE value="Dev cleanup" />
     <MESSAGE value="Fixed sizing of container" />
     <MESSAGE value="Responsive meetup overview page" />
     <MESSAGE value="Fix bug with width on book page" />
@@ -876,7 +898,16 @@
     <MESSAGE value="add default genres if number of genres is less than 3" />
     <MESSAGE value="w3c validation for search page" />
     <MESSAGE value="change name of folder due to error in production environment" />
-    <option name="LAST_COMMIT_MESSAGE" value="change name of folder due to error in production environment" />
+    <MESSAGE value="consistency in cards for meetups" />
+    <MESSAGE value="change form_end for w3c validation for book page" />
+    <MESSAGE value="remove double validation" />
+    <MESSAGE value="add decode URI for search bar" />
+    <MESSAGE value="add filter for meetups that already passed" />
+    <MESSAGE value="change order of validation" />
+    <MESSAGE value="add filter for meetups that already passed for meetup page" />
+    <MESSAGE value="revert changed to validation that caused errors" />
+    <MESSAGE value="add link to host of meetings in book page and order meetup request by date" />
+    <option name="LAST_COMMIT_MESSAGE" value="add link to host of meetings in book page and order meetup request by date" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

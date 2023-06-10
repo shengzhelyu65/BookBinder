@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -39,7 +40,7 @@ class Book
     private ?int $pages = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $published_date = null;
+    private ?DateTimeInterface $published_date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
@@ -157,12 +158,12 @@ class Book
         return $this;
     }
 
-    public function getPublishedDate(): ?\DateTimeInterface
+    public function getPublishedDate(): ?DateTimeInterface
     {
         return $this->published_date;
     }
 
-    public function setPublishedDate(\DateTimeInterface $published_date): self
+    public function setPublishedDate(DateTimeInterface $published_date): self
     {
         $this->published_date = $published_date;
 

@@ -103,7 +103,7 @@
                             <p class="card-text">Date: {{ meetupAvailable.getDatetime()|date('F j') }}</p>
                             <p class="card-text">Max participants: {{ meetupAvailable.getMaxNumber() }}</p>
                             <p class="card-text">Library: {{ meetupAvailable.getLibraryID().getLibraryName() }}</p>
-                            <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2">Join</a>
+                            <a href="{{ path('meetup_requests_list_join', {'userId': userId, 'meetupRequestId': meetupAvailable.getMeetupId()}) }}" class="btn btn-primary mb-2 join-button">Join</a>
                         </div>
                     </div>
                 </div>
