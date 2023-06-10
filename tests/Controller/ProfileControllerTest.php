@@ -42,7 +42,7 @@ class ProfileControllerTest extends WebTestCase
     }
 
     /**
-     * @group WebTestCase
+     * @group PantherTestCase
      */
     public function testUserProfile()
     {
