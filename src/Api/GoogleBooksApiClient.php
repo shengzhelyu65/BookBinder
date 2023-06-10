@@ -110,10 +110,8 @@ class GoogleBooksApiClient
 
         try {
             // Make the API request to retrieve the book by ID.
-            $book = $service->volumes->get($bookId);
-
             // Return the book object if found.
-            return $book;
+            return $service->volumes->get($bookId);
         } catch (Google_Exception $e) {
             // If the book is not found, return null.
             if ($e->getCode() === 404) {

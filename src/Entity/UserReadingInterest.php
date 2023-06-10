@@ -31,13 +31,13 @@ class UserReadingInterest
         return $this->id;
     }
 
-    #[ORM\Column(type: Types::STRING, enum: LanguageEnum::class, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false, enumType: LanguageEnum::class)]
     public function getLanguages(): array
     {
         return $this->languages;
     }
 
-    #[ORM\Column(type: Types::STRING, enum: LanguageEnum::class, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false, enumType: LanguageEnum::class)]
     public function setLanguages(array $languages): self
     {
         $this->languages = $languages;
@@ -45,13 +45,13 @@ class UserReadingInterest
         return $this;
     }
 
-    #[ORM\Column(type: Types::STRING, enum: GenreEnum::class, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false, enumType: GenreEnum::class)]
     public function getGenres(): array
     {
         return $this->genres;
     }
 
-    #[ORM\Column(type: Types::STRING, enum: GenreEnum::class, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false, enumType: GenreEnum::class)]
     public function setGenres(array $genres): self
     {
         $this->genres = $genres;

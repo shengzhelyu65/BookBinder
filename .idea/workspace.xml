@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="revert changed to validation that caused errors">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="add link to host of meetings in book page and order meetup request by date">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/GoogleBooksApiClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BookBinderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BookBinderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/BookReviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BookReviews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/MeetupRequests.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/MeetupRequests.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -479,14 +488,7 @@
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
       <workItem from="1686304378102" duration="2373000" />
-      <workItem from="1686395985027" duration="8652000" />
-    </task>
-    <task id="LOCAL-00006" summary="Base with sidebar">
-      <created>1683893091138</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1683893091138</updated>
+      <workItem from="1686395985027" duration="10614000" />
     </task>
     <task id="LOCAL-00007" summary="Login and registration base">
       <created>1683895021928</created>
@@ -824,7 +826,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686403428901</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="add link to host of meetings in book page and order meetup request by date">
+      <created>1686408130469</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1686408130469</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -873,7 +882,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Dev cleanup" />
     <MESSAGE value="Fixed sizing of container" />
     <MESSAGE value="Responsive meetup overview page" />
     <MESSAGE value="Fix bug with width on book page" />
@@ -898,7 +906,8 @@
     <MESSAGE value="change order of validation" />
     <MESSAGE value="add filter for meetups that already passed for meetup page" />
     <MESSAGE value="revert changed to validation that caused errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="revert changed to validation that caused errors" />
+    <MESSAGE value="add link to host of meetings in book page and order meetup request by date" />
+    <option name="LAST_COMMIT_MESSAGE" value="add link to host of meetings in book page and order meetup request by date" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

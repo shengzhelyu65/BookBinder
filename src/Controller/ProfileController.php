@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 class ProfileController extends AbstractController  {
     #[Route("/profile", name: 'profile')]
@@ -38,7 +39,7 @@ class ProfileController extends AbstractController  {
 
         try {
             $user = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $username])->getUser();
-        } catch(\Throwable $th) {
+        } catch(Throwable) {
             return $this->redirectToRoute('app_home');
         }
 

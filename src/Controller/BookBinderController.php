@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BookReviews;
 use App\Entity\Book;
 use App\Message\AddBookToDatabase;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -106,9 +107,9 @@ class BookBinderController extends AbstractController
                         }
 
                         if (isset($bookData['volumeInfo']['publishedDate'])) {
-                            $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
+                            $newBook->setPublishedDate(new DateTime($bookData['volumeInfo']['publishedDate']));
                         } else {
-                            $newBook->setPublishedDate(new \DateTime());
+                            $newBook->setPublishedDate(new DateTime());
                         }
 
                         $newBook->setCategory($genre);
