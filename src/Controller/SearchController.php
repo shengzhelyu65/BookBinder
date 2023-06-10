@@ -39,7 +39,7 @@ class SearchController extends AbstractController
 
         $ApiClient = new GoogleBooksApiClient();
 
-        $results = $ApiClient->searchBooksByTitle($query, 40);
+        $results = $ApiClient->searchBooksByTitle(urldecode($query), 40);
 
         // Pass the results array to the Twig template.
         return $this->render('book_binder/book_search.html.twig', [
@@ -204,8 +204,10 @@ class SearchController extends AbstractController
                 WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
             )')
             ->andWhere('mr.book_ID = :bookId')
+            ->andWhere('mr.datetime >= :currentDate')
             ->setParameter('userId', $userId)
             ->setParameter('bookId', $id)
+            ->setParameter('currentDate', date("Y-m-d h:i:sa"))
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
             ->getQuery()

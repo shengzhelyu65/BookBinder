@@ -96,7 +96,7 @@
                             <div class="card mb-3 me-2 width-300-px">
                                 <div class="d-flex flex-row h-100">
                                     <div class="card-body">
-                                        <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
+                                        <h5 class="card-title">Host: <a href="{{ path('profile_other', {'username': meetupRequest.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupRequest.getHostUser().getUserPersonalInfo().getNickname() }}</a></h5>
                                         <p class="card-text">Participants: {{ meetupRequest.getMaxNumber() }}</p>
                                         <p class="card-text">Library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
                                         <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
@@ -182,7 +182,7 @@
                         </div>
                         <div class="form-group">
                             <label for="rating" class="form-label">Rating:</label>
-                            <select class="form-control" id="rating" name="rating" required>
+                            <select class="form-control" id="rating" name="rating" {% if hasReviewed %}size="5"{% endif %} required >
                                 {% if hasReviewed == false %}
                                 <option value="">Select a rating</option>
                                 {% endif %}
@@ -211,8 +211,8 @@
                     <h5 class="modal-title h4" id="hostLabel">Host a meetup</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                {{ form_start(form, { 'attr': { 'class': 'row g-3 meetup-validation', 'novalidate': 'novalidate' } }) }}
                 <div class="modal-body">
-                    {{ form_start(form, { 'attr': { 'class': 'row g-3 meetup-validation', 'novalidate': 'novalidate' } }) }}
                     <div class="flex-row">
                         {{ form_label(form.library_ID, 'Library', { 'class': 'form-label' }) }}
                         {{ form_widget(form.library_ID) }}
