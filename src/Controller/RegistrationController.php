@@ -8,14 +8,11 @@ use App\Entity\UserReadingInterest;
 use App\Entity\UserReadingList;
 use App\Form\RegistrationFormType;
 use App\Form\ReadingInterestFormType;
-use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -111,7 +108,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/reading-interest', name: 'reading_interest')]
-    public function collectReadingInterestForm(Request $request, EntityManagerInterface $entityManager,): Response
+    public function collectReadingInterestForm(Request $request, EntityManagerInterface $entityManager): Response
     {
         // check if the user has already filled the reading interest form
         $user = $this->getUser();

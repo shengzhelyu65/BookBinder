@@ -8,9 +8,12 @@ use App\Entity\MeetupRequests;
 use App\Entity\Book;
 use App\Entity\UserPersonalInfo;
 use App\Message\AddBookToDatabase;
+use DateTime;
+use Google_Exception;
 use OpenAI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +22,6 @@ use App\Entity\MeetupRequestList;
 use App\Form\MeetupRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use OpenAI\Client as OpenAIClient;
 
 /*
  * This controller meant for the development of the
@@ -103,7 +105,7 @@ class SearchController extends AbstractController
     }
 
     /**
-     * @throws \Google_Exception
+     * @throws Google_Exception
      */
     #[Route('/book-page/{id}', name: 'book-page')]
     public function clickBook($id, Request $request, EntityManagerInterface $entityManager, MessageBusInterface $messageBus): Response
@@ -168,9 +170,9 @@ class SearchController extends AbstractController
             }
 
             if (isset($bookData['volumeInfo']['publishedDate'])) {
-                $newBook->setPublishedDate(new \DateTime($bookData['volumeInfo']['publishedDate']));
+                $newBook->setPublishedDate(new DateTime($bookData['volumeInfo']['publishedDate']));
             } else {
-                $newBook->setPublishedDate(new \DateTime());
+                $newBook->setPublishedDate(new DateTime());
             }
 
             if (isset($bookData['volumeInfo']['categories'])) {
@@ -291,7 +293,7 @@ class SearchController extends AbstractController
 
     //"/book/{bookId}/add-review/{userId}", name="add_review", methods={"POST"})
     #[Route('/add-review/{bookId}', name: 'add_review')]
-    public function addReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function addReview(Request $request, $bookId, EntityManagerInterface $entityManager): RedirectResponse
     {
         $comment = $request->request->get('comment');
         $rating = $request->request->get('rating');
@@ -304,7 +306,7 @@ class SearchController extends AbstractController
         $user = $this->getUser();
         $review->setUserId($user);
         $review->setReview($comment);
-        $review->setCreatedAt(new \DateTime());
+        $review->setCreatedAt(new DateTime());
         $review->setBookTitle($book->getTitle());
         $review->setRating($rating);
         $review->setTags("Hi");
@@ -316,7 +318,7 @@ class SearchController extends AbstractController
     }
 
     #[Route('/update-review/{bookId}', name: 'update_review')]
-    public function updateReview(Request $request, $bookId, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function updateReview(Request $request, $bookId, EntityManagerInterface $entityManager): RedirectResponse
     {
         $user = $this->getUser();
         $existingReview = $entityManager->getRepository(BookReviews::class)->findOneBy([
