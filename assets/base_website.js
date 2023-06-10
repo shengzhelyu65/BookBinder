@@ -51,12 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    const generatedText = data.text;
+
+                    let generatedText = data.text;
+
+                    // Replace all . with a space
+                    generatedText = generatedText.replace(/\./g, ' ');
 
                     const APIResponse = await fetch(`/book-search/ai/${encodeURIComponent(generatedText)}`);
 
                     if (APIResponse.ok) {
                         const data = await APIResponse.json();
+
+                        console.log(data);
+                        // check if the insides of the json is empty, so data would be "{}"
+                        if (data === "{}") {
+                            console.log('No recommendation found.');
+                            resetButton(generateButton);
+                            return;
+                        }
 
                         // Check if thumbnail and id exist
                         if (data.thumbnail && data.id) {
@@ -77,17 +89,24 @@ document.addEventListener('DOMContentLoaded', () => {
                             recommendationDiv.appendChild(thumbnailLink);
                         } else {
                             console.log('No thumbnail or id found.');
+
+                            generateButton.style.backgroundColor = 'red';
+                            resetButton(generateButton);
+                            return;
                         }
                     }
                     else {
-                        console.log('Something went wrong with the API call.');
+                        console.log('Something went wrong with the Books API call.');
+                        resetButton(generateButton);
                     }
 
                 } else {
-                    console.log('Something went wrong with the API call.');
+                    console.log('Something went wrong with the OpenAI API call.');
+                    resetButton(generateButton);
                 }
             } catch (error) {
                 console.log('An error occurred:', error.message);
+                resetButton(generateButton);
             }
 
             // Enable the button and change its text back to "Generate"
@@ -96,3 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+function resetButton(button, delay = 1000) {
+    button.style.backgroundColor = 'red';
+    button.textContent = 'Error';
+    setTimeout(() => {
+        button.style.backgroundColor = '';
+        button.disabled = false;
+        button.textContent = 'Generate';
+    }, delay);
+}

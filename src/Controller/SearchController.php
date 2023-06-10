@@ -57,6 +57,11 @@ class SearchController extends AbstractController
         // Result is a size 1 array of Google\Service\Books\Volume
         $result = $ApiClient->searchBooksByTitle($query, 1);
 
+        // Check if result is empty
+        if (count($result) == 0) {
+            return new JsonResponse(null);
+        }
+
         $thumbnail = $result[0]->getVolumeInfo()->getImageLinks()->getThumbnail();
         $id = $result[0]->getId();
 
