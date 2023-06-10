@@ -111,7 +111,9 @@ class MeetupRequestsController extends AbstractController
                 SELECT 1 FROM App\Entity\MeetupRequestList submrl
                 WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
             )')
+            ->andWhere('mr.datetime >= :currentDate')
             ->setParameter('userId', $userId)
+            ->setParameter('currentDate', date("Y-m-d h:i:sa"))
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
@@ -137,7 +139,16 @@ class MeetupRequestsController extends AbstractController
 
         // The second column
         // Retrieve the meetups hosted by the user
-        $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $user]);
+        $hostedMeetups = $entityManager->createQueryBuilder()
+            ->select('mr')
+            ->from('App\Entity\MeetupRequests', 'mr')
+            ->where('mr.host_user = :userId')
+            ->andWhere('mr.datetime >= :currentDate')
+            ->setParameter('userId', $userId)
+            ->setParameter('currentDate', date("Y-m-d h:i:sa"))
+            ->orderBy('mr.datetime', 'ASC')
+            ->getQuery()
+            ->getResult();
         $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
         $booksMeetupRequests = [];
         foreach ($meetupRequests as $meetupRequest) {
@@ -149,7 +160,17 @@ class MeetupRequestsController extends AbstractController
 
         // The first column
         // Get the joined meetup requests for the user
-        $joinedRequests = $entityManager->getRepository(MeetupList::class)->findBy(['user_ID' => $userId]);
+        $joinedRequests = $entityManager->createQueryBuilder()
+            ->select('ml')
+            ->from('App\Entity\MeetupList', 'ml')
+            ->leftJoin('App\Entity\MeetupRequests', 'mr', 'WITH', 'ml.meetup_ID = mr.meetup_ID')
+            ->where('ml.user_ID = :userId')
+            ->andWhere('mr.datetime >= :currentDate')
+            ->setParameter('userId', $userId)
+            ->setParameter('currentDate', date("Y-m-d h:i:sa"))
+            ->orderBy('mr.datetime', 'ASC')
+            ->getQuery()
+            ->getResult();
         $joinedMeetupIds = array_map(function ($joinedRequest) {
             return $joinedRequest->getMeetupID();
         }, $joinedRequests);
