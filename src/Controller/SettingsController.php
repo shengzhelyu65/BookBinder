@@ -38,18 +38,19 @@ class SettingsController extends AbstractController
                 $nickname = $settingsForm->get('nickname')->getData();
                 // check if there is already a user with the same nickname
                 $userWithSameNickname = $entityManager->getRepository(UserPersonalInfo::class)->findOneBy(['nickname' => $nickname]);
-                // get id of the user with the same nickname
-                $userWithSameNicknameId = $userWithSameNickname->getUser()->getId();
 
-                dump($userWithSameNicknameId, $userWithSameNickname, $user);
+                if ($userWithSameNickname !== null) {
+                    // get id of the user with the same nickname
+                    $userWithSameNicknameId = $userWithSameNickname->getUser()->getId();
+                    dump($userWithSameNicknameId, $userWithSameNickname, $user);
 
-                // if there is a user with the same nickname and it is not the current user
-                if ($userWithSameNickname && $userWithSameNicknameId != $user->getId()) {
-                    $this->addFlash('error', 'Nickname already in use');
-                    return $this->redirectToRoute('settings');
-                } else {
-                    $userPersonalInfo->setNickname($settingsForm->get('nickname')->getData());
+                    // if there is a user with the same nickname and it is not the current user
+                    if ($userWithSameNicknameId != $user->getId()) {
+                        $this->addFlash('error', 'Nickname already in use');
+                        return $this->redirectToRoute('settings');
+                    }
                 }
+                $userPersonalInfo->setNickname($settingsForm->get('nickname')->getData());
             }
             if (!empty($settingsForm->get('languages')->getData())) {
                 $userReadingInterest->setLanguages($settingsForm->get('languages')->getData());

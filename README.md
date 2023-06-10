@@ -37,15 +37,43 @@ The user authentication is handled by the Symfony Security bundle. The user can 
 
 When users register for the first time, they are redirected to a reading interests page. There, they can select their favorite genres and languages. The genres are used to recommend books to the user in the home page.
 
-The login and regiistration forms have browser and server side validation. The user is notified if they enter invalid data.
+The login and registration forms have browser and server side validation. The user is notified if they enter invalid data.
 
 ### Home Page
 
 ### Search Bar
+The search-bar contains two event listeners.
 
-### OPenAI API
+1. Submit event
+
+The submit event is used for the search itself. It checks the contents of the input
+and redirects the user to ```/book-search/{query}``` where the controller uses the google-books API to list a number
+of books based on the query. Each book on the search-page has a href to its book-page
+
+2. Keyup
+
+We utilize our cached books table to provide autosuggestions as the user is typing in the searchbar.
+
+### OpenAI API
+Another feature on the website is an AI book recommendation system.
+It utilizes OpenAI's GPT-3.5-turbo Large Language Model to recommend books based on a prompt.
+
+A prompt could be "Something about magic and wizards", after pressing the generate button
+Javascript does a fetch request on one of our endpoints that uses the OpenAI API to get a response.
+This response is the title of the book it recommends. After some prompt engineering this is working fairly well.
+After acquiring the book title it does another fetch request to an endpoint that uses the google-books API
+and returns a google-books ID and a link to the books thumbnail.
+
+The javascript then appends this title and thumbnail to the recommendation panel with a href on the thumbnail
+that leads to the book-page.
+
 
 ### Book Page
+Upon accessing the book-page first a request will be made to the database to check if we have
+a cached version of the book based on the ID and display that. If there is no entry for it a google-books API request is made
+to retrieve the information and is added to the cache table in the database.
+
+
 
 ### Add review
 
