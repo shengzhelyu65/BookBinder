@@ -76,9 +76,8 @@ Upon accessing the book-page first a request will be made to the database to che
 a cached version of the book based on the ID and display that. If there is no entry for it a google-books API request is made
 to retrieve the information and is added to the cache table in the database.
 
-
-
 ### Add review
+Users can add one review to any books they want. Once the review is added they can edit and update their existing review.
 
 ### Meetup Page 
 Meetups can be created by going to a book page and clicking the "host meetup" button after filling in the form you become the host of the meetup. Other user can now request to join that meetup. As host of a meetup you can accept or deny other user that requested to join your meetup.
