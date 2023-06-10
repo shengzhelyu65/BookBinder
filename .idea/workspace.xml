@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change order of validation">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="revert changed to validation that caused errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book_binder/book_page.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -478,21 +479,7 @@
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
       <workItem from="1686304378102" duration="2373000" />
-      <workItem from="1686395985027" duration="4410000" />
-    </task>
-    <task id="LOCAL-00004" summary="Base with side bar">
-      <created>1683300042219</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1683300042219</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Logo image">
-      <created>1683300065255</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1683300065255</updated>
+      <workItem from="1686395985027" duration="8652000" />
     </task>
     <task id="LOCAL-00006" summary="Base with sidebar">
       <created>1683893091138</created>
@@ -823,7 +810,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686402294028</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="add filter for meetups that already passed for meetup page">
+      <created>1686403366966</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1686403366966</updated>
+    </task>
+    <task id="LOCAL-00054" summary="revert changed to validation that caused errors">
+      <created>1686403428901</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1686403428901</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -872,8 +873,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Homescreen with text truncate and user genres" />
-    <MESSAGE value="Add navigation to meetup overview" />
     <MESSAGE value="Dev cleanup" />
     <MESSAGE value="Fixed sizing of container" />
     <MESSAGE value="Responsive meetup overview page" />
@@ -897,7 +896,9 @@
     <MESSAGE value="add decode URI for search bar" />
     <MESSAGE value="add filter for meetups that already passed" />
     <MESSAGE value="change order of validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="change order of validation" />
+    <MESSAGE value="add filter for meetups that already passed for meetup page" />
+    <MESSAGE value="revert changed to validation that caused errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="revert changed to validation that caused errors" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

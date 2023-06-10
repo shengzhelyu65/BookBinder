@@ -13,10 +13,11 @@ Here's the [Main login page](https://a22web31.studev.groept.be/). From there you
 
 This way you can navigate through the website with two different accounts and see how the user-interaction related features work.
 
-## Minimal Requirements & Implemented Features
-- [x] - MySQL database with 11 tables
+---
 
-    ![Software Engineering ERD.png](./Software Engineering ERD.png)   
+## Minimal Requirements & Implemented Features
+- [x] - MySQL database with 5 or more tables
+    (add pictures of the database schema here)    
 - [x] - Fully mapped ORM
     + Created custom Enum types for the database to hold genres and languages
 - [x] - User login/authentication
