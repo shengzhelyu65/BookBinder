@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="add decode URI for search bar">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change order of validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/book_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/book_page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MeetupRequestsController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -479,21 +478,7 @@
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
       <workItem from="1686304378102" duration="2373000" />
-      <workItem from="1686395985027" duration="3589000" />
-    </task>
-    <task id="LOCAL-00002" summary="Base with side navbar">
-      <created>1683286663649</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1683286663649</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Login">
-      <created>1683296200889</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1683296200889</updated>
+      <workItem from="1686395985027" duration="4410000" />
     </task>
     <task id="LOCAL-00004" summary="Base with side bar">
       <created>1683300042219</created>
@@ -824,7 +809,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686401225952</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="add filter for meetups that already passed">
+      <created>1686402276972</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1686402276972</updated>
+    </task>
+    <task id="LOCAL-00052" summary="change order of validation">
+      <created>1686402294028</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1686402294028</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -873,8 +872,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Add default avatar" />
-    <MESSAGE value="Profile screen with user information" />
     <MESSAGE value="Homescreen with text truncate and user genres" />
     <MESSAGE value="Add navigation to meetup overview" />
     <MESSAGE value="Dev cleanup" />
@@ -898,7 +895,9 @@
     <MESSAGE value="change form_end for w3c validation for book page" />
     <MESSAGE value="remove double validation" />
     <MESSAGE value="add decode URI for search bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="add decode URI for search bar" />
+    <MESSAGE value="add filter for meetups that already passed" />
+    <MESSAGE value="change order of validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="change order of validation" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
