@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for C:\Users\dell\Desktop\3-2\Software Engineering and Web Technology\a22web31\src</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="_css/bootstrap.min.css?v=9.2.26" rel="stylesheet" type="text/css">
+  <link href="_css/nv.d3.min.css?v=9.2.26" rel="stylesheet" type="text/css">
+  <link href="_css/style.css?v=9.2.26" rel="stylesheet" type="text/css">
+  <link href="_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="index.html">C:\Users\dell\Desktop\3-2\Software Engineering and Web Technology\a22web31\src</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#18">App\Api\GoogleBooksApiClient</a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#32">App\Controller\SearchController</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#19">App\Controller\SecurityController</a></td><td class="text-right">84%</td></tr>
+       <tr><td><a href="Entity/User.php.html#11">App\Entity\User</a></td><td class="text-right">87%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/SearchController.php.html#32">App\Controller\SearchController</a></td><td class="text-right">61</td></tr>
+       <tr><td><a href="Entity/User.php.html#11">App\Entity\User</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#18">App\Api\GoogleBooksApiClient</a></td><td class="text-right">10</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#19">App\Controller\SecurityController</a></td><td class="text-right">9</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/SearchController.php.html#78"><abbr title="App\Controller\SearchController::bookSearchOpenAI">bookSearchOpenAI</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#35"><abbr title="App\Controller\SecurityController::logout">logout</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/User.php.html#108"><abbr title="App\Entity\User::eraseCredentials">eraseCredentials</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/User.php.html#114"><abbr title="App\Entity\User::isVerified">isVerified</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Entity/User.php.html#119"><abbr title="App\Entity\User::setIsVerified">setIsVerified</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#106"><abbr title="App\Api\GoogleBooksApiClient::getBookById">getBookById</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Security/LoginAuthenticator.php.html#43"><abbr title="App\Security\LoginAuthenticator::onAuthenticationSuccess">onAuthenticationSuccess</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#37"><abbr title="App\Api\GoogleBooksApiClient::searchBooksByTitle">searchBooksByTitle</abbr></a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#73"><abbr title="App\Api\GoogleBooksApiClient::getBooksBySubject">getBooksBySubject</abbr></a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="Repository/UserRepository.php.html#48"><abbr title="App\Repository\UserRepository::upgradePassword">upgradePassword</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#21"><abbr title="App\Controller\SecurityController::login">login</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#407"><abbr title="App\Controller\SearchController::handleDropdownSelection">handleDropdownSelection</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#110"><abbr title="App\Controller\SearchController::clickBook">clickBook</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#41"><abbr title="App\Controller\SecurityController::googleCheckAction">googleCheckAction</abbr></a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#34"><abbr title="App\Controller\SearchController::index">index</abbr></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controller/SearchController.php.html#110"><abbr title="App\Controller\SearchController::clickBook">clickBook</abbr></a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#407"><abbr title="App\Controller\SearchController::handleDropdownSelection">handleDropdownSelection</abbr></a></td><td class="text-right">15</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#41"><abbr title="App\Controller\SecurityController::googleCheckAction">googleCheckAction</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#106"><abbr title="App\Api\GoogleBooksApiClient::getBookById">getBookById</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="Security/LoginAuthenticator.php.html#43"><abbr title="App\Security\LoginAuthenticator::onAuthenticationSuccess">onAuthenticationSuccess</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#37"><abbr title="App\Api\GoogleBooksApiClient::searchBooksByTitle">searchBooksByTitle</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Api/GoogleBooksApiClient.php.html#73"><abbr title="App\Api\GoogleBooksApiClient::getBooksBySubject">getBooksBySubject</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Repository/UserRepository.php.html#48"><abbr title="App\Repository\UserRepository::upgradePassword">upgradePassword</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controller/SecurityController.php.html#21"><abbr title="App\Controller\SecurityController::login">login</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controller/SearchController.php.html#34"><abbr title="App\Controller\SearchController::index">index</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.26</a> using <a href="https://secure.php.net/" target="_top">PHP 8.2.3</a> and <a href="https://phpunit.de/">PHPUnit 9.6.8</a> at Sat Jun 10 20:57:31 UTC 2023.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="_js/jquery.min.js?v=9.2.26" type="text/javascript"></script>
+  <script src="_js/d3.min.js?v=9.2.26" type="text/javascript"></script>
+  <script src="_js/nv.d3.min.js?v=9.2.26" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,1,3,6,29], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([5,0,0,0,1,0,0,1,3,5,7,178], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[72.97297297297297,9,"<a href=\"Api\/GoogleBooksApiClient.php.html#18\">App\\Api\\GoogleBooksApiClient<\/a>"],[93.22033898305084,19,"<a href=\"Controller\/BookBinderController.php.html#16\">App\\Controller\\BookBinderController<\/a>"],[99.09909909909909,15,"<a href=\"Controller\/MeetupRequestsController.php.html#17\">App\\Controller\\MeetupRequestsController<\/a>"],[100,8,"<a href=\"Controller\/ProfileController.php.html#14\">App\\Controller\\ProfileController<\/a>"],[95.83333333333334,5,"<a href=\"Controller\/ReadingListController.php.html#12\">App\\Controller\\ReadingListController<\/a>"],[95.65217391304348,12,"<a href=\"Controller\/RegistrationController.php.html#22\">App\\Controller\\RegistrationController<\/a>"],[80.41666666666667,46,"<a href=\"Controller\/SearchController.php.html#32\">App\\Controller\\SearchController<\/a>"],[84.44444444444444,9,"<a href=\"Controller\/SecurityController.php.html#19\">App\\Controller\\SecurityController<\/a>"],[100,11,"<a href=\"Controller\/SettingsController.php.html#13\">App\\Controller\\SettingsController<\/a>"],[100,4,"<a href=\"Doctrine\/Type\/GenreEnumType.php.html#11\">App\\Doctrine\\Type\\GenreEnumType<\/a>"],[100,4,"<a href=\"Doctrine\/Type\/LanguageEnumType.php.html#11\">App\\Doctrine\\Type\\LanguageEnumType<\/a>"],[100,21,"<a href=\"Entity\/Book.php.html#10\">App\\Entity\\Book<\/a>"],[100,15,"<a href=\"Entity\/BookReviews.php.html#11\">App\\Entity\\BookReviews<\/a>"],[100,17,"<a href=\"Entity\/Library.php.html#8\">App\\Entity\\Library<\/a>"],[100,5,"<a href=\"Entity\/MeetupList.php.html#8\">App\\Entity\\MeetupList<\/a>"],[100,5,"<a href=\"Entity\/MeetupRequestList.php.html#8\">App\\Entity\\MeetupRequestList<\/a>"],[100,11,"<a href=\"Entity\/MeetupRequests.php.html#10\">App\\Entity\\MeetupRequests<\/a>"],[87.5,20,"<a href=\"Entity\/User.php.html#11\">App\\Entity\\User<\/a>"],[100,9,"<a href=\"Entity\/UserPersonalInfo.php.html#8\">App\\Entity\\UserPersonalInfo<\/a>"],[100,7,"<a href=\"Entity\/UserReadingInterest.php.html#11\">App\\Entity\\UserReadingInterest<\/a>"],[100,9,"<a href=\"Entity\/UserReadingList.php.html#8\">App\\Entity\\UserReadingList<\/a>"],[100,2,"<a href=\"Form\/MeetupRequestFormType.php.html#18\">App\\Form\\MeetupRequestFormType<\/a>"],[100,2,"<a href=\"Form\/ReadingInterestFormType.php.html#14\">App\\Form\\ReadingInterestFormType<\/a>"],[100,2,"<a href=\"Form\/RegistrationFormType.php.html#15\">App\\Form\\RegistrationFormType<\/a>"],[100,2,"<a href=\"Form\/SettingsFormType.php.html#16\">App\\Form\\SettingsFormType<\/a>"],[100,0,"<a href=\"Kernel.php.html#8\">App\\Kernel<\/a>"],[100,2,"<a href=\"MessageHandler\/AddBookToDatabaseHandler.php.html#9\">App\\MessageHandler\\AddBookToDatabaseHandler<\/a>"],[100,2,"<a href=\"Message\/AddBookToDatabase.php.html#7\">App\\Message\\AddBookToDatabase<\/a>"],[100,5,"<a href=\"Repository\/BookRepository.php.html#17\">App\\Repository\\BookRepository<\/a>"],[100,7,"<a href=\"Repository\/BookReviewsRepository.php.html#17\">App\\Repository\\BookReviewsRepository<\/a>"],[100,5,"<a href=\"Repository\/LibraryRepository.php.html#17\">App\\Repository\\LibraryRepository<\/a>"],[100,5,"<a href=\"Repository\/MeetupListRepository.php.html#17\">App\\Repository\\MeetupListRepository<\/a>"],[100,5,"<a href=\"Repository\/MeetupRequestListRepository.php.html#17\">App\\Repository\\MeetupRequestListRepository<\/a>"],[100,5,"<a href=\"Repository\/MeetupRequestsRepository.php.html#17\">App\\Repository\\MeetupRequestsRepository<\/a>"],[100,5,"<a href=\"Repository\/UserPersonalInfoRepository.php.html#17\">App\\Repository\\UserPersonalInfoRepository<\/a>"],[100,5,"<a href=\"Repository\/UserReadingInterestRepository.php.html#17\">App\\Repository\\UserReadingInterestRepository<\/a>"],[100,5,"<a href=\"Repository\/UserReadingListRepository.php.html#17\">App\\Repository\\UserReadingListRepository<\/a>"],[90.9090909090909,7,"<a href=\"Repository\/UserRepository.php.html#20\">App\\Repository\\UserRepository<\/a>"],[92.85714285714286,5,"<a href=\"Security\/LoginAuthenticator.php.html#18\">App\\Security\\LoginAuthenticator<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Api\/GoogleBooksApiClient.php.html#24\">App\\Api\\GoogleBooksApiClient::__construct<\/a>"],[72.72727272727273,2,"<a href=\"Api\/GoogleBooksApiClient.php.html#37\">App\\Api\\GoogleBooksApiClient::searchBooksByTitle<\/a>"],[72.72727272727273,2,"<a href=\"Api\/GoogleBooksApiClient.php.html#73\">App\\Api\\GoogleBooksApiClient::getBooksBySubject<\/a>"],[33.33333333333333,3,"<a href=\"Api\/GoogleBooksApiClient.php.html#106\">App\\Api\\GoogleBooksApiClient::getBookById<\/a>"],[100,1,"<a href=\"Api\/GoogleBooksApiClient.php.html#127\">App\\Api\\GoogleBooksApiClient::getBooksService<\/a>"],[93.22033898305084,19,"<a href=\"Controller\/BookBinderController.php.html#18\">App\\Controller\\BookBinderController::home<\/a>"],[100,6,"<a href=\"Controller\/MeetupRequestsController.php.html#19\">App\\Controller\\MeetupRequestsController::joinMeetupRequest<\/a>"],[100,2,"<a href=\"Controller\/MeetupRequestsController.php.html#55\">App\\Controller\\MeetupRequestsController::acceptMeetupRequest<\/a>"],[98.80952380952381,7,"<a href=\"Controller\/MeetupRequestsController.php.html#83\">App\\Controller\\MeetupRequestsController::showMeetupOverview<\/a>"],[100,2,"<a href=\"Controller\/ProfileController.php.html#15\">App\\Controller\\ProfileController::myProfile<\/a>"],[100,6,"<a href=\"Controller\/ProfileController.php.html#33\">App\\Controller\\ProfileController::userProfile<\/a>"],[95.83333333333334,5,"<a href=\"Controller\/ReadingListController.php.html#14\">App\\Controller\\ReadingListController::showReadingList<\/a>"],[95.74468085106383,8,"<a href=\"Controller\/RegistrationController.php.html#25\">App\\Controller\\RegistrationController::register<\/a>"],[95.45454545454545,4,"<a href=\"Controller\/RegistrationController.php.html#110\">App\\Controller\\RegistrationController::collectReadingInterestForm<\/a>"],[88.88888888888889,2,"<a href=\"Controller\/SearchController.php.html#34\">App\\Controller\\SearchController::index<\/a>"],[90.9090909090909,2,"<a href=\"Controller\/SearchController.php.html#54\">App\\Controller\\SearchController::bookSearchAI<\/a>"],[0,1,"<a href=\"Controller\/SearchController.php.html#78\">App\\Controller\\SearchController::bookSearchOpenAI<\/a>"],[81.73076923076923,17,"<a href=\"Controller\/SearchController.php.html#110\">App\\Controller\\SearchController::clickBook<\/a>"],[100,1,"<a href=\"Controller\/SearchController.php.html#295\">App\\Controller\\SearchController::addReview<\/a>"],[100,1,"<a href=\"Controller\/SearchController.php.html#320\">App\\Controller\\SearchController::updateReview<\/a>"],[94.11764705882352,6,"<a href=\"Controller\/SearchController.php.html#341\">App\\Controller\\SearchController::joinMeetupRequest<\/a>"],[100,2,"<a href=\"Controller\/SearchController.php.html#385\">App\\Controller\\SearchController::bookSuggestion<\/a>"],[80.48780487804879,14,"<a href=\"Controller\/SearchController.php.html#407\">App\\Controller\\SearchController::handleDropdownSelection<\/a>"],[80,2,"<a href=\"Controller\/SecurityController.php.html#21\">App\\Controller\\SecurityController::login<\/a>"],[0,1,"<a href=\"Controller\/SecurityController.php.html#35\">App\\Controller\\SecurityController::logout<\/a>"],[87.17948717948718,6,"<a href=\"Controller\/SecurityController.php.html#41\">App\\Controller\\SecurityController::googleCheckAction<\/a>"],[100,11,"<a href=\"Controller\/SettingsController.php.html#15\">App\\Controller\\SettingsController::settings<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/GenreEnumType.php.html#15\">App\\Doctrine\\Type\\GenreEnumType::getSQLDeclaration<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/GenreEnumType.php.html#20\">App\\Doctrine\\Type\\GenreEnumType::convertToPHPValue<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/GenreEnumType.php.html#25\">App\\Doctrine\\Type\\GenreEnumType::convertToDatabaseValue<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/GenreEnumType.php.html#30\">App\\Doctrine\\Type\\GenreEnumType::getName<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/LanguageEnumType.php.html#15\">App\\Doctrine\\Type\\LanguageEnumType::getSQLDeclaration<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/LanguageEnumType.php.html#20\">App\\Doctrine\\Type\\LanguageEnumType::convertToPHPValue<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/LanguageEnumType.php.html#25\">App\\Doctrine\\Type\\LanguageEnumType::convertToDatabaseValue<\/a>"],[100,1,"<a href=\"Doctrine\/Type\/LanguageEnumType.php.html#30\">App\\Doctrine\\Type\\LanguageEnumType::getName<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#48\">App\\Entity\\Book::getCategory<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#53\">App\\Entity\\Book::setCategory<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#60\">App\\Entity\\Book::getId<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#65\">App\\Entity\\Book::getGoogleBooksId<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#70\">App\\Entity\\Book::setGoogleBooksId<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#77\">App\\Entity\\Book::getTitle<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#82\">App\\Entity\\Book::setTitle<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#89\">App\\Entity\\Book::getDescription<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#94\">App\\Entity\\Book::setDescription<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#101\">App\\Entity\\Book::getThumbnail<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#106\">App\\Entity\\Book::setThumbnail<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#113\">App\\Entity\\Book::getRating<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#118\">App\\Entity\\Book::setRating<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#125\">App\\Entity\\Book::getReviewCount<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#130\">App\\Entity\\Book::setReviewCount<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#137\">App\\Entity\\Book::getAuthor<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#142\">App\\Entity\\Book::setAuthor<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#149\">App\\Entity\\Book::getPages<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#154\">App\\Entity\\Book::setPages<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#161\">App\\Entity\\Book::getPublishedDate<\/a>"],[100,1,"<a href=\"Entity\/Book.php.html#166\">App\\Entity\\Book::setPublishedDate<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#42\">App\\Entity\\BookReviews::getReviewId<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#47\">App\\Entity\\BookReviews::getBookId<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#52\">App\\Entity\\BookReviews::setBookId<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#59\">App\\Entity\\BookReviews::getUserId<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#64\">App\\Entity\\BookReviews::setUserId<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#71\">App\\Entity\\BookReviews::getRating<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#76\">App\\Entity\\BookReviews::setRating<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#83\">App\\Entity\\BookReviews::getTags<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#88\">App\\Entity\\BookReviews::setTags<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#95\">App\\Entity\\BookReviews::getReview<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#100\">App\\Entity\\BookReviews::setReview<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#107\">App\\Entity\\BookReviews::getCreatedAt<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#112\">App\\Entity\\BookReviews::setCreatedAt<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#119\">App\\Entity\\BookReviews::getBookTitle<\/a>"],[100,1,"<a href=\"Entity\/BookReviews.php.html#124\">App\\Entity\\BookReviews::setBookTitle<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#40\">App\\Entity\\Library::getLibraryID<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#45\">App\\Entity\\Library::getLibraryName<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#50\">App\\Entity\\Library::setLibraryName<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#57\">App\\Entity\\Library::getZipCode<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#62\">App\\Entity\\Library::setZipCode<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#69\">App\\Entity\\Library::getCity<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#74\">App\\Entity\\Library::setCity<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#81\">App\\Entity\\Library::getHouseNumber<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#86\">App\\Entity\\Library::setHouseNumber<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#93\">App\\Entity\\Library::getStreet<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#98\">App\\Entity\\Library::setStreet<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#105\">App\\Entity\\Library::getNumber<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#110\">App\\Entity\\Library::setNumber<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#117\">App\\Entity\\Library::getWebsite<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#122\">App\\Entity\\Library::setWebsite<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#129\">App\\Entity\\Library::getEmail<\/a>"],[100,1,"<a href=\"Entity\/Library.php.html#134\">App\\Entity\\Library::setEmail<\/a>"],[100,1,"<a href=\"Entity\/MeetupList.php.html#24\">App\\Entity\\MeetupList::getMeetupListID<\/a>"],[100,1,"<a href=\"Entity\/MeetupList.php.html#29\">App\\Entity\\MeetupList::getMeetupID<\/a>"],[100,1,"<a href=\"Entity\/MeetupList.php.html#34\">App\\Entity\\MeetupList::setMeetupID<\/a>"],[100,1,"<a href=\"Entity\/MeetupList.php.html#41\">App\\Entity\\MeetupList::getUserID<\/a>"],[100,1,"<a href=\"Entity\/MeetupList.php.html#46\">App\\Entity\\MeetupList::setUserID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequestList.php.html#24\">App\\Entity\\MeetupRequestList::getMeetupRequestListID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequestList.php.html#29\">App\\Entity\\MeetupRequestList::getMeetupID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequestList.php.html#34\">App\\Entity\\MeetupRequestList::setMeetupID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequestList.php.html#41\">App\\Entity\\MeetupRequestList::getUserID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequestList.php.html#46\">App\\Entity\\MeetupRequestList::setUserID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#35\">App\\Entity\\MeetupRequests::getMeetupID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#40\">App\\Entity\\MeetupRequests::getLibraryID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#45\">App\\Entity\\MeetupRequests::setLibraryID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#52\">App\\Entity\\MeetupRequests::getHostUser<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#57\">App\\Entity\\MeetupRequests::setHostUser<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#64\">App\\Entity\\MeetupRequests::getBookID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#69\">App\\Entity\\MeetupRequests::setBookID<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#76\">App\\Entity\\MeetupRequests::getMaxNumber<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#81\">App\\Entity\\MeetupRequests::setMaxNumber<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#88\">App\\Entity\\MeetupRequests::getDatetime<\/a>"],[100,1,"<a href=\"Entity\/MeetupRequests.php.html#93\">App\\Entity\\MeetupRequests::setDatetime<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#44\">App\\Entity\\User::getId<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#49\">App\\Entity\\User::getEmail<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#54\">App\\Entity\\User::setEmail<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#66\">App\\Entity\\User::getUserIdentifier<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#74\">App\\Entity\\User::getRoles<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#83\">App\\Entity\\User::setRoles<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#93\">App\\Entity\\User::getPassword<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#98\">App\\Entity\\User::setPassword<\/a>"],[0,1,"<a href=\"Entity\/User.php.html#108\">App\\Entity\\User::eraseCredentials<\/a>"],[0,1,"<a href=\"Entity\/User.php.html#114\">App\\Entity\\User::isVerified<\/a>"],[0,1,"<a href=\"Entity\/User.php.html#119\">App\\Entity\\User::setIsVerified<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#126\">App\\Entity\\User::getUserPersonalInfo<\/a>"],[100,2,"<a href=\"Entity\/User.php.html#131\">App\\Entity\\User::setUserPersonalInfo<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#143\">App\\Entity\\User::getUserReadingInterest<\/a>"],[100,2,"<a href=\"Entity\/User.php.html#148\">App\\Entity\\User::setUserReadingInterest<\/a>"],[100,1,"<a href=\"Entity\/User.php.html#160\">App\\Entity\\User::getUserReadingList<\/a>"],[100,2,"<a href=\"Entity\/User.php.html#165\">App\\Entity\\User::setUserReadingList<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#29\">App\\Entity\\UserPersonalInfo::getId<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#34\">App\\Entity\\UserPersonalInfo::getName<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#39\">App\\Entity\\UserPersonalInfo::setName<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#46\">App\\Entity\\UserPersonalInfo::getSurname<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#51\">App\\Entity\\UserPersonalInfo::setSurname<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#58\">App\\Entity\\UserPersonalInfo::getNickname<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#63\">App\\Entity\\UserPersonalInfo::setNickname<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#70\">App\\Entity\\UserPersonalInfo::getUser<\/a>"],[100,1,"<a href=\"Entity\/UserPersonalInfo.php.html#75\">App\\Entity\\UserPersonalInfo::setUser<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#29\">App\\Entity\\UserReadingInterest::getId<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#34\">App\\Entity\\UserReadingInterest::getLanguages<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#40\">App\\Entity\\UserReadingInterest::setLanguages<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#48\">App\\Entity\\UserReadingInterest::getGenres<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#54\">App\\Entity\\UserReadingInterest::setGenres<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#62\">App\\Entity\\UserReadingInterest::getUser<\/a>"],[100,1,"<a href=\"Entity\/UserReadingInterest.php.html#67\">App\\Entity\\UserReadingInterest::setUser<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#29\">App\\Entity\\UserReadingList::getId<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#34\">App\\Entity\\UserReadingList::getUser<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#39\">App\\Entity\\UserReadingList::setUser<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#46\">App\\Entity\\UserReadingList::getCurrentlyReading<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#51\">App\\Entity\\UserReadingList::setCurrentlyReading<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#58\">App\\Entity\\UserReadingList::getWantToRead<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#63\">App\\Entity\\UserReadingList::setWantToRead<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#70\">App\\Entity\\UserReadingList::getHaveRead<\/a>"],[100,1,"<a href=\"Entity\/UserReadingList.php.html#75\">App\\Entity\\UserReadingList::setHaveRead<\/a>"],[100,1,"<a href=\"Form\/MeetupRequestFormType.php.html#20\">App\\Form\\MeetupRequestFormType::buildForm<\/a>"],[100,1,"<a href=\"Form\/MeetupRequestFormType.php.html#73\">App\\Form\\MeetupRequestFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/ReadingInterestFormType.php.html#16\">App\\Form\\ReadingInterestFormType::buildForm<\/a>"],[100,1,"<a href=\"Form\/ReadingInterestFormType.php.html#44\">App\\Form\\ReadingInterestFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/RegistrationFormType.php.html#17\">App\\Form\\RegistrationFormType::buildForm<\/a>"],[100,1,"<a href=\"Form\/RegistrationFormType.php.html#59\">App\\Form\\RegistrationFormType::configureOptions<\/a>"],[100,1,"<a href=\"Form\/SettingsFormType.php.html#18\">App\\Form\\SettingsFormType::buildForm<\/a>"],[100,1,"<a href=\"Form\/SettingsFormType.php.html#49\">App\\Form\\SettingsFormType::configureOptions<\/a>"],[100,1,"<a href=\"MessageHandler\/AddBookToDatabaseHandler.php.html#14\">App\\MessageHandler\\AddBookToDatabaseHandler::__construct<\/a>"],[100,1,"<a href=\"MessageHandler\/AddBookToDatabaseHandler.php.html#20\">App\\MessageHandler\\AddBookToDatabaseHandler::__invoke<\/a>"],[100,1,"<a href=\"Message\/AddBookToDatabase.php.html#11\">App\\Message\\AddBookToDatabase::__construct<\/a>"],[100,1,"<a href=\"Message\/AddBookToDatabase.php.html#16\">App\\Message\\AddBookToDatabase::getBookData<\/a>"],[100,1,"<a href=\"Repository\/BookRepository.php.html#19\">App\\Repository\\BookRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/BookRepository.php.html#24\">App\\Repository\\BookRepository::save<\/a>"],[100,2,"<a href=\"Repository\/BookRepository.php.html#33\">App\\Repository\\BookRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/BookReviewsRepository.php.html#19\">App\\Repository\\BookReviewsRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/BookReviewsRepository.php.html#24\">App\\Repository\\BookReviewsRepository::save<\/a>"],[100,2,"<a href=\"Repository\/BookReviewsRepository.php.html#33\">App\\Repository\\BookReviewsRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/BookReviewsRepository.php.html#45\">App\\Repository\\BookReviewsRepository::findLatest<\/a>"],[100,1,"<a href=\"Repository\/BookReviewsRepository.php.html#50\">App\\Repository\\BookReviewsRepository::findByUser<\/a>"],[100,1,"<a href=\"Repository\/LibraryRepository.php.html#19\">App\\Repository\\LibraryRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/LibraryRepository.php.html#24\">App\\Repository\\LibraryRepository::save<\/a>"],[100,2,"<a href=\"Repository\/LibraryRepository.php.html#33\">App\\Repository\\LibraryRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/MeetupListRepository.php.html#19\">App\\Repository\\MeetupListRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/MeetupListRepository.php.html#24\">App\\Repository\\MeetupListRepository::save<\/a>"],[100,2,"<a href=\"Repository\/MeetupListRepository.php.html#33\">App\\Repository\\MeetupListRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/MeetupRequestListRepository.php.html#19\">App\\Repository\\MeetupRequestListRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/MeetupRequestListRepository.php.html#24\">App\\Repository\\MeetupRequestListRepository::save<\/a>"],[100,2,"<a href=\"Repository\/MeetupRequestListRepository.php.html#33\">App\\Repository\\MeetupRequestListRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/MeetupRequestsRepository.php.html#19\">App\\Repository\\MeetupRequestsRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/MeetupRequestsRepository.php.html#24\">App\\Repository\\MeetupRequestsRepository::save<\/a>"],[100,2,"<a href=\"Repository\/MeetupRequestsRepository.php.html#33\">App\\Repository\\MeetupRequestsRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/UserPersonalInfoRepository.php.html#19\">App\\Repository\\UserPersonalInfoRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/UserPersonalInfoRepository.php.html#24\">App\\Repository\\UserPersonalInfoRepository::save<\/a>"],[100,2,"<a href=\"Repository\/UserPersonalInfoRepository.php.html#33\">App\\Repository\\UserPersonalInfoRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/UserReadingInterestRepository.php.html#19\">App\\Repository\\UserReadingInterestRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/UserReadingInterestRepository.php.html#24\">App\\Repository\\UserReadingInterestRepository::save<\/a>"],[100,2,"<a href=\"Repository\/UserReadingInterestRepository.php.html#33\">App\\Repository\\UserReadingInterestRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/UserReadingListRepository.php.html#19\">App\\Repository\\UserReadingListRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/UserReadingListRepository.php.html#24\">App\\Repository\\UserReadingListRepository::save<\/a>"],[100,2,"<a href=\"Repository\/UserReadingListRepository.php.html#33\">App\\Repository\\UserReadingListRepository::remove<\/a>"],[100,1,"<a href=\"Repository\/UserRepository.php.html#22\">App\\Repository\\UserRepository::__construct<\/a>"],[100,2,"<a href=\"Repository\/UserRepository.php.html#27\">App\\Repository\\UserRepository::save<\/a>"],[100,2,"<a href=\"Repository\/UserRepository.php.html#36\">App\\Repository\\UserRepository::remove<\/a>"],[75,2,"<a href=\"Repository\/UserRepository.php.html#48\">App\\Repository\\UserRepository::upgradePassword<\/a>"],[100,1,"<a href=\"Security\/LoginAuthenticator.php.html#24\">App\\Security\\LoginAuthenticator::__construct<\/a>"],[100,1,"<a href=\"Security\/LoginAuthenticator.php.html#28\">App\\Security\\LoginAuthenticator::authenticate<\/a>"],[66.66666666666666,2,"<a href=\"Security\/LoginAuthenticator.php.html#43\">App\\Security\\LoginAuthenticator::onAuthenticationSuccess<\/a>"],[100,1,"<a href=\"Security\/LoginAuthenticator.php.html#52\">App\\Security\\LoginAuthenticator::getLoginUrl<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>
