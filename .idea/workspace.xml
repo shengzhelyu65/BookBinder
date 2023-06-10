@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="change form_end for w3c validation for book page">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="add decode URI for search bar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/book_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/book_page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MeetupRequestFormType.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -479,14 +479,7 @@
       <workItem from="1685982428136" duration="34000" />
       <workItem from="1686293246884" duration="7641000" />
       <workItem from="1686304378102" duration="2373000" />
-      <workItem from="1686395985027" duration="2225000" />
-    </task>
-    <task id="LOCAL-00001" summary="Install Webpack Encore and Bootstrap">
-      <created>1682875063971</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1682875063971</updated>
+      <workItem from="1686395985027" duration="3589000" />
     </task>
     <task id="LOCAL-00002" summary="Base with side navbar">
       <created>1683286663649</created>
@@ -817,7 +810,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686400537309</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="remove double validation">
+      <created>1686401034067</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1686401034067</updated>
+    </task>
+    <task id="LOCAL-00050" summary="add decode URI for search bar">
+      <created>1686401225952</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1686401225952</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -866,8 +873,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Fixed routing to homepage" />
-    <MESSAGE value="Rollback to older version" />
     <MESSAGE value="Add default avatar" />
     <MESSAGE value="Profile screen with user information" />
     <MESSAGE value="Homescreen with text truncate and user genres" />
@@ -891,7 +896,9 @@
     <MESSAGE value="change name of folder due to error in production environment" />
     <MESSAGE value="consistency in cards for meetups" />
     <MESSAGE value="change form_end for w3c validation for book page" />
-    <option name="LAST_COMMIT_MESSAGE" value="change form_end for w3c validation for book page" />
+    <MESSAGE value="remove double validation" />
+    <MESSAGE value="add decode URI for search bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="add decode URI for search bar" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

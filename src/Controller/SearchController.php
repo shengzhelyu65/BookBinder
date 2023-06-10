@@ -199,8 +199,10 @@ class SearchController extends AbstractController
                 WHERE submrl.meetup_ID = mr.meetup_ID AND submrl.user_ID = :userId
             )')
             ->andWhere('mr.book_ID = :bookId')
+            ->andWhere('mr.datetime >= :currentDate')
             ->setParameter('userId', $userId)
             ->setParameter('bookId', $id)
+            ->setParameter('currentDate', date("Y-m-d h:i:sa"))
             ->orderBy('mr.datetime', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
