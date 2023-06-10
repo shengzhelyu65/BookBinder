@@ -179,7 +179,7 @@ class MeetupRequestsControllerTest extends PantherTestCase
         $this->assertInstanceOf(MeetupList::class, $meetupList);
 
         // Check if the meetup request is deleted
-        $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_ID' => $meetup, 'user_ID' => $meetupRequestUser]);
+        $meetupRequestList = $meetupRequestListRepository->findOneBy(['meetup_request_list_ID' => $meetupRequestId]);
         $this->assertNull($meetupRequestList);
 
         // Rollback the changes
