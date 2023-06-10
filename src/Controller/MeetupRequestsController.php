@@ -139,17 +139,18 @@ class MeetupRequestsController extends AbstractController
 
         // The second column
         // Retrieve the meetups hosted by the user
-        $hostedMeetups = $entityManager->createQueryBuilder()
-            ->select('mr')
-            ->from('App\Entity\MeetupRequests', 'mr')
-            ->where('mr.host_user = :userId')
+        $hostedMeetups = $entityManager->getRepository(MeetupRequests::class)->findBy(['host_user' => $userId]);
+        $meetupRequests = $entityManager->createQueryBuilder()
+            ->select('mrl')
+            ->from('App\Entity\MeetupRequestList', 'mrl')
+            ->leftJoin('App\Entity\MeetupRequests', 'mr', 'WITH', 'mrl.meetup_ID = mr.meetup_ID')
+            ->where('mrl.meetup_ID IN (:meetupId)')
             ->andWhere('mr.datetime >= :currentDate')
-            ->setParameter('userId', $userId)
+            ->setParameter('meetupId', $hostedMeetups)
             ->setParameter('currentDate', date("Y-m-d h:i:sa"))
             ->orderBy('mr.datetime', 'ASC')
             ->getQuery()
             ->getResult();
-        $meetupRequests = $entityManager->getRepository(MeetupRequestList::class)->findBy(['meetup_ID' => $hostedMeetups]);
         $booksMeetupRequests = [];
         foreach ($meetupRequests as $meetupRequest) {
             $bookId = $meetupRequest->getMeetupID()->getBookID();

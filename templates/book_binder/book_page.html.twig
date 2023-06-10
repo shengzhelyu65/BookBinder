@@ -96,7 +96,7 @@
                             <div class="card mb-3 me-2 width-300-px">
                                 <div class="d-flex flex-row h-100">
                                     <div class="card-body">
-                                        <h5 class="card-title">Host: {{ meetupRequest.getHostUser().getUserPersonalInfo().getName() }}</h5>
+                                        <h5 class="card-title">Host: <a href="{{ path('profile_other', {'username': meetupRequest.getHostUser().getUserPersonalInfo().getNickname() }) }}" class="text-decoration-none text-black">{{ meetupRequest.getHostUser().getUserPersonalInfo().getNickname() }}</a></h5>
                                         <p class="card-text">Participants: {{ meetupRequest.getMaxNumber() }}</p>
                                         <p class="card-text">Library: {{ meetupRequest.getLibraryID().getLibraryName() }}</p>
                                         <p class="card-text">Date: {{ meetupRequest.getDatetime()|date('F j') }}</p>
