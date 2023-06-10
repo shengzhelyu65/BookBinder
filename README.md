@@ -42,6 +42,8 @@ The login and registration forms have browser and server side validation. The us
 
 ### Home Page
 
+The home page shows book recommendation for the users preffered genres and recent reviews from other users.
+
 ### Search Bar
 The search-bar contains two event listeners.
 
@@ -79,17 +81,20 @@ to retrieve the information and is added to the cache table in the database.
 ### Add review
 
 ### Meetup Page 
-Meetups can be created by going to a book page and clikcing the "host meetup" button after filling in the form you become the host of the meetup. Other user can now request to join that meetup. As host of a meetup you can accept or deny other user that requested to join your meetup.
+Meetups can be created by going to a book page and clicking the "host meetup" button after filling in the form you become the host of the meetup. Other user can now request to join that meetup. As host of a meetup you can accept or deny other user that requested to join your meetup.
 
 The meetup Page displays 3 rows for meetup information and actions. The first row displays the meetups you host or have joined.
 In the second row you can accept or reject requests to join your meetups.
 Then the third row shows meetups you haven't joined yet.
 ### MyList Page
+On the book page there is a dropdown list where you can select either "Want to read", "Currently reading" or "have read". These are mutally exclusive so only one can chosen but the tag can swiched with the same dropdown.
 
+The "My list" page shows the books for which you have selected a tag in their respective row.
 ### Profile Page
-
+The Profile page shows your username, full name, your language and genre preferences, your reading List and your reviews. 
+Clicking on another user's username, which are on the reviews brings you to their profile page containing the same information except for their full name. 
 ### Settings Page
-
+The settings page has a form with the profile settings filled in. The settings are Nickname, Name, Surname, Languages, Genres. These can be changed and them confirmed by pressing the "submit" button.
 
 ## Team
 

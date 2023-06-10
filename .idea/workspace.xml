@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Fix tests">
+    <list default="true" id="5ead56d2-0030-4aa0-9ed2-79521470b502" name="Changes" comment="Added text to README">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -786,7 +786,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685885751519</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Added text to README">
+      <created>1686413878350</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1686413878350</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -820,7 +827,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Profile screen with user information and reviews" />
     <MESSAGE value="Search results screen template" />
     <MESSAGE value="Remove link from logo in navbar" />
     <MESSAGE value="Homescreen with dummy reviews" />
@@ -845,7 +851,8 @@
     <MESSAGE value="Made confirm button disabled if date is in the past + only allow positive inputs" />
     <MESSAGE value="Added nearest_library to UserPersonalInfo" />
     <MESSAGE value="Revert previous commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert previous commit" />
+    <MESSAGE value="Added text to README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added text to README" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
