@@ -42,7 +42,7 @@ The login and registration forms have browser and server side validation. The us
 
 ### Home Page
 
-The home page shows book recommendation for the users preffered genres and recent reviews from other users.
+The home page shows book recommendations and recent reviews from other users. The recommendations are based on the user's preferred genres or if they don't have any, default genres are used. The user can click on a book to view more information. For the reviews, the user can click on the book title to view the book information. Clicking on the username will take them to the author's profile.
 
 ### Search Bar
 The search-bar contains two event listeners.
@@ -76,24 +76,25 @@ Upon accessing the book-page first a request will be made to the database to che
 a cached version of the book based on the ID and display that. If there is no entry for it a google-books API request is made
 to retrieve the information and is added to the cache table in the database.
 
+On the page, a summary and general information on the book is shown. It also shows the book's rating and how many reviews it has received. The user can add the book to one of three reading lists: "Want to read", "Currently reading" or "Have read". These are mutally exclusive so only one can be selected at the same time. Added books are shown on the "My list" page. Next, the page shows the book's upcoming meetups that the user can join. After joining, the user can find the meetup in their meetup overview. The user can also host a new meetup, choosing library, date and time and maximium number of participants allowed. After filling in the form, the user becomes the host and other users can now request to join that meetup. The new meetup will also appear in their meetup overview. Lastly, the page shows the latest reviews on the book. The user can click on the username to check the profile of the author.
+
 ### Add review
-Users can add one review to any books they want. Once the review is added they can edit and update their existing review.
+On the book page, the user can add a review on the book or if the user already has one, edit their review. A review consists of a rating between 1 and 5 stars and a comment.
+
 
 ### Meetup Page 
-Meetups can be created by going to a book page and clicking the "host meetup" button after filling in the form you become the host of the meetup. Other user can now request to join that meetup. As host of a meetup you can accept or deny other user that requested to join your meetup.
+The meetup page displays 3 rows for meetup information and actions. The first row displays the meetups that the user hosts or has joined. In the second row, the user can accept or reject requests from other users to join your meetups. Lastly, the third row shows upcoming meetups that the user can join.
 
-The meetup Page displays 3 rows for meetup information and actions. The first row displays the meetups you host or have joined.
-In the second row you can accept or reject requests to join your meetups.
-Then the third row shows meetups you haven't joined yet.
 ### MyList Page
-On the book page there is a dropdown list where you can select either "Want to read", "Currently reading" or "have read". These are mutally exclusive so only one can chosen but the tag can swiched with the same dropdown.
+The "My list" page contains three rows: "Want to read", "Currently reading" or "Have read". It shows the books for which the user has selected a tag in their respective row. The user can click on a book to see it's book page, where the user can also change it's selected tag.
 
-The "My list" page shows the books for which you have selected a tag in their respective row.
 ### Profile Page
-The Profile page shows your username, full name, your language and genre preferences, your reading List and your reviews. 
-Clicking on another user's username, which are on the reviews brings you to their profile page containing the same information except for their full name. 
+The profile page shows the user's username, full name (if possible), language and genre preferences, a summary of the user's reading lists and their reviews. Clicking on a reading list takes the user to their "My list" page. Clicking on the book title of a review takes the user to the book page where they can edit it.
+
+For reviews and meetups, if the user clicks on another user's username, it brings the user to their profile page. It contains the same information except no full name and books for the reading lists instead of a summary.
+
 ### Settings Page
-The settings page has a form with the profile settings filled in. The settings are Nickname, Name, Surname, Languages, Genres. These can be changed and them confirmed by pressing the "submit" button.
+The settings page contains a form with the current profile settings filled in by default. The fields are "Nickname", "Name", "Surname", "Languages" and "Genres". These can be changed and then confirmed by pressing the "submit" button. If the new nickname is already in use, the user is notified.
 
 ## Team
 
